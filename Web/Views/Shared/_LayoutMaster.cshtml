@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sunrise Computers</title>
+    <link rel=" icon" href="~/Content/IMAGES-PAGES/sol-barra-web.png" />
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        /*ESTILO QUE DA EL ESPACIO SUFICIENTE A TODO EL APP*/
+        /*DA LA SENSACION DE ESPACIO A LOS LATERALES Y ARRIBA*/
+        .main-container-page {
+            margin-left: 20%;
+            margin-right: 20%;
+            margin-top: 3%;
+            margin-bottom: 5%;
+        }
+    </style>
+
+</head>
+<body>
+    @Html.Partial("_Menu")
+
+    <main class="main-container-page">
+        <div>
+            @RenderBody()
+        </div>
+    </main>
+
+    @RenderSection("footer", false)
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

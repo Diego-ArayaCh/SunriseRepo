@@ -1,7 +1,70 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Acerca de";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<p>
+    Los siguientes, son estudiantes del grupo ISW-711-02-CII21
+</p>
+<p>
+    Profesora a cargo: Nathalie Paniagua López
+</p>
+
+<div class="row ">
+
+    <div class="col-lg-4 col-md-10  ">
+        <div class="card mb-md-2" style="max-width: 20rem;">
+            <h3 class="card-header">Estudiante</h3>
+            <img src="~/Content/IMAGES-PAGES/foto-perfil-jpaul.jpeg" />
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">John P. Alfaro Carballo</li>
+                <li class="list-group-item">Ingenieria del Software - UTN</li>
+                <li class="list-group-item">Estudiante de 8vo nivel</li>
+            </ul>
+            <div class="card-footer text-muted">
+                Actualizado el 01/06/2021
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-10  ">
+        <div class="card mb-md-2" style="max-width: 20rem;">
+            <h3 class="card-header">Estudiante</h3>
+            <img src="~/Content/IMAGES-PAGES/foto-perfil-DEMO.jpg" />
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Nombre del desarrollador</li>
+                <li class="list-group-item">Ingenieria del Software - UTN</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+            <div class="card-footer text-muted">
+                Actualizado el 01/06/2021
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-md-10  ">
+        <div class="card mb-md-2" style="max-width: 20rem;">
+            <h3 class="card-header">Estudiante</h3>
+            <img src="~/Content/IMAGES-PAGES/foto-perfil-DEMO.jpg" />
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Nombre del desarrollador</li>
+                <li class="list-group-item">Ingenieria del Software - UTN</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+            <div class="card-footer text-muted">
+                Actualizado el 01/06/2021
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+        </div>
+    </footer>
+}

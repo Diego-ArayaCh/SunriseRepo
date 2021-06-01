@@ -1,0 +1,46 @@
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="~/Content/IMAGES-PAGES/sol-logo.png" style="height:75px; width:120px; padding-left:20px" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Inventario</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Entradas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Salidas</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Producto</a>
+                    <a class="dropdown-item" href="#">Usuarios</a>
+                    <a class="dropdown-item" href="#">Proveedores</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                @Html.ActionLink("Acerca de", "About", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li class="nav-item dropdown my-lg-0">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Configuracion</a>
+                    <div class="dropdown-menu">
+                        <span class="dropdown-item" style="color:forestgreen; font-weight:bolder!important">En linea: @ViewBag.usuario</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="#" style="color:red; font-weight:bolder">Salir</a>
+                    </div>
+            </li>
+        </ul>
+        
+    </div>
+</nav>
