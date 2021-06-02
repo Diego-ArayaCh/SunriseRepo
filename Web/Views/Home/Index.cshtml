@@ -3,42 +3,121 @@
 }
 
 <div class="jumbotron">
-    <h1 class="display-3">Hello, world!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <h2 class="display-6">Bienvenido a la aplicacion!</h2>
+    <p class="lead">Cualquier cambio generado, afectara directamente los regsitros de la base de datos. ¡Favor tener cuidado!</p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
+    <p class="lead">Estos son los ultimos datos generados por la aplicacion, cualquier inconsistencia, favor llamar a su supervisor</pclass="lead">
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="row " >
+    <div class="col-lg-4 col-md-5">
+        <div class="card text-white bg-success mb-3 border border-white " style="max-width: 20rem;">
+            <div class="card-header bg-dark font-weight-bold">Productos Registrados</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center">#1067</h1>
+                <h6 class="card-text">**Inventario total</h6>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-lg-4 col-md-5">
+        <div class="card text-white bg-warning mb-3 border border-white" style="max-width: 20rem;">
+            <div class="card-header bg-dark">Entradas realizadas</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center;">#2357</h1>
+                <h6 class="card-text ">**Actualizado hace 24h</h6>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-lg-4 col-md-5">
+        <div class="card text-white bg-danger mb-3 border border-white" style="max-width: 20rem;">
+            <div class="card-header bg-dark">Salidas realizadas</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center">#4010</h1>
+                <h6 class="card-text ">**Actualizado hace 24h</h6>
+            </div>
+        </div>
     </div>
 </div>
+<br />
+<table class="table table-hover">
+    <p class="lead">
+        Inventario en nivel de reposición: Lista de productos en stock que se encuentran bajo el nivel
+        de reposición definido
+    </p>
+    <thead>
+        <tr class="table-primary" style="text-align:center">
+            <th scope="col">Categoria</th>
+            <th scope="col">Serial</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Cantidad</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-danger">
+            <th scope="row">Danger</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">0</td>
+        </tr>
+        <tr class="table-danger">
+            <th scope="row">Danger</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">0</td>
+        </tr>
+        <tr class="table-warning">
+            <th scope="row">Secondary</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">3</td>
+        </tr>
+        <tr class="table-warning">
+            <th scope="row">Secondary</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">6</td>
+        </tr>
+        <tr class="table-secondary">
+            <th scope="row">Secondary</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">15</td>
+        </tr>
+        <tr class="table-secondary">
+            <th scope="row">Secondary</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">16</td>
+        </tr>
+        <tr class="table-secondary">
+            <th scope="row">Secondary</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td style="text-align:center">18</td>
+        </tr>
+
+
+    </tbody>
+</table>
+
+
+
 
 @section footer{
     <footer class="footer mt-auto py-3 ">
         <hr />
         <div class="container">
             <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la pagina, favor visitar la pagina "Acerca de"</p>
         </div>
     </footer>
 }

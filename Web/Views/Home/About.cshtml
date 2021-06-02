@@ -1,36 +1,36 @@
 ﻿@{
     ViewBag.Title = "Acerca de";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>
+<h1 class="display-6">
+    @ViewBag.Message
+</h1>
+
+<p class="lead">
     Los siguientes, son estudiantes del grupo ISW-711-02-CII21
 </p>
-<p>
+<p class="lead">
     Profesora a cargo: Nathalie Paniagua López
 </p>
 
 <div class="row ">
-
     <div class="col-lg-4 col-md-10  ">
         <div class="card mb-md-2" style="max-width: 20rem;">
-            <h3 class="card-header">Estudiante</h3>
+            <h3 class="card-header" style="text-align:center">Estudiante</h3>
             <img src="~/Content/IMAGES-PAGES/foto-perfil-jpaul.jpeg" />
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">John P. Alfaro Carballo</li>
                 <li class="list-group-item">Ingenieria del Software - UTN</li>
-                <li class="list-group-item">Estudiante de 8vo nivel</li>
+                <li class="list-group-item">Tel: +506 6029-85-46</li>
             </ul>
             <div class="card-footer text-muted">
                 Actualizado el 01/06/2021
             </div>
         </div>
     </div>
-
     <div class="col-lg-4 col-md-10  ">
         <div class="card mb-md-2" style="max-width: 20rem;">
-            <h3 class="card-header">Estudiante</h3>
+            <h3 class="card-header" style="text-align:center">Estudiante</h3>
             <img src="~/Content/IMAGES-PAGES/foto-perfil-DEMO.jpg" />
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Nombre del desarrollador</li>
@@ -42,10 +42,9 @@
             </div>
         </div>
     </div>
-
     <div class="col-lg-4 col-md-10  ">
         <div class="card mb-md-2" style="max-width: 20rem;">
-            <h3 class="card-header">Estudiante</h3>
+            <h3 class="card-header" style="text-align:center">Estudiante</h3>
             <img src="~/Content/IMAGES-PAGES/foto-perfil-DEMO.jpg" />
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Nombre del desarrollador</li>
@@ -57,8 +56,28 @@
             </div>
         </div>
     </div>
-
 </div>
+<div>
+    <hr class="my-4">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-6">Información de contacto</h1>
+            <p class="lead">
+                Sunrise Computers&reg;
+            </p>
+            <p class="lead">
+                Alajuela Centro, Contiguo a monumento de Juan Santa Maria
+            </p>
+            <p class="lead">
+                Tel: 2430-00-00 / Cel: 8877-66-55
+            </p>
+            <p class="lead">
+                Correo electronico: soporte@sunrisecomputers.cr
+            </p>
+        </div>
+    </div>
+</div>
+
 
 @section footer{
     <footer class="footer mt-auto py-3 ">
