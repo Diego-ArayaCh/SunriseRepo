@@ -1,0 +1,1249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SunriseBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="CONTACTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDProv" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="nombre" Type="varchar(max)" />
+          <Property Name="correo" Type="varchar" MaxLength="30" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="HistDetalleCRUD">
+          <Key>
+            <PropertyRef Name="IDHistorico" />
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDHistorico" Type="int" Nullable="false" />
+          <Property Name="IDProducto" Type="int" Nullable="false" />
+          <Property Name="IDProveedor" Type="int" />
+          <Property Name="IDUsuario" Type="int" />
+          <Property Name="IDContacto" Type="int" />
+          <Property Name="TipoCRUD" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HistDetalleEntradaSalida">
+          <Key>
+            <PropertyRef Name="IDHistorico" />
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDHistorico" Type="int" Nullable="false" />
+          <Property Name="IDProducto" Type="int" Nullable="false" />
+          <Property Name="IDSucursalEntra" Type="int" />
+          <Property Name="IDSucursalSale" Type="int" />
+          <Property Name="IDProveedor" Type="int" />
+          <Property Name="cantidad" Type="int" />
+        </EntityType>
+        <EntityType Name="HISTORICO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaHora" Type="varchar(max)" />
+          <Property Name="IDUsuario" Type="int" />
+          <Property Name="tipoMov" Type="int" />
+          <Property Name="detalle" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="MOVIMIENTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="20" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="PAIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="ProdProv">
+          <Key>
+            <PropertyRef Name="IDProducto" />
+            <PropertyRef Name="IDProveedor" />
+          </Key>
+          <Property Name="IDProducto" Type="int" Nullable="false" />
+          <Property Name="IDProveedor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProdSuc">
+          <Key>
+            <PropertyRef Name="IDProducto" />
+            <PropertyRef Name="IDSucursal" />
+          </Key>
+          <Property Name="IDProducto" Type="int" Nullable="false" />
+          <Property Name="IDSucursal" Type="int" Nullable="false" />
+          <Property Name="estado" Type="int" />
+          <Property Name="cant" Type="int" />
+        </EntityType>
+        <EntityType Name="PRODUCTOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDCategoria" Type="int" />
+          <Property Name="estado" Type="int" />
+          <Property Name="serial" Type="varchar" MaxLength="20" />
+          <Property Name="precio" Type="money" />
+          <Property Name="nombre" Type="varchar(max)" />
+          <Property Name="marca" Type="varchar(max)" />
+          <Property Name="detalle" Type="varchar(max)" />
+          <Property Name="imagen" Type="varchar(max)" />
+          <Property Name="stock" Type="int" />
+          <Property Name="cantMin" Type="int" />
+        </EntityType>
+        <EntityType Name="PROVEEDORES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="int" />
+          <Property Name="nombre" Type="varchar(max)" />
+          <Property Name="direccion" Type="varchar(max)" />
+          <Property Name="IDPais" Type="int" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="SUCURSAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar(max)" />
+          <Property Name="direccion" Type="varchar(max)" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TipoCRUD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cedula" Type="varchar" MaxLength="9" />
+          <Property Name="estado" Type="int" />
+          <Property Name="correo" Type="varchar(max)" />
+          <Property Name="contrasenha" Type="varchar(max)" />
+          <Property Name="nombre" Type="varchar(max)" />
+          <Property Name="apellidos" Type="varchar(max)" />
+          <Property Name="IDRol" Type="int" />
+          <Property Name="telefono" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__CONTACTO__IDProv__36B12243">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="IDProv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HISTORICO__IDUsu__2E1BDC42">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HISTORICO">
+              <PropertyRef Name="IDUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HISTORICO__tipoM__2F10007B">
+          <End Role="MOVIMIENTO" Type="Self.MOVIMIENTO" Multiplicity="0..1" />
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIMIENTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HISTORICO">
+              <PropertyRef Name="tipoMov" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTOS__IDCat__3C69FB99">
+          <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTOS">
+              <PropertyRef Name="IDCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROVEEDOR__IDPai__33D4B598">
+          <End Role="PAIS" Type="Self.PAIS" Multiplicity="0..1" />
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAIS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROVEEDORES">
+              <PropertyRef Name="IDPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__IDRol__276EDEB3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="IDRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HC">
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HISTORICO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDHistorico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCC">
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTACTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCTC">
+          <End Role="TipoCRUD" Type="Self.TipoCRUD" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCRUD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="TipoCRUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCU">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HES">
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HISTORICO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDHistorico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HESP">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HESProv">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HPC">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HPProvC">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HSE">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDSucursalEntra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HSS">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDSucursalSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_P">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="ProdSuc" Type="Self.ProdSuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdSuc">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PP">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="ProdProv" Type="Self.ProdProv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdProv">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrPr">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="1" />
+          <End Role="ProdProv" Type="Self.ProdProv" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdProv">
+              <PropertyRef Name="IDProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_S">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
+          <End Role="ProdSuc" Type="Self.ProdSuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdSuc">
+              <PropertyRef Name="IDSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SunriseBDModelStoreContainer">
+          <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CONTACTO" EntityType="Self.CONTACTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistDetalleCRUD" EntityType="Self.HistDetalleCRUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HistDetalleEntradaSalida" EntityType="Self.HistDetalleEntradaSalida" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HISTORICO" EntityType="Self.HISTORICO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MOVIMIENTO" EntityType="Self.MOVIMIENTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAIS" EntityType="Self.PAIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdProv" EntityType="Self.ProdProv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdSuc" EntityType="Self.ProdSuc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTOS" EntityType="Self.PRODUCTOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROVEEDORES" EntityType="Self.PROVEEDORES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoCRUD" EntityType="Self.TipoCRUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CONTACTO__IDProv__36B12243" Association="Self.FK__CONTACTO__IDProv__36B12243">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HISTORICO__IDUsu__2E1BDC42" Association="Self.FK__HISTORICO__IDUsu__2E1BDC42">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HISTORICO__tipoM__2F10007B" Association="Self.FK__HISTORICO__tipoM__2F10007B">
+            <End Role="MOVIMIENTO" EntitySet="MOVIMIENTO" />
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTOS__IDCat__3C69FB99" Association="Self.FK__PRODUCTOS__IDCat__3C69FB99">
+            <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROVEEDOR__IDPai__33D4B598" Association="Self.FK__PROVEEDOR__IDPai__33D4B598">
+            <End Role="PAIS" EntitySet="PAIS" />
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__IDRol__276EDEB3" Association="Self.FK__USUARIO__IDRol__276EDEB3">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HC" Association="Self.FK_HC">
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCC" Association="Self.FK_HCC">
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCTC" Association="Self.FK_HCTC">
+            <End Role="TipoCRUD" EntitySet="TipoCRUD" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCU" Association="Self.FK_HCU">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HES" Association="Self.FK_HES">
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HESP" Association="Self.FK_HESP">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HESProv" Association="Self.FK_HESProv">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HPC" Association="Self.FK_HPC">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HPProvC" Association="Self.FK_HPProvC">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HSE" Association="Self.FK_HSE">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HSS" Association="Self.FK_HSS">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_P" Association="Self.FK_P">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="ProdSuc" EntitySet="ProdSuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PP" Association="Self.FK_PP">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="ProdProv" EntitySet="ProdProv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrPr" Association="Self.FK_PrPr">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="ProdProv" EntitySet="ProdProv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_S" Association="Self.FK_S">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="ProdSuc" EntitySet="ProdSuc" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SunriseBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CATEGORIA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK__PRODUCTOS__IDCat__3C69FB99" FromRole="CATEGORIA" ToRole="PRODUCTOS" />
+        </EntityType>
+        <EntityType Name="CONTACTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDProv" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__CONTACTO__IDProv__36B12243" FromRole="CONTACTO" ToRole="PROVEEDORES" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HCC" FromRole="CONTACTO" ToRole="HistDetalleCRUD" />
+        </EntityType>
+        <EntityType Name="HistDetalleCRUD">
+          <Key>
+            <PropertyRef Name="IDHistorico" />
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDHistorico" Type="Int32" Nullable="false" />
+          <Property Name="IDProducto" Type="Int32" Nullable="false" />
+          <Property Name="IDProveedor" Type="Int32" />
+          <Property Name="IDUsuario" Type="Int32" />
+          <Property Name="IDContacto" Type="Int32" />
+          <Property Name="TipoCRUD" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CONTACTO" Relationship="Self.FK_HCC" FromRole="HistDetalleCRUD" ToRole="CONTACTO" />
+          <NavigationProperty Name="HISTORICO" Relationship="Self.FK_HC" FromRole="HistDetalleCRUD" ToRole="HISTORICO" />
+          <NavigationProperty Name="TipoCRUD1" Relationship="Self.FK_HCTC" FromRole="HistDetalleCRUD" ToRole="TipoCRUD" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK_HCU" FromRole="HistDetalleCRUD" ToRole="USUARIO" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK_HPC" FromRole="HistDetalleCRUD" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK_HPProvC" FromRole="HistDetalleCRUD" ToRole="PROVEEDORES" />
+        </EntityType>
+        <EntityType Name="HistDetalleEntradaSalida">
+          <Key>
+            <PropertyRef Name="IDHistorico" />
+            <PropertyRef Name="IDProducto" />
+          </Key>
+          <Property Name="IDHistorico" Type="Int32" Nullable="false" />
+          <Property Name="IDProducto" Type="Int32" Nullable="false" />
+          <Property Name="IDSucursalEntra" Type="Int32" />
+          <Property Name="IDSucursalSale" Type="Int32" />
+          <Property Name="IDProveedor" Type="Int32" />
+          <Property Name="cantidad" Type="Int32" />
+          <NavigationProperty Name="HISTORICO" Relationship="Self.FK_HES" FromRole="HistDetalleEntradaSalida" ToRole="HISTORICO" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK_HESP" FromRole="HistDetalleEntradaSalida" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK_HESProv" FromRole="HistDetalleEntradaSalida" ToRole="PROVEEDORES" />
+          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK_HSE" FromRole="HistDetalleEntradaSalida" ToRole="SUCURSAL" />
+          <NavigationProperty Name="SUCURSAL1" Relationship="Self.FK_HSS" FromRole="HistDetalleEntradaSalida" ToRole="SUCURSAL" />
+        </EntityType>
+        <EntityType Name="HISTORICO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaHora" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IDUsuario" Type="Int32" />
+          <Property Name="tipoMov" Type="Int32" />
+          <Property Name="detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HC" FromRole="HISTORICO" ToRole="HistDetalleCRUD" />
+          <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HES" FromRole="HISTORICO" ToRole="HistDetalleEntradaSalida" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__HISTORICO__IDUsu__2E1BDC42" FromRole="HISTORICO" ToRole="USUARIO" />
+          <NavigationProperty Name="MOVIMIENTO" Relationship="Self.FK__HISTORICO__tipoM__2F10007B" FromRole="HISTORICO" ToRole="MOVIMIENTO" />
+        </EntityType>
+        <EntityType Name="MOVIMIENTO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="HISTORICO" Relationship="Self.FK__HISTORICO__tipoM__2F10007B" FromRole="MOVIMIENTO" ToRole="HISTORICO" />
+        </EntityType>
+        <EntityType Name="PAIS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__PROVEEDOR__IDPai__33D4B598" FromRole="PAIS" ToRole="PROVEEDORES" />
+        </EntityType>
+        <EntityType Name="ProdSuc">
+          <Key>
+            <PropertyRef Name="IDProducto" />
+            <PropertyRef Name="IDSucursal" />
+          </Key>
+          <Property Name="IDProducto" Type="Int32" Nullable="false" />
+          <Property Name="IDSucursal" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="cant" Type="Int32" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK_P" FromRole="ProdSuc" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK_S" FromRole="ProdSuc" ToRole="SUCURSAL" />
+        </EntityType>
+        <EntityType Name="PRODUCTOS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDCategoria" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="serial" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="cantMin" Type="Int32" />
+          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTOS__IDCat__3C69FB99" FromRole="PRODUCTOS" ToRole="CATEGORIA" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HPC" FromRole="PRODUCTOS" ToRole="HistDetalleCRUD" />
+          <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HESP" FromRole="PRODUCTOS" ToRole="HistDetalleEntradaSalida" />
+          <NavigationProperty Name="ProdSuc" Relationship="Self.FK_P" FromRole="PRODUCTOS" ToRole="ProdSuc" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.ProdProv" FromRole="PRODUCTOS" ToRole="PROVEEDORES" />
+        </EntityType>
+        <EntityType Name="PROVEEDORES">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IDPais" Type="Int32" />
+          <NavigationProperty Name="CONTACTO" Relationship="Self.FK__CONTACTO__IDProv__36B12243" FromRole="PROVEEDORES" ToRole="CONTACTO" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HPProvC" FromRole="PROVEEDORES" ToRole="HistDetalleCRUD" />
+          <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HESProv" FromRole="PROVEEDORES" ToRole="HistDetalleEntradaSalida" />
+          <NavigationProperty Name="PAIS" Relationship="Self.FK__PROVEEDOR__IDPai__33D4B598" FromRole="PROVEEDORES" ToRole="PAIS" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.ProdProv" FromRole="PROVEEDORES" ToRole="PRODUCTOS" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__USUARIO__IDRol__276EDEB3" FromRole="ROL" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="SUCURSAL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HSE" FromRole="SUCURSAL" ToRole="HistDetalleEntradaSalida" />
+          <NavigationProperty Name="HistDetalleEntradaSalida1" Relationship="Self.FK_HSS" FromRole="SUCURSAL" ToRole="HistDetalleEntradaSalida" />
+          <NavigationProperty Name="ProdSuc" Relationship="Self.FK_S" FromRole="SUCURSAL" ToRole="ProdSuc" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TipoCRUD">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HCTC" FromRole="TipoCRUD" ToRole="HistDetalleCRUD" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cedula" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="estado" Type="Int32" />
+          <Property Name="correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="contrasenha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="apellidos" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IDRol" Type="Int32" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HCU" FromRole="USUARIO" ToRole="HistDetalleCRUD" />
+          <NavigationProperty Name="HISTORICO" Relationship="Self.FK__HISTORICO__IDUsu__2E1BDC42" FromRole="USUARIO" ToRole="HISTORICO" />
+          <NavigationProperty Name="ROL" Relationship="Self.FK__USUARIO__IDRol__276EDEB3" FromRole="USUARIO" ToRole="ROL" />
+        </EntityType>
+        <Association Name="FK__PRODUCTOS__IDCat__3C69FB99">
+          <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PRODUCTOS">
+              <PropertyRef Name="IDCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CONTACTO__IDProv__36B12243">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CONTACTO">
+              <PropertyRef Name="IDProv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCC">
+          <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONTACTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HC">
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HISTORICO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDHistorico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCTC">
+          <End Role="TipoCRUD" Type="Self.TipoCRUD" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoCRUD">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="TipoCRUD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HCU">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HPC">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HPProvC">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="HistDetalleCRUD" Type="Self.HistDetalleCRUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleCRUD">
+              <PropertyRef Name="IDProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HES">
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HISTORICO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDHistorico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HESP">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HESProv">
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROVEEDORES">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HSE">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDSucursalEntra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HSS">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="0..1" />
+          <End Role="HistDetalleEntradaSalida" Type="Self.HistDetalleEntradaSalida" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HistDetalleEntradaSalida">
+              <PropertyRef Name="IDSucursalSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HISTORICO__IDUsu__2E1BDC42">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HISTORICO">
+              <PropertyRef Name="IDUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HISTORICO__tipoM__2F10007B">
+          <End Role="MOVIMIENTO" Type="Self.MOVIMIENTO" Multiplicity="0..1" />
+          <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIMIENTO">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="HISTORICO">
+              <PropertyRef Name="tipoMov" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROVEEDOR__IDPai__33D4B598">
+          <End Role="PAIS" Type="Self.PAIS" Multiplicity="0..1" />
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAIS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PROVEEDORES">
+              <PropertyRef Name="IDPais" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_P">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="1" />
+          <End Role="ProdSuc" Type="Self.ProdSuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTOS">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdSuc">
+              <PropertyRef Name="IDProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_S">
+          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
+          <End Role="ProdSuc" Type="Self.ProdSuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSAL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProdSuc">
+              <PropertyRef Name="IDSucursal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__IDRol__276EDEB3">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="IDRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProdProv">
+          <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
+          <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SunriseBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" />
+          <EntitySet Name="CONTACTO" EntityType="Self.CONTACTO" />
+          <EntitySet Name="HistDetalleCRUD" EntityType="Self.HistDetalleCRUD" />
+          <EntitySet Name="HistDetalleEntradaSalida" EntityType="Self.HistDetalleEntradaSalida" />
+          <EntitySet Name="HISTORICO" EntityType="Self.HISTORICO" />
+          <EntitySet Name="MOVIMIENTO" EntityType="Self.MOVIMIENTO" />
+          <EntitySet Name="PAIS" EntityType="Self.PAIS" />
+          <EntitySet Name="ProdSuc" EntityType="Self.ProdSuc" />
+          <EntitySet Name="PRODUCTOS" EntityType="Self.PRODUCTOS" />
+          <EntitySet Name="PROVEEDORES" EntityType="Self.PROVEEDORES" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" />
+          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TipoCRUD" EntityType="Self.TipoCRUD" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK__PRODUCTOS__IDCat__3C69FB99" Association="Self.FK__PRODUCTOS__IDCat__3C69FB99">
+            <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CONTACTO__IDProv__36B12243" Association="Self.FK__CONTACTO__IDProv__36B12243">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCC" Association="Self.FK_HCC">
+            <End Role="CONTACTO" EntitySet="CONTACTO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HC" Association="Self.FK_HC">
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCTC" Association="Self.FK_HCTC">
+            <End Role="TipoCRUD" EntitySet="TipoCRUD" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HCU" Association="Self.FK_HCU">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HPC" Association="Self.FK_HPC">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HPProvC" Association="Self.FK_HPProvC">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="HistDetalleCRUD" EntitySet="HistDetalleCRUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HES" Association="Self.FK_HES">
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HESP" Association="Self.FK_HESP">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HESProv" Association="Self.FK_HESProv">
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HSE" Association="Self.FK_HSE">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HSS" Association="Self.FK_HSS">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="HistDetalleEntradaSalida" EntitySet="HistDetalleEntradaSalida" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HISTORICO__IDUsu__2E1BDC42" Association="Self.FK__HISTORICO__IDUsu__2E1BDC42">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HISTORICO__tipoM__2F10007B" Association="Self.FK__HISTORICO__tipoM__2F10007B">
+            <End Role="MOVIMIENTO" EntitySet="MOVIMIENTO" />
+            <End Role="HISTORICO" EntitySet="HISTORICO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROVEEDOR__IDPai__33D4B598" Association="Self.FK__PROVEEDOR__IDPai__33D4B598">
+            <End Role="PAIS" EntitySet="PAIS" />
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_P" Association="Self.FK_P">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="ProdSuc" EntitySet="ProdSuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_S" Association="Self.FK_S">
+            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+            <End Role="ProdSuc" EntitySet="ProdSuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__IDRol__276EDEB3" Association="Self.FK__USUARIO__IDRol__276EDEB3">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
+          <AssociationSet Name="ProdProv" Association="Self.ProdProv">
+            <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
+            <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SunriseBDModelStoreContainer" CdmEntityContainer="SunriseBDEntities">
+          <EntitySetMapping Name="CATEGORIA">
+            <EntityTypeMapping TypeName="SunriseBDModel.CATEGORIA">
+              <MappingFragment StoreEntitySet="CATEGORIA">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONTACTO">
+            <EntityTypeMapping TypeName="SunriseBDModel.CONTACTO">
+              <MappingFragment StoreEntitySet="CONTACTO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDProv" ColumnName="IDProv" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistDetalleCRUD">
+            <EntityTypeMapping TypeName="SunriseBDModel.HistDetalleCRUD">
+              <MappingFragment StoreEntitySet="HistDetalleCRUD">
+                <ScalarProperty Name="IDHistorico" ColumnName="IDHistorico" />
+                <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
+                <ScalarProperty Name="IDProveedor" ColumnName="IDProveedor" />
+                <ScalarProperty Name="IDUsuario" ColumnName="IDUsuario" />
+                <ScalarProperty Name="IDContacto" ColumnName="IDContacto" />
+                <ScalarProperty Name="TipoCRUD" ColumnName="TipoCRUD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HistDetalleEntradaSalida">
+            <EntityTypeMapping TypeName="SunriseBDModel.HistDetalleEntradaSalida">
+              <MappingFragment StoreEntitySet="HistDetalleEntradaSalida">
+                <ScalarProperty Name="IDHistorico" ColumnName="IDHistorico" />
+                <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
+                <ScalarProperty Name="IDSucursalEntra" ColumnName="IDSucursalEntra" />
+                <ScalarProperty Name="IDSucursalSale" ColumnName="IDSucursalSale" />
+                <ScalarProperty Name="IDProveedor" ColumnName="IDProveedor" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HISTORICO">
+            <EntityTypeMapping TypeName="SunriseBDModel.HISTORICO">
+              <MappingFragment StoreEntitySet="HISTORICO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="fechaHora" ColumnName="fechaHora" />
+                <ScalarProperty Name="IDUsuario" ColumnName="IDUsuario" />
+                <ScalarProperty Name="tipoMov" ColumnName="tipoMov" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MOVIMIENTO">
+            <EntityTypeMapping TypeName="SunriseBDModel.MOVIMIENTO">
+              <MappingFragment StoreEntitySet="MOVIMIENTO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAIS">
+            <EntityTypeMapping TypeName="SunriseBDModel.PAIS">
+              <MappingFragment StoreEntitySet="PAIS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProdSuc">
+            <EntityTypeMapping TypeName="SunriseBDModel.ProdSuc">
+              <MappingFragment StoreEntitySet="ProdSuc">
+                <ScalarProperty Name="IDProducto" ColumnName="IDProducto" />
+                <ScalarProperty Name="IDSucursal" ColumnName="IDSucursal" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="cant" ColumnName="cant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTOS">
+            <EntityTypeMapping TypeName="SunriseBDModel.PRODUCTOS">
+              <MappingFragment StoreEntitySet="PRODUCTOS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDCategoria" ColumnName="IDCategoria" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="serial" ColumnName="serial" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+                <ScalarProperty Name="detalle" ColumnName="detalle" />
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="cantMin" ColumnName="cantMin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROVEEDORES">
+            <EntityTypeMapping TypeName="SunriseBDModel.PROVEEDORES">
+              <MappingFragment StoreEntitySet="PROVEEDORES">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="IDPais" ColumnName="IDPais" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL">
+            <EntityTypeMapping TypeName="SunriseBDModel.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUCURSAL">
+            <EntityTypeMapping TypeName="SunriseBDModel.SUCURSAL">
+              <MappingFragment StoreEntitySet="SUCURSAL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SunriseBDModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoCRUD">
+            <EntityTypeMapping TypeName="SunriseBDModel.TipoCRUD">
+              <MappingFragment StoreEntitySet="TipoCRUD">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="SunriseBDModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="cedula" ColumnName="cedula" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="contrasenha" ColumnName="contrasenha" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="IDRol" ColumnName="IDRol" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ProdProv" TypeName="SunriseBDModel.ProdProv" StoreEntitySet="ProdProv">
+            <EndProperty Name="PRODUCTOS">
+              <ScalarProperty Name="ID" ColumnName="IDProducto" />
+            </EndProperty>
+            <EndProperty Name="PROVEEDORES">
+              <ScalarProperty Name="ID" ColumnName="IDProveedor" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
