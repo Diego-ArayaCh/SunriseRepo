@@ -14,11 +14,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Inventario</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Entradas</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Movimiento</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Realizar Entrada</a>
+                    <a class="dropdown-item" href="#">Realizar Salida</a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Salidas</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Informes</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Entradas</a>
+                    <a class="dropdown-item" href="#">Salidas</a>
+                    <a class="dropdown-item" href="#">Productos</a>
+                </div>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
@@ -32,7 +41,7 @@
                 @Html.ActionLink("Acerca de", "About", "Home", null, new { @class = "nav-link" })
             </li>
             <li class="nav-item dropdown  ">
-                <a  class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img style="margin-top:-10px" width="32px" height="32px" src="~/Content/IMAGES-PAGES/configuracion.png" alt="Configuración" /></a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><img style="margin-top:-10px" width="32px" height="32px" src="~/Content/IMAGES-PAGES/configuracion.png" alt="Configuración" /></a>
                 <div class="dropdown-menu">
                     <span class="dropdown-item" style="color:forestgreen; font-weight:bolder!important">En línea: @ViewBag.usuario</span>
                     <div class="dropdown-divider"></div>
@@ -41,7 +50,5 @@
                 </div>
             </li>
         </ul>
-       
-        
     </div>
 </nav>
