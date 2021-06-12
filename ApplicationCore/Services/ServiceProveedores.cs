@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-  public  class ServiceProveedores
+    public class ServiceProveedores
     {
         public IEnumerable<PROVEEDORES> GetProveedores()
         {
@@ -19,7 +19,7 @@ namespace ApplicationCore.Services
         public PROVEEDORES GetProveedorByID(int pID)
         {
             RepositoryProveedor repository = new RepositoryProveedor();
-            return repository.GetProveedorByID( pID);
+            return repository.GetProveedorByID(pID);
 
 
 

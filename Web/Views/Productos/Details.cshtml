@@ -1,101 +1,175 @@
 ﻿@model Infraestructure.Models.PRODUCTOS
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle Producto";
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>PRODUCTOS</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IDCategoria)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDCategoria)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.serial)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.serial)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.precio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.precio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.marca)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.marca)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.detalle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.detalle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.imagen)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.imagen)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.stock)
-        </dd>
-        <dd>
-            @Html.DisplayNameFor(model => model.stock)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.cantMin)
-        </dd>
-        <dd>
-            @Html.DisplayNameFor(model => model.cantMin)
-        </dd>
 
 
-    </dl>
-    @foreach (var item in Model.ProdSuc)
-    {
-        <h1> 
-    @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
-        </h1>
-    }
+<h1 class="display-6" id="estiloColor">
+    Detalle Producto
+</h1>
+<hr class="my-4">
+
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h3 class="card-title"> @Html.DisplayFor(model => model.marca)  @Html.DisplayFor(model => model.nombre)</h3>
+                <h6 class="text-muted">
+                    @Html.DisplayNameFor(model => model.serial):  @Html.DisplayFor(model => model.serial) |
+                    @Html.DisplayNameFor(model => model.IDCategoria): @Html.DisplayFor(model => model.CATEGORIA.descripcion)
+                </h6>
+                <br />
+                <p class="card-text">
+                <p>
+                    @Html.DisplayNameFor(model => model.detalle):
+                </p>
+                <p>
+                    @Html.DisplayFor(model => model.detalle)
+                </p>
+                </p>
+                <p class="card-text">
+                    <h3>
+                        @Html.DisplayNameFor(model => model.precio): @Html.DisplayFor(model => model.precio)
+                    </h3>
+                </p>
+                <br />
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="@Html.DisplayNameFor(model => model.imagen)">
+            <img src="~/Content/IMAGES-PRODUCTS/11900K.jpg" width="280px" height="310px" />
+        </div>
     </div>
+</div>
+<br />
+
+<h3>Detalles Generales</h3>
+<hr class="my-4">
+<div class="row ">
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center"> @Html.DisplayNameFor(model => model.stock)</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center">#@Html.DisplayFor(model => model.stock)</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center"> @Html.DisplayNameFor(model => model.cantMin)</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center;">#@Html.DisplayFor(model => model.cantMin)</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center">
+                @Html.DisplayNameFor(model => model.estado)
+            </div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center"> @Html.DisplayFor(model => model.estado)</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<h3>Sucursales</h3>
+<hr class="my-4">
+@foreach (var item in Model.ProdSuc)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-success">
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.SUCURSAL.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.SUCURSAL.direccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.cant)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cant)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+<br />
+
+
+<h3>Proveedores</h3>
+<hr class="my-4">
+@foreach (var item in Model.PROVEEDORES)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-success">
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.PAIS)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(modelItem => item.direccion)
+                </th>
+                <th style="text-align:center">
+                    @Html.DisplayNameFor(modelItem => item.estado)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PAIS.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+<br />
+
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "IndexAdmin")
+    @Html.ActionLink("Regresar al listado", "IndexAdmin")
 </p>
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}
+
+
+

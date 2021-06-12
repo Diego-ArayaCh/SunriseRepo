@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Services
 {
-   public class ServiceProductos
+    public class ServiceProductos
     {
         public IEnumerable<PRODUCTOS> GetProductos()
         {
             RepositoryProducto repository = new RepositoryProducto();
-           return repository.GetProductos();
+            return repository.GetProductos();
         }
 
         public PRODUCTOS GetProductoByID(int pID)

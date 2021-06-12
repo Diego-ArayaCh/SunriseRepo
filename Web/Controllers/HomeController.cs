@@ -10,7 +10,7 @@ namespace Web.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.usuario = "Putin";
+            ViewBag.usuario = "Jose M. Figueres";
 
             return View();
         }

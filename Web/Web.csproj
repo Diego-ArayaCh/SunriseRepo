@@ -161,13 +161,18 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\IMAGES-PRODUCTS\11900K.jpg" />
+    <Content Include="Content\IMAGES-PRODUCTS\905P.jpg" />
+    <Content Include="Content\IMAGES-PRODUCTS\B550.jpg" />
     <Content Include="Content\IMAGES-PAGES\configuracion.png" />
+    <Content Include="Content\IMAGES-PRODUCTS\D60G.jpg" />
     <Content Include="Content\IMAGES-PAGES\foto-perfil-alvaro.jpg" />
     <Content Include="Content\IMAGES-PAGES\foto-perfil-DEMO.jpg" />
     <Content Include="Content\IMAGES-PAGES\foto-perfil-diego.jpg" />
     <Content Include="Content\IMAGES-PAGES\foto-perfil-jpaul.jpeg" />
     <Content Include="Content\IMAGES-PAGES\sol-barra-web.png" />
     <Content Include="Content\IMAGES-PAGES\sol-logo.png" />
+    <Content Include="Content\STYLE-GENERAL\product-list.css" />
     <Content Include="Content\STYLE-GENERAL\layout-home-page.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -312,7 +317,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\IMAGES-PRODUCTS\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

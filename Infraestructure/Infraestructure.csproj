@@ -73,6 +73,7 @@
     <Compile Include="Models\HISTORICO.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\MOVIMIENTO.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>

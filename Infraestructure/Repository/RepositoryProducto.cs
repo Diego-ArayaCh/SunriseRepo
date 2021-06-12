@@ -17,8 +17,8 @@ namespace Infraestructure.Repository
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
-                //lista = ctx.Libro.Include("Autor").ToList();
-                lista = ctx.PRODUCTOS.ToList();
+                //lista = ctx.Libro.Include("PRODUCTOS").ToList();
+                lista = ctx.PRODUCTOS.Include("CATEGORIA").ToList();
 
             }
             return lista;
@@ -32,12 +32,13 @@ namespace Infraestructure.Repository
                 ctx.Configuration.LazyLoadingEnabled = false;
 
                 oProducto = ctx.PRODUCTOS.
-            Include("CATEGORIA").
-            Include("PROVEEDORES").
-            Include("ProdSuc").
-             Include("ProdSuc.SUCURSAL").
-            Where(p => p.ID == pID).
-            FirstOrDefault<PRODUCTOS>();
+                        Include("CATEGORIA").
+                        Include("PROVEEDORES").
+                        Include("PROVEEDORES.PAIS").
+                        Include("ProdSuc").
+                        Include("ProdSuc.SUCURSAL").
+                            Where(p => p.ID == pID).
+                                FirstOrDefault<PRODUCTOS>();
             }
             return oProducto;
 

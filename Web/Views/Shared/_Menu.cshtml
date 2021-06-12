@@ -23,9 +23,9 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mantenimiento</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Productos</a>
+                    @Html.ActionLink("Productos", "IndexAdmin", "Productos", null, new { @class = "dropdown-item" })
                     <a class="dropdown-item" href="#">Usuarios</a>
-                    <a class="dropdown-item" href="#">Proveedores</a>
+                    @Html.ActionLink("Proveedores", "IndexAdmin", "Proveedores", null, new { @class = "dropdown-item" })
                 </div>
             </li>
             <li class="nav-item">

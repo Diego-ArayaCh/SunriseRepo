@@ -1,3 +1,41 @@
-﻿body {
-
+﻿/*ESTILO QUE DA EL ESPACIO SUFICIENTE A TODO EL APP*/
+/*DA LA SENSACION DE ESPACIO A LOS LATERALES Y ARRIBA*/
+.main-container-page {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 3%;
+    margin-bottom: 5%;
 }
+
+
+/*LE DA EL ESTILO DEL LOGO, AL MENU, CUANDO SE PASA EL MOUSE SOBRE LAS OPCIONES*/
+#navbarColor02 a:hover {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: white;
+}
+/*SI SE DESEA DAR EL ESTILO DE HOVER A OTRO ELEMENTO EN EL APP*/
+#estiloColor {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: white;
+}
+
+.estiloColorTabla  {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+#estiloColorHover a:hover {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: white;
+}
+
+
+
+

@@ -16,9 +16,7 @@ namespace Infraestructure.Repository
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
-
                 lista = ctx.PROVEEDORES.ToList();
-
             }
             return lista;
         }
