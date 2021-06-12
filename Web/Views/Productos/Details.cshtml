@@ -70,7 +70,14 @@
                 @Html.DisplayNameFor(model => model.estado)
             </div>
             <div class="card-body">
-                <h1 class="card-title font-weight-bold" style="text-align:center"> @Html.DisplayFor(model => model.estado)</h1>
+                @if ( @Html.DisplayFor(model => model.estado).ToString() == "1")
+                {
+                    <h1 class="card-title font-weight-bold" style="text-align:center">Activo</h1>
+                }
+                else
+                {
+                    <h1 class="card-title font-weight-bold" style="text-align:center">Inactivo</h1>
+                }
             </div>
         </div>
     </div>
@@ -146,7 +153,14 @@
                     @Html.DisplayFor(modelItem => item.direccion)
                 </td>
                 <td style="text-align:center">
-                    @Html.DisplayFor(modelItem => item.estado)
+                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                    {
+                        <div>Activo</div>
+                    }
+                    else
+                    {
+                        <div>Inactivo</div>
+                    }
                 </td>
             </tr>
         </tbody>
