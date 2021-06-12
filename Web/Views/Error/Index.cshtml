@@ -1,0 +1,27 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Error";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="padding: 40px 15px; text-align: center;">
+
+                <h2 style="color:red">
+                    @ViewBag.Title
+                </h2>
+                <div>
+                    @ViewBag.Description
+                </div>
+                <div style="margin-top: 15px; margin-bottom: 15px;">
+                    @Html.ActionLink("Regresar", (String)ViewBag.redirectAction, (String)ViewBag.redirect, null, new { @class = "btn btn-primary btn-lg", @style = "margin-right:10px;" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

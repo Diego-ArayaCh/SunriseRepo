@@ -11,7 +11,9 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(ProductoSucursalMetaData))]
     public partial class ProdSuc
     {
         public int IDProducto { get; set; }
