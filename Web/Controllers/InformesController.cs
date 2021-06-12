@@ -14,7 +14,7 @@ namespace Web.Controllers
         // GET: Informe
         public ActionResult InformeEntrada()
         {
-            IEnumerable<HISTORICO> lista = null;
+            IEnumerable<HistDetalleEntradaSalida> lista = null;
             try
             {
                  ServiceInformes _ServiceInformes = new ServiceInformes();

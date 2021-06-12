@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Infraestructure.Models.HISTORICO>
+﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
 
 @{
     ViewBag.Title = "InformeEntrada";
@@ -12,19 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.fechaHora)
+            @Html.DisplayNameFor(model => model.HISTORICO.fechaHora)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IDUsuario)
+            @Html.DisplayNameFor(model => model.HISTORICO.USUARIO.cedula)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tipoMov)
+            @Html.DisplayNameFor(model => model.HISTORICO.MOVIMIENTO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.detalle)
+            @Html.DisplayNameFor(model => model.SUCURSAL)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MOVIMIENTO)
+            @Html.DisplayNameFor(model => model.PRODUCTOS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
         </th>
         <th></th>
     </tr>
@@ -32,22 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.fechaHora)
+            @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.USUARIO.cedula)
-        </td>
-
-        <td>
-            @Html.DisplayFor(modelItem => item.MOVIMIENTO.nombre)
+            @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.HistDetalleEntradaSalida)
+            @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

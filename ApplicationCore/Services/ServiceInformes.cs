@@ -10,7 +10,7 @@ namespace ApplicationCore.Services
 {
    public class ServiceInformes
     {
-        public IEnumerable<HISTORICO> GetEntradas()
+        public IEnumerable<HistDetalleEntradaSalida> GetEntradas()
         {
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetEntradas();
