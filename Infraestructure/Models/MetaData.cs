@@ -11,7 +11,7 @@ namespace Infraestructure.Models
     {
         [Display(Name = "Identificación")]
         public int ID { get; set; }
-        [Display(Name = "Descripción")]
+        [Display(Name = "Categoría")]
         public string descripcion { get; set; }
         [Display(Name = "Estado")]
         public Nullable<int> estado { get; set; }
