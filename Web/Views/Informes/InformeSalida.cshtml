@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Infraestructure.Models.HISTORICO>
+
+@{
+    ViewBag.Title = "InformeSalida";
+}
+
+<h2>InformeSalida</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaHora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IDUsuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipoMov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.detalle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaHora)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IDUsuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipoMov)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.detalle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
