@@ -146,6 +146,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -306,6 +307,8 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Productos\IndexAdmin.cshtml" />
     <Content Include="Views\Productos\Details.cshtml" />
+    <Content Include="Views\Proveedores\IndexAdmin.cshtml" />
+    <Content Include="Views\Proveedores\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

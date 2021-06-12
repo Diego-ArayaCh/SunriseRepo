@@ -16,10 +16,10 @@ namespace ApplicationCore.Services
             return repository.GetProveedores();
         }
 
-        public PRODUCTOS GetProductoByID(int pID)
+        public PROVEEDORES GetProveedorByID(int pID)
         {
-            RepositoryProducto repository = new RepositoryProducto();
-            return repository.GetProductoByID(pID);
+            RepositoryProveedor repository = new RepositoryProveedor();
+            return repository.GetProveedorByID( pID);
 
 
 

@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-   public class RepositoryProducto
+    public class RepositoryProducto
     {
         public IEnumerable<PRODUCTOS> GetProductos()
         {
@@ -23,40 +24,23 @@ namespace Infraestructure.Repository
             return lista;
         }
 
-        public  PRODUCTOS GetProductoByID(int pID)
+        public PRODUCTOS GetProductoByID(int pID)
         {
             PRODUCTOS oProducto = null;
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
 
-                var productoBuscado = from p in ctx.PRODUCTOS
-                                      join ps in ctx.ProdSuc on p.ID equals ps.IDProducto
-                                      join s in ctx.SUCURSAL on ps.IDSucursal equals s.ID
-                                      where p.ID == pID
-                                      select new PRODUCTOS
-                                      {
-                                          //variables a requerir de la consulta
-                                          nombre = p.nombre,
-                                          serial = p.serial
-                                      };
-                oProducto = productoBuscado.First();
-                
-                return oProducto;
-               
-
-
-                //    oProducto = ctx.PRODUCTOS.
-                //Where(p => p.ID == pID).
-                //Include(c => c.CATEGORIA).
-                //Include(pr => pr.PROVEEDORES).
-                //Include(u => u.ProdSuc).
-                //FirstOrDefault();
+                oProducto = ctx.PRODUCTOS.
+            Include("CATEGORIA").
+            Include("PROVEEDORES").
+            Include("ProdSuc").
+             Include("ProdSuc.SUCURSAL").
+            Where(p => p.ID == pID).
+            FirstOrDefault<PRODUCTOS>();
             }
-           
+            return oProducto;
 
-
-           
         }
 
     }

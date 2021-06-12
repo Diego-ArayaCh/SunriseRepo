@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-  public  class RepositoryProveedor
+    public class RepositoryProveedor
     {
         public IEnumerable<PROVEEDORES> GetProveedores()
         {
@@ -16,7 +16,7 @@ namespace Infraestructure.Repository
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
-               
+
                 lista = ctx.PROVEEDORES.ToList();
 
             }
@@ -31,7 +31,9 @@ namespace Infraestructure.Repository
                 ctx.Configuration.LazyLoadingEnabled = false;
                 oProveedor = ctx.PROVEEDORES.Where(p => p.ID == pID).
                     Include(pr => pr.PRODUCTOS).
-                    Include(c => c.CONTACTO).FirstOrDefault();
+                    Include(c => c.CONTACTO).
+                    Include(p => p.PAIS).
+                    FirstOrDefault();
             }
             return oProveedor;
 

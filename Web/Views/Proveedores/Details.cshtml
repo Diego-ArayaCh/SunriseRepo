@@ -1,0 +1,64 @@
+﻿@model Infraestructure.Models.PROVEEDORES
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PROVEEDORES</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IDPais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IDPais)
+        </dd>
+
+
+    </dl>
+    @foreach (var item in Model.PRODUCTOS)
+    {
+        <h1>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </h1>
+    }
+    @foreach (var item in Model.CONTACTO)
+    {
+        <h1>
+            @Html.DisplayFor(modelItem => item.correo)
+        </h1>
+    }
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "IndexAdmin")
+</p>
