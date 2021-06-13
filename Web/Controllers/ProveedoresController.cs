@@ -26,6 +26,7 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("IndexAdmin");
             }
 
             ViewBag.titulo = "Lista Proveedores";

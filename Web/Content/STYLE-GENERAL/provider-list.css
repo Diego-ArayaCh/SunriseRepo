@@ -1,0 +1,25 @@
+﻿.general-container{
+    width:100%
+}
+.sub-container-1{
+    width:60%;
+    float:left
+}
+.sub-container-2 {
+    width: 30%;
+    float:left;
+    margin-bottom:20px
+}
+
+#estiloColorHover2 a:hover {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: white;
+}
+#estiloColorHover2 a {
+    text-decoration: none;
+    font-size: large;
+    color: #55595c
+}
+

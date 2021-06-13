@@ -1,64 +1,124 @@
 ﻿@model Infraestructure.Models.PROVEEDORES
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle Proveedor";
 }
 
-<h2>Details</h2>
+<h1 class="display-6" id="estiloColor">
+    Detalle Proveedor
+</h1>
+<hr class="my-4">
 
-<div>
-    <h4>PROVEEDORES</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h3 class="card-title">@Html.DisplayFor(model => model.nombre)</h3>
+                <h6 class="text-muted">
+                    @Html.DisplayNameFor(model => model.PAIS): @Html.DisplayFor(model => model.PAIS.nombre)
+                    
+                </h6>
+                <h6>
+                    Dirección: @Html.DisplayFor(model => model.direccion)
+                </h6>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.direccion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.direccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IDPais)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDPais)
-        </dd>
-
-
-    </dl>
-    @foreach (var item in Model.PRODUCTOS)
-    {
-        <h1>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </h1>
-    }
-    @foreach (var item in Model.CONTACTO)
-    {
-        <h1>
-            @Html.DisplayFor(modelItem => item.correo)
-        </h1>
-    }
-
+    </div>
 </div>
+<br />
+
+
+<br />
+
+<h3>Productos</h3>
+<hr class="my-4">
+<table class="table table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.PRODUCTOS.ElementAt(1).CATEGORIA.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRODUCTOS.ElementAt(1).marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PRODUCTOS.ElementAt(1).nombre)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.PRODUCTOS.ElementAt(1).stock)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PRODUCTOS)
+        {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td style="text-align:center">
+                    @Html.DisplayFor(modelItem => item.stock)
+                </td>
+                <td style="text-align:center">
+                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                    {
+                        <div>Activo</div>
+                    }
+                    else
+                    {
+                        <div>Inactivo</div>
+                    }
+                </td>
+                
+            </tr>
+        }
+        </tbody>
+    </table>
+
+<br />
+
+
+<h3>Contactos</h3>
+@foreach (var item in Model.CONTACTO)
+{
+    <hr class="my-4">
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayFor(modelItem => item.nombre)
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Información</h5>
+            <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
+            <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+          
+        </div>
+    </div>
+}
+<br />
+
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "IndexAdmin")
+    @Html.ActionLink("Regresar al listado", "IndexAdmin")
 </p>
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}

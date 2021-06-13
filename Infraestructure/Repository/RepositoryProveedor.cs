@@ -24,13 +24,15 @@ namespace Infraestructure.Repository
         public PROVEEDORES GetProveedorByID(int pID)
         {
             PROVEEDORES oProveedor = null;
+            
             using (MyContext ctx = new MyContext())
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
                 oProveedor = ctx.PROVEEDORES.Where(p => p.ID == pID).
-                    Include(pr => pr.PRODUCTOS).
-                    Include(c => c.CONTACTO).
-                    Include(p => p.PAIS).
+                    Include("PRODUCTOS").
+                    Include("PRODUCTOS.CATEGORIA").
+                    Include("CONTACTO").
+                    Include("PAIS").
                     FirstOrDefault();
             }
             return oProveedor;
