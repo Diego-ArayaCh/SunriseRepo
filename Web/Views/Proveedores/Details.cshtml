@@ -16,14 +16,12 @@
                 <h3 class="card-title">@Html.DisplayFor(model => model.nombre)</h3>
                 <h6 class="text-muted">
                     @Html.DisplayNameFor(model => model.PAIS): @Html.DisplayFor(model => model.PAIS.nombre)
-                    
                 </h6>
                 <h6>
                     Dirección: @Html.DisplayFor(model => model.direccion)
                 </h6>
             </div>
         </div>
-
     </div>
 </div>
 <br />
@@ -57,7 +55,7 @@
     <tbody>
         @foreach (var item in Model.PRODUCTOS)
         {
-            <tr class="table-success">
+            <tr class="table-secondary">
                 <td>
                     @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
                 </td>
@@ -80,10 +78,10 @@
                         <div>Inactivo</div>
                     }
                 </td>
-                
+
             </tr>
         }
-        </tbody>
+    </tbody>
     </table>
 
 <br />
@@ -96,15 +94,14 @@
         @foreach (var item in Model.CONTACTO)
         {
             
-            <div style="margin: 1.5px;" class="  col-5 card"  >
-                <div class="card-header bg-success text-white">
+            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success"  >
+                <div class="card-header bg-success text-white" >
                     @Html.DisplayFor(modelItem => item.nombre)
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Información</h5>
+                    <h5 class="card-title">Información:</h5>
                     <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
                     <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
-
                 </div>
             </div>
         }
