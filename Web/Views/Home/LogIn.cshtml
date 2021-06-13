@@ -1,16 +1,112 @@
 ﻿@{
     ViewBag.Title = "Inicio Sesion";
+    Layout = null;
 }
 
+@Styles.Render("~/Content/STYLE-GENERAL/layout-home-page.css")
+@Styles.Render("~/Content/STYLE-GENERAL/product-list.css")
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
 
 
 
-@section footer{
-    <footer class="footer mt-auto py-3 ">
-        <hr />
-        <div class="container">
-            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
-            <p>Si deseas conocer mas acerca de la pagina, favor visitar la pagina "Acerca de"</p>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="~/Content/IMAGES-PAGES/sol-logo.png" style="height:75px; width:120px; padding-left:20px" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <h3  id="estiloColor">
+        Favor Autenticarse para Ingresar al Sistema. ¡Gracias!
+    </h3>
+</nav>
+
+
+<main class="main-container-page">
+    <div>
+
+        <ul class="nav nav-tabs align-content-center" style="transform: translateX(-50%); margin-left: 50%;">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#InicioSesion">Inicio de Sesión </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#Registrarse">Registrarse</a>
+            </li>
+        </ul>
+
+        <div id="myTabContent" class="tab-content">
+
+            <div class="tab-pane fade active show" id="InicioSesion">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                    Inicio de Sesión
+                </h1>
+                <hr class="my-4" style="width:75%;transform: translateX(-50%); margin-left: 50%;">
+                <form style="width:50%;transform: translateX(-50%); margin-left: 50%;" >
+                    <div class="form-group">
+                        <label for="emailUser">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="emailUser">
+                    </div>
+                    <div class="form-group" style="margin-top:20px">
+                        <label for="passwordUser">Contraseña</label>
+                        <input type="password" class="form-control" id="passwordUser">
+                    </div>
+                    <button type="button" @*onclick="location.pathname='/Views/Home/Index.cshtml'"*@ class="btn btn-primary"
+                            style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px">
+                        Ingresar
+                    </button>
+                </form>
+            </div>
+
+            <div class="tab-pane fade " id="Registrarse">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                    Registrarse
+                </h1>
+                <hr class="my-4" style="width:75%;transform: translateX(-50%); margin-left: 50%;">
+                <form style="width:50%; transform: translateX(-50%); margin-left: 50%;">
+
+                    <div class="form-group ">
+                        <label for="Cedula">Cedula</label>
+                        <input type="text" class="form-control" id="Cedula">
+                    </div>
+
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="Nombre">Nombre</label>
+                        <input type="text" class="form-control" id="Nombre">
+                    </div>
+
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="Apellidos">Apellidos</label>
+                        <input type="text" class="form-control" id="Apellidos">
+                    </div>
+
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="Telefono">Teléfono</label>
+                        <input type="text" class="form-control" id="Telefono">
+                    </div>
+
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="CorreoElectronico">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="CorreoElectronico">
+                    </div>
+
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="Contrasenia">Contraseña</label>
+                        <input type="password" class="form-control" id="Contrasenia">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px">Registrarse</button>
+
+                </form>
+            </div>
+
         </div>
-    </footer>
-}
+
+    </div>
+</main>
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
