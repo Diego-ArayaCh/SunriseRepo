@@ -37,7 +37,7 @@ namespace Web.Controllers
         // GET: Informe/Details/5
         public ActionResult InformeSalida()
         {
-            IEnumerable<HISTORICO> lista = null;
+            IEnumerable<HistDetalleEntradaSalida> lista = null;
             try
             {
                 ServiceInformes _ServiceInformes = new ServiceInformes();

@@ -38,20 +38,22 @@ namespace Infraestructure.Repository
             }
             return lista;
         }
-        public IEnumerable<HISTORICO> GetSalidas()
+        public IEnumerable<HistDetalleEntradaSalida> GetSalidas()
         {
-            IEnumerable<HISTORICO> lista = null;
+            IEnumerable<HistDetalleEntradaSalida> lista = null;
             using (MyContext ctx = new MyContext())
             {
 
 
                 ctx.Configuration.LazyLoadingEnabled = false;
-                //lista = ctx.Libro.Include("PRODUCTOS").ToList();
-                lista = ctx.HISTORICO.Include("HistDetalleEntradaSalida").
-                    Include("HistDetalleEntradaSalida.SUCURSAL1").
-                    Include("MOVIMIENTO").
-                      Where(p => p.tipoMov == 2 || p.tipoMov == 3).
-                                ToList();
+                 lista = ctx.HistDetalleEntradaSalida.
+                   Include("PRODUCTOS").
+                   Include("SUCURSAL1").
+                   Include("HISTORICO").
+                   Include("HISTORICO.MOVIMIENTO").
+                   Include("HISTORICO.USUARIO").
+                     Where(p => p.IDSucursalEntra == null).
+                               ToList();
 
 
             }

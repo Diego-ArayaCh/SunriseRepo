@@ -1,51 +1,73 @@
-﻿@model IEnumerable<Infraestructure.Models.HISTORICO>
+﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
 
 @{
-    ViewBag.Title = "InformeSalida";
+    ViewBag.Title = "Informe Salida";
 }
 
-<h2>InformeSalida</h2>
+<h2>Informe Salida</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaHora)
+<table class="table table-hover">
+    <tr class="table-primary">
+        <th width="180px">
+            @Html.DisplayNameFor(model => model.HISTORICO.fechaHora)
+        </th>
+        <th width="180px">
+            @Html.DisplayNameFor(model => model.HISTORICO.USUARIO.cedula)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IDUsuario)
+            @Html.DisplayNameFor(model => model.HISTORICO.MOVIMIENTO)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.tipoMov)
+            @Html.DisplayNameFor(model => model.SUCURSAL)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.detalle)
+            @Html.DisplayNameFor(model => model.PRODUCTOS)
         </th>
-        <th></th>
-    </tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cantidad)
+        </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaHora)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDUsuario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tipoMov)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.detalle)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
     </tr>
-}
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            
+            <td colspan="6"><div class="text-center">No hay registros</div> </td>
+        </tr>
+    }
+    else
+    {
+
+        foreach (var item in Model)
+        {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SUCURSAL1.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+
+            </tr>
+        }
+    }
+
+
 
 </table>
+

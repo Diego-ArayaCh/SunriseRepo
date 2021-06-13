@@ -319,8 +319,8 @@
     <Content Include="Views\Proveedores\Details.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Informes\InformeSalida.cshtml" />
     <Content Include="Views\Informes\InformeEntrada.cshtml" />
+    <Content Include="Views\Informes\InformeSalida.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

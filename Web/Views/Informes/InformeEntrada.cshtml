@@ -1,20 +1,20 @@
 ﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
 
 @{
-    ViewBag.Title = "InformeEntrada";
+    ViewBag.Title = "Informe Entrada";
 }
 
-<h2>InformeEntrada</h2>
+<h2>Informe Entrada</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @*Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
-    <tr>
-        <th>
+<table class="table table-hover">
+    <tr class="table-primary">
+        <th width="180px">
             @Html.DisplayNameFor(model => model.HISTORICO.fechaHora)
         </th>
-        <th>
+        <th width="180px">
             @Html.DisplayNameFor(model => model.HISTORICO.USUARIO.cedula)
         </th>
         <th>
@@ -29,35 +29,43 @@
         <th>
             @Html.DisplayNameFor(model => model.cantidad)
         </th>
-        <th></th>
+
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    @if (Model.Count() == 0)
+    {
+        <tr>
+
+            <td colspan="6"><div class="text-center">No hay registros</div> </td>
+        </tr>
+    }
+    else
+    {
+
+        foreach (var item in Model)
+        {
+            <tr class="table-secondary">
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+
+            </tr>
+        }
+    }
 
 </table>
