@@ -57,7 +57,7 @@
     <tbody>
         @foreach (var item in Model.PRODUCTOS)
         {
-            <tr class="table-secondary">
+            <tr class="table-success">
                 <td>
                     @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
                 </td>
@@ -90,21 +90,27 @@
 
 
 <h3>Contactos</h3>
-@foreach (var item in Model.CONTACTO)
-{
-    <hr class="my-4">
-    <div class="card">
-        <div class="card-header">
-            @Html.DisplayFor(modelItem => item.nombre)
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Información</h5>
-            <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
-            <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
-          
-        </div>
+<hr class="my-4">
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.CONTACTO)
+        {
+            
+            <div style="margin: 1.5px;" class="  col-5 card"  >
+                <div class="card-header bg-success text-white">
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Información</h5>
+                    <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
+                    <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+
+                </div>
+            </div>
+        }
     </div>
-}
+</div>
+
 <br />
 
 
