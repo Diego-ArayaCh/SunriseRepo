@@ -187,7 +187,7 @@ namespace Infraestructure.Models
     {
         [Display(Name = "Identificación")]
         public int ID { get; set; }
-        [Display(Name = "Numero de Cedula")]
+        [Display(Name = "Número de Cédula")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string cedula { get; set; }
         [Display(Name = "Estado")]

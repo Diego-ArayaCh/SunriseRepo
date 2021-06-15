@@ -43,7 +43,7 @@
                     Inicio de Sesión
                 </h1>
                 <hr class="my-4" style="width:75%;transform: translateX(-50%); margin-left: 50%;">
-                <form style="width:50%;transform: translateX(-50%); margin-left: 50%;" >
+                <form style="width:50%;transform: translateX(-50%); margin-left: 50%;">
                     <div class="form-group">
                         <label for="emailUser">Correo Electrónico</label>
                         <input type="email" class="form-control" id="emailUser">
@@ -52,10 +52,8 @@
                         <label for="passwordUser">Contraseña</label>
                         <input type="password" class="form-control" id="passwordUser">
                     </div>
-                    <button type="button" @*onclick="location.pathname='/Views/Home/Index.cshtml'"*@ class="btn btn-primary"
-                            style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px">
-                        Ingresar
-                    </button>
+                   
+                    @Html.ActionLink("Ingresar", "Index", "Home", null, new { @class = "btn btn-primary", @style = "text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px" })
                 </form>
             </div>
 

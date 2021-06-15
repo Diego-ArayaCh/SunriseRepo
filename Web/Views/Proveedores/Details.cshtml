@@ -20,6 +20,19 @@
                 <h6>
                     Dirección: @Html.DisplayFor(model => model.direccion)
                 </h6>
+                @if (@Html.DisplayFor(model => model.estado).ToString() == "1")
+                {
+                    <h6>
+                        Estado: Activo
+                    </h6>
+                }
+                else
+                {
+                    <h6>
+                        Estado: Inactivo
+                    </h6>
+                }
+                
             </div>
         </div>
     </div>
@@ -53,34 +66,47 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.PRODUCTOS)
+        @if (Model.PRODUCTOS.Count() == 0)
         {
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td style="text-align:center">
-                    @Html.DisplayFor(modelItem => item.stock)
-                </td>
-                <td style="text-align:center">
-                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
-                    {
-                        <div>Activo</div>
-                    }
-                    else
-                    {
-                        <div>Inactivo</div>
-                    }
-                </td>
 
+
+            <tr class="table-warning">
+
+                <td colspan="5"><div class="text-center">No hay registros</div> </td>
             </tr>
         }
+        else
+        {
+            foreach (var item in Model.PRODUCTOS)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.stock)
+                    </td>
+                    <td style="text-align:center">
+                        @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            <div>Inactivo</div>
+                        }
+                    </td>
+
+                </tr>
+            }
+        }
+
     </tbody>
     </table>
 
@@ -91,20 +117,38 @@
 <hr class="my-4">
 <div class="container">
     <div class="row">
-        @foreach (var item in Model.CONTACTO)
+
+        @if (Model.PRODUCTOS.Count() == 0)
         {
-            
-            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success"  >
-                <div class="card-header bg-success text-white" >
-                    @Html.DisplayFor(modelItem => item.nombre)
+            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-warning">
+                <div class="card-header  bg-warning text-white" style="text-align: center">
+                   No disponible
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="text-align: center">
                     <h5 class="card-title">Información:</h5>
-                    <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
-                    <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+                    <p class="card-text"> No hay contactos registrados para este proveedor</p>
+                   
                 </div>
             </div>
         }
+        else
+        {
+            foreach (var item in Model.CONTACTO)
+            {
+
+                <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
+                    <div class="card-header bg-success text-white">
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Información:</h5>
+                        <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
+                        <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+                    </div>
+                </div>
+            }
+        }
+
     </div>
 </div>
 
