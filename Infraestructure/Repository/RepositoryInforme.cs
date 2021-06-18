@@ -38,6 +38,26 @@ namespace Infraestructure.Repository
             }
             return lista;
         }
+        public HISTORICO GetEntradaByID(int pID)
+        {
+            HISTORICO oHistorico = null;
+            using (MyContext ctx = new MyContext())
+            {
+                ctx.Configuration.LazyLoadingEnabled = false;
+
+                oHistorico = ctx.HISTORICO.
+                    Include("MOVIMIENTO").
+                    Include("USUARIO").
+                    Include("HistDetalleEntradaSalida").
+                    Include("HistDetalleEntradaSalida.SUCURSAL").
+                      Where(p => p.ID == pID ).FirstOrDefault<HISTORICO>();
+
+            }
+            return oHistorico;
+
+        }
+
+
         public IEnumerable<HistDetalleEntradaSalida> GetSalidas()
         {
             IEnumerable<HistDetalleEntradaSalida> lista = null;
@@ -59,5 +79,6 @@ namespace Infraestructure.Repository
             }
             return lista;
         }
+
     }
 }
