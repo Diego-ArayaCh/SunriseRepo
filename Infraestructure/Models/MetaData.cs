@@ -56,9 +56,9 @@ namespace Infraestructure.Models
         public int IDHistorico { get; set; }
         [Display(Name = "Identificación Producto")]
         public int IDProducto { get; set; }
-        [Display(Name = "Identificación Sucursal Entrada")]
+        [Display(Name = "Sucursal")]
         public Nullable<int> IDSucursalEntra { get; set; }
-        [Display(Name = "Identificación Sucursal Salida")]
+        [Display(Name = "Sucursal")]
         public Nullable<int> IDSucursalSale { get; set; }
         [Display(Name = "Identificación Proveedor")]
         public Nullable<int> IDProveedor { get; set; }

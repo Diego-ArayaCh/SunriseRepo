@@ -1,38 +1,30 @@
-﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
+﻿@model IEnumerable<Infraestructure.Models.HISTORICO>
 
 @{
-    ViewBag.Title = "Informe Entrada";
+    ViewBag.Title = "InformeEntrada";
 }
-
 <h1 class="display-6" id="estiloColor">
     Informe de Entradas
 </h1>
 
 <hr class="my-4">
-<p>
-    @*Html.ActionLink("Create New", "Create")*@
-</p>
+
 <table class="table table-hover">
     <thead>
         <tr class="table-primary">
             <th width="180px">
-                @Html.DisplayNameFor(model => model.HISTORICO.fechaHora)
-            </th>
-            <th width="180px">
-                @Html.DisplayNameFor(model => model.HISTORICO.USUARIO.cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HISTORICO.MOVIMIENTO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SUCURSAL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PRODUCTOS)
+                @Html.DisplayNameFor(model => model.fechaHora)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.cantidad)
+                @Html.DisplayNameFor(model => model.USUARIO.cedula)
             </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.MOVIMIENTO)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).IDSucursalEntra)
+            </th>
+            <th style="text-align:center">Ver Detalle</th>
         </tr>
     </thead>
     <tbody>
@@ -41,7 +33,7 @@
         {
             <tr class="table-warning">
 
-                <td colspan="6"><div class="text-center">No hay registros</div> </td>
+                <td colspan="4"><div class="text-center">No hay registros</div> </td>
             </tr>
         }
         else
@@ -49,27 +41,23 @@
 
             foreach (var item in Model)
             {
-                <tr class="table-secondary">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
-                    </td>
-                    <td style="text-align:center">
-                        @Html.DisplayFor(modelItem => item.cantidad)
-                    </td>
-
-                </tr>
+    <tr class="table-secondary">
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.fechaHora)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.USUARIO.cedula)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.MOVIMIENTO.nombre)
+        </td>
+        <td style="text-align:center">
+            @Html.DisplayFor(modelItem => item.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)
+        </td>
+        <td style="width:20%; text-align:center" id="estiloColorHover">
+            @Html.ActionLink("Detalles", "Details", new { id = item.ID })
+        </td>
+    </tr>
             }
         }
     </tbody>
