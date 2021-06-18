@@ -86,86 +86,90 @@
 
 <h3>Sucursales</h3>
 <hr class="my-4">
-@foreach (var item in Model.ProdSuc)
-{
+
     <table class="table table-hover">
         <thead>
             <tr class="table-success">
                 <th>
-                    @Html.DisplayNameFor(modelItem => item.SUCURSAL.nombre)
+                    @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).SUCURSAL.nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(modelItem => item.SUCURSAL.direccion)
+                    @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).SUCURSAL.direccion)
                 </th>
                 <th style="text-align:center">
-                    @Html.DisplayNameFor(modelItem => item.cant)
+                    @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).cant)
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
-                </td>
-                <td style="text-align:center">
-                    @Html.DisplayFor(modelItem => item.cant)
-                </td>
-            </tr>
-        </tbody>
+            @foreach (var item in Model.ProdSuc)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.cant)
+                    </td>
+                </tr>
+            }
+            </tbody>
     </table>
-}
+
 <br />
 
 
 <h3>Proveedores</h3>
 <hr class="my-4">
-@foreach (var item in Model.PROVEEDORES)
-{
+
     <table class="table table-hover">
         <thead>
             <tr class="table-success">
                 <th>
-                    @Html.DisplayNameFor(modelItem => item.nombre)
+                    @Html.DisplayNameFor(model => model.nombre)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(modelItem => item.PAIS)
+                    @Html.DisplayNameFor(model => model.PROVEEDORES.ElementAt(0).PAIS)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(modelItem => item.direccion)
+                    @Html.DisplayNameFor(model => model.PROVEEDORES.ElementAt(0).direccion)
                 </th>
                 <th style="text-align:center">
-                    @Html.DisplayNameFor(modelItem => item.estado)
+                    @Html.DisplayNameFor(model => model.estado)
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PAIS.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.direccion)
-                </td>
-                <td style="text-align:center">
-                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
-                    {
-                        <div>Activo</div>
-                    }
-                    else
-                    {
-                        <div>Inactivo</div>
-                    }
-                </td>
-            </tr>
-        </tbody>
+            @foreach (var item in Model.PROVEEDORES)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PAIS.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.direccion)
+                    </td>
+                    <td style="text-align:center">
+                        @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            <div>Inactivo</div>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
     </table>
-}
+
 <br />
 
 
