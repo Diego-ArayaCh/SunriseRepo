@@ -41,25 +41,37 @@
 
             foreach (var item in Model)
             {
-    <tr class="table-secondary">
-        <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.fechaHora)
-        </td>
-        <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.USUARIO.cedula)
-        </td>
-        <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.MOVIMIENTO.nombre)
-        </td>
-        <td style="text-align:center">
-            @Html.DisplayFor(modelItem => item.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)
-        </td>
-        <td style="width:20%; text-align:center" id="estiloColorHover">
-            @Html.ActionLink("Detalles", "Details", new { id = item.ID })
-        </td>
-    </tr>
+                <tr class="table-secondary">
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.fechaHora)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.USUARIO.cedula)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.MOVIMIENTO.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)
+                    </td>
+                    <td style="width:20%; text-align:center" id="estiloColorHover">
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID })
+                    </td>
+                </tr>
             }
         }
     </tbody>
 
 </table>
+
+
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}
