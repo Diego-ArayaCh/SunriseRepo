@@ -1,28 +1,35 @@
-﻿@model IEnumerable<Infraestructure.Models.HISTORICO>
+﻿@*@model IEnumerable<Infraestructure.Models.HISTORICO>*@
+@model  PagedList.IPagedList<Infraestructure.Models.HISTORICO>
+@using PagedList.Mvc;
+
+
 
 @{
     ViewBag.Title = "InformeEntrada";
 }
+@Styles.Render("~/Content/PagedList.css")
+
+
 <h1 class="display-6" id="estiloColor">
     Informe de Entradas
 </h1>
 
 <hr class="my-4">
 
-<table style="display: block; overflow-x: auto " class="table table-hover">
+<table class="table table-hover">
     <thead>
         <tr class="table-primary">
             <th width="180px">
-                @Html.DisplayNameFor(model => model.fechaHora)
+                @Html.DisplayNameFor(model => model.First().fechaHora)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.USUARIO.cedula)
+                @Html.DisplayNameFor(model => model.First().USUARIO.cedula)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.MOVIMIENTO)
+                @Html.DisplayNameFor(model => model.First().MOVIMIENTO)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).IDSucursalEntra)
+                @Html.DisplayNameFor(model => model.First().HistDetalleEntradaSalida.ElementAt(0).IDSucursalEntra)
             </th>
             <th style="text-align:center">Ver Detalle</th>
         </tr>
@@ -64,14 +71,30 @@
 
 </table>
 
+       @* Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount*@
+
+        @Html.PagedListPager(Model, page => Url.Action("InformeEntrada", new { page = page }),
+       new PagedListRenderOptions
+       {
+           LinkToFirstPageFormat = "<< Primera ",
+           LinkToPreviousPageFormat = "< Anterior ",
+           LinkToNextPageFormat = " Siguiente >",
+           LinkToLastPageFormat = " Ultima >>",
+           UlElementClasses = new[] { "pagination" },
+           LiElementClasses = new[] { "page-item" },
+           MaximumPageNumbersToDisplay = 5
+            //,DelimiterBetweenPageNumbers = "-"
+        })
 
 
-@section footer{
-    <footer class="footer mt-auto py-3 ">
-        <hr />
-        <div class="container">
-            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
-            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
-        </div>
-    </footer>
-}
+
+
+        @section footer{
+            <footer class="footer mt-auto py-3 ">
+                <hr />
+                <div class="container">
+                    <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+                    <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+                </div>
+            </footer>
+        }

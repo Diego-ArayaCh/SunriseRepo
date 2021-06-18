@@ -6,13 +6,15 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace Web.Controllers
 {
     public class InformesController : Controller
     {
         // GET: Informe
-        public ActionResult InformeEntrada()
+        public ActionResult InformeEntrada(int? page)
         {
             IEnumerable<HISTORICO> lista = null;
             try
@@ -29,10 +31,15 @@ namespace Web.Controllers
             }
 
             ViewBag.titulo = "Lista Entradas";
-            return View(lista);
+
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+
+            return View(lista.ToPagedList(pageNumber,pageSize));
 
            
         }
+        
 
         // GET: Informe/Details/5
         public ActionResult InformeSalida()
