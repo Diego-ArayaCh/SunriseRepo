@@ -6,13 +6,15 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using PagedList.Mvc;
+using PagedList;
 
 namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
         // GET: Productos
-        public ActionResult IndexAdmin()
+        public ActionResult IndexAdmin(int? page)
         {
             IEnumerable<PRODUCTOS> lista = null;
             try
@@ -29,7 +31,10 @@ namespace Web.Controllers
             }
 
             ViewBag.titulo = "Lista Productos";
-            return View(lista);
+
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+            return View(lista.ToPagedList(pageNumber, pageSize));
 
         }
 

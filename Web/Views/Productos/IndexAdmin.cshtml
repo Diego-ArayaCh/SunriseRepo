@@ -1,8 +1,11 @@
-﻿@model IEnumerable<Infraestructure.Models.PRODUCTOS>
+﻿@*@model IEnumerable<Infraestructure.Models.PRODUCTOS>*@
+@model  PagedList.IPagedList<Infraestructure.Models.PRODUCTOS>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Lista Productos";
 }
+@Styles.Render("~/Content/PagedList.css")
 
 
 <h1 class="display-6" id="estiloColor">
@@ -41,19 +44,19 @@
     <thead>
         <tr class="table-primary">
             <th>
-                @Html.DisplayNameFor(model => model.CATEGORIA.descripcion)
+                @Html.DisplayNameFor(model => model.First().CATEGORIA.descripcion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.marca)
+                @Html.DisplayNameFor(model => model.First().marca)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.nombre)
+                @Html.DisplayNameFor(model => model.First().nombre)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.stock)
+                @Html.DisplayNameFor(model => model.First().stock)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.estado)
+                @Html.DisplayNameFor(model => model.First().estado)
             </th>
             <th>Opciones</th>
         </tr>
@@ -93,6 +96,18 @@
     </tbody>
 </table>
 
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page }),
+     new PagedListRenderOptions
+     {
+         LinkToFirstPageFormat = "<< Primera ",
+         LinkToPreviousPageFormat = "< Anterior ",
+         LinkToNextPageFormat = " Siguiente >",
+         LinkToLastPageFormat = " Ultima >>",
+         UlElementClasses = new[] { "pagination" },
+         LiElementClasses = new[] { "page-item" },
+         MaximumPageNumbersToDisplay = 5
+          //,DelimiterBetweenPageNumbers = "-"
+      })
 
 @section footer{
     <footer class="footer mt-auto py-3 ">
