@@ -16,7 +16,7 @@ namespace ApplicationCore.Services
             return repository.GetEntradas();
         }
 
-        public IEnumerable<HistDetalleEntradaSalida> GetSalidas()
+        public IEnumerable<HISTORICO> GetSalidas()
         {
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetSalidas();

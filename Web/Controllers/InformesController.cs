@@ -42,9 +42,9 @@ namespace Web.Controllers
         
 
         // GET: Informe/Details/5
-        public ActionResult InformeSalida()
+        public ActionResult InformeSalida(int? page)
         {
-            IEnumerable<HistDetalleEntradaSalida> lista = null;
+            IEnumerable<HISTORICO> lista = null;
             try
             {
                 ServiceInformes _ServiceInformes = new ServiceInformes();
@@ -59,8 +59,10 @@ namespace Web.Controllers
             }
 
             ViewBag.titulo = "Lista Salidas";
-            return View(lista);
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
 
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Informe/Create

@@ -1,47 +1,87 @@
-﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
+﻿@*@model IEnumerable<Infraestructure.Models.HISTORICO>*@
+@model  PagedList.IPagedList<Infraestructure.Models.HISTORICO>
+@using PagedList.Mvc;
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryajax")
+    <script type="text/javascript">
+        $(function () {
+            var dateFormat = "mm/dd/yy",
+                from = $("#from")
+                    .datepicker({
+                        defaultDate: "+1w",
+                        changeMonth: true,
+                        numberOfMonths: 3
+                    })
+                    .on("change", function () {
+                        to.datepicker("option", "minDate", getDate(this));
+                    }),
+                to = $("#to").datepicker({
+                    defaultDate: "+1w",
+                    changeMonth: true,
+                    numberOfMonths: 3
+                })
+                    .on("change", function () {
+                        from.datepicker("option", "maxDate", getDate(this));
+                    });
+
+            function getDate(element) {
+                var date;
+                try {
+                    date = $.datepicker.parseDate(dateFormat, element.value);
+                } catch (error) {
+                    date = null;
+                }
+
+                return date;
+            }
+        });
+    </script>
+}
 
 @{
     ViewBag.Title = "Informe Salida";
 }
+@Styles.Render("~/Content/PagedList.css")
+
 
 <h1 class="display-6" id="estiloColor">
     Informe de Salidas
 </h1>
-
+<div id="controles">
+    <div>
+        <label for="from">Desde</label>
+        <input type="text" id="from" name="from">
+        <label for="to">hasta</label>
+        <input type="text" id="to" name="to">
+    </div>
+</div>
 <hr class="my-4">
-<p>
-    @*Html.ActionLink("Create New", "Create")*@
-</p>
-<table style="display: block; overflow-x: auto " class="table table-hover">
+
+<table class="table table-hover">
     <thead>
         <tr class="table-primary">
             <th width="180px">
-                @Html.DisplayNameFor(model => model.HISTORICO.fechaHora)
-            </th>
-            <th width="180px">
-                @Html.DisplayNameFor(model => model.HISTORICO.USUARIO.cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HISTORICO.MOVIMIENTO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SUCURSAL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PRODUCTOS)
+                @Html.DisplayNameFor(model => model.First().fechaHora)
             </th>
             <th style="text-align:center">
-                @Html.DisplayNameFor(model => model.cantidad)
+                @Html.DisplayNameFor(model => model.First().USUARIO.cedula)
             </th>
-
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.First().MOVIMIENTO)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.First().HistDetalleEntradaSalida.ElementAt(0).IDSucursalEntra)
+            </th>
+            <th style="text-align:center">Ver Detalle</th>
         </tr>
     </thead>
     <tbody>
+
         @if (Model.Count() == 0)
         {
             <tr class="table-warning">
 
-                <td colspan="6"><div class="text-center">No hay registros</div> </td>
+                <td colspan="4"><div class="text-center">No hay registros</div> </td>
             </tr>
         }
         else
@@ -50,32 +90,53 @@
             foreach (var item in Model)
             {
                 <tr class="table-secondary">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.USUARIO.cedula)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HISTORICO.MOVIMIENTO.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SUCURSAL1.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.fechaHora)
                     </td>
                     <td style="text-align:center">
-                        @Html.DisplayFor(modelItem => item.cantidad)
+                        @Html.DisplayFor(modelItem => item.USUARIO.cedula)
                     </td>
-
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.MOVIMIENTO.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)
+                    </td>
+                    <td style="width:20%; text-align:center" id="estiloColorHover">
+                        @Html.ActionLink("Detalles", "DetailsIn", new { id = item.ID })
+                    </td>
                 </tr>
             }
         }
     </tbody>
-   
-
-
 
 </table>
 
+
+@* Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount*@
+
+@Html.PagedListPager(Model, page => Url.Action("InformeSalida", new { page = page }),
+new PagedListRenderOptions
+{
+   LinkToFirstPageFormat = "<< Primera ",
+   LinkToPreviousPageFormat = "< Anterior ",
+   LinkToNextPageFormat = " Siguiente >",
+   LinkToLastPageFormat = " Ultima >>",
+   UlElementClasses = new[] { "pagination" },
+   LiElementClasses = new[] { "page-item" },
+   MaximumPageNumbersToDisplay = 5
+    //,DelimiterBetweenPageNumbers = "-"
+})
+
+
+
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}
