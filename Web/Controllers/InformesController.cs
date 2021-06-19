@@ -32,7 +32,7 @@ namespace Web.Controllers
 
             ViewBag.titulo = "Lista Entradas";
 
-            int pageSize = 5;
+            int pageSize = 4;
             int pageNumber = page ?? 1;
 
             return View(lista.ToPagedList(pageNumber,pageSize));
@@ -59,7 +59,7 @@ namespace Web.Controllers
             }
 
             ViewBag.titulo = "Lista Salidas";
-            int pageSize = 5;
+            int pageSize = 4;
             int pageNumber = page ?? 1;
 
             return View(lista.ToPagedList(pageNumber, pageSize));
