@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Services;
 using Infraestructure.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Web.Controllers
     public class ProveedoresController : Controller
     {
         // GET: Proveedores
-        public ActionResult IndexAdmin()
+        public ActionResult IndexAdmin(int? page)
         {
             IEnumerable<PROVEEDORES> lista = null;
             try
@@ -30,7 +31,11 @@ namespace Web.Controllers
             }
 
             ViewBag.titulo = "Lista Proveedores";
-            return View(lista);
+            int pageSize = 5;
+            int pageNumber = page ?? 1;
+            return View(lista.ToPagedList(pageNumber, pageSize));
+          
+
         }
 
 

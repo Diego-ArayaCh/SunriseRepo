@@ -1,8 +1,10 @@
-﻿@model IEnumerable<Infraestructure.Models.PROVEEDORES>
+﻿@model PagedList.IPagedList<Infraestructure.Models.PROVEEDORES>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Lista Proveedores";
 }
+@Styles.Render("~/Content/PagedList.css")
 
 <h1 class="display-6" id="estiloColor">
     Proveedores
@@ -40,49 +42,71 @@
     <thead>
         <tr class="table-primary">
             <th>
-                @Html.DisplayNameFor(model => model.nombre)
+                @Html.DisplayNameFor(model => model.First().nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.direccion)
+                @Html.DisplayNameFor(model => model.First().direccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.estado)
+                @Html.DisplayNameFor(model => model.First().estado)
             </th>
-           
+
             <th>Opciones</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model.Count() == 0)
         {
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.direccion)
-                </td>
-               
-                
-                <td style="text-align:center">
-                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
-                    {
-                        <div>Activo</div>
-                    }
-                    else
-                    {
-                        <div>Inactivo</div>
-                    }
-                </td>
-                <td style="width:20%" id="estiloColorHover">
-                    @Html.ActionLink("Editar", "Edit", new { /*id = item.ID */}) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.ID })
-                </td>
+            <tr class="table-warning">
+
+                <td colspan="4"><div class="text-center">No hay registros</div> </td>
             </tr>
         }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.direccion)
+                    </td>
+
+
+                    <td style="text-align:center">
+                        @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            <div>Inactivo</div>
+                        }
+                    </td>
+                    <td style="width:20%" id="estiloColorHover">
+                        @Html.ActionLink("Editar", "Edit", new { /*id = item.ID */}) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        }
+
     </tbody>
 </table>
-
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page }),
+     new PagedListRenderOptions
+     {
+         LinkToFirstPageFormat = "<< Primera ",
+         LinkToPreviousPageFormat = "< Anterior ",
+         LinkToNextPageFormat = " Siguiente >",
+         LinkToLastPageFormat = " Ultima >>",
+         UlElementClasses = new[] { "pagination" },
+         LiElementClasses = new[] { "page-item" },
+         MaximumPageNumbersToDisplay = 5
+          //,DelimiterBetweenPageNumbers = "-"
+      })
 @section footer{
     <footer class="footer mt-auto py-3 ">
         <hr />

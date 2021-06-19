@@ -62,37 +62,48 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @if (Model.Count() == 0)
         {
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td style="text-align:center">
-                    @Html.DisplayFor(modelItem => item.stock)
-                </td>
-                <td style="text-align:center">
-                    @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
-                    {
-                        <div>Activo</div>
-                    }
-                    else
-                    {
-                        <div>Inactivo</div>
-                    }
-                </td>
-                <td style="width:20%" id="estiloColorHover">
-                    @Html.ActionLink("Editar", "Edit", new { /*id = item.ID */}) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.ID })
-                </td>
+            <tr class="table-warning">
+
+                <td colspan="6"><div class="text-center">No hay registros</div> </td>
             </tr>
         }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.stock)
+                    </td>
+                    <td style="text-align:center">
+                        @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            <div>Inactivo</div>
+                        }
+                    </td>
+                    <td style="width:20%" id="estiloColorHover">
+                        @Html.ActionLink("Editar", "Edit", new { /*id = item.ID */}) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        }
+
     </tbody>
 </table>
 
