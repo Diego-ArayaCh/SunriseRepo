@@ -38,7 +38,6 @@ namespace Web.Controllers
 
         }
 
-
         // GET: Productos/Details/5
         public ActionResult Details(int? id)
         {
@@ -66,6 +65,57 @@ namespace Web.Controllers
             {
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 return RedirectToAction("IndexAdmin");
+            }
+        }
+
+
+
+        // GET: Libro/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Libro/Edit/5
+        [HttpPost]
+        public ActionResult Save()
+        {
+
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Libro";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+
+        // GET: Libro/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Libro";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
             }
         }
 

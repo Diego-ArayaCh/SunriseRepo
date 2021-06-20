@@ -169,6 +169,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\IMAGES-PAGES\imagen-no-disponible.png" />
     <Content Include="Content\IMAGES-PRODUCTS\11900K.jpg" />
     <Content Include="Content\IMAGES-PRODUCTS\905P.jpg" />
     <Content Include="Content\IMAGES-PRODUCTS\B550.jpg" />
@@ -340,6 +341,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Informes\InformeEntrada.cshtml" />
     <Content Include="Views\Informes\InformeSalida.cshtml" />
+    <Content Include="Views\Productos\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

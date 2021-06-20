@@ -9,7 +9,7 @@ namespace Infraestructure.Models
 {
     internal partial class CategoriaMetaData
     {
-        [Display(Name = "Identificación")]
+        [Display(Name = "Categoría")]
         public int ID { get; set; }
         [Display(Name = "Categoría")]
         public string descripcion { get; set; }
