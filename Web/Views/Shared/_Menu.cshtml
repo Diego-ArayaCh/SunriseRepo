@@ -46,7 +46,7 @@
                     <span class="dropdown-item" style="color:forestgreen; font-weight:bolder!important">En línea: @ViewBag.usuario</span>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Perfil</a>
-                    <a class="dropdown-item" href="#" style="color:red; font-weight:bolder">Salir</a>
+                    @Html.ActionLink("Salir", "LogIn", "Home", null, new { @class = "dropdown-item" , style= "color:red; font-weight:bolder" })
                 </div>
             </li>
         </ul>
