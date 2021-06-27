@@ -39,9 +39,38 @@ namespace Web.Controllers
 
            
         }
-        
+
 
         // GET: Informe/Details/5
+        public ActionResult Details(int? id)
+        {
+            ServiceInformes _ServiceInforme = new ServiceInformes();
+            HISTORICO informe = null;
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                informe = _ServiceInforme.GetInformeById(id.Value);
+                if (informe == null)
+                {
+                    return RedirectToAction("Index", "Home"); //preguntar si vamos usar la pagina "error"
+                }
+
+                ViewBag.titulo = "Detalle Informe";
+                return View(informe);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         public ActionResult InformeSalida(int? page)
         {
             IEnumerable<HISTORICO> lista = null;
