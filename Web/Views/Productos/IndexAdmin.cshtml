@@ -42,6 +42,7 @@
     </div>
 </div>
 
+
 <table class="table table-hover">
     <thead>
         <tr class="table-primary">
@@ -108,6 +109,7 @@
     </tbody>
 </table>
 
+
 @Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page }),
      new PagedListRenderOptions
      {
@@ -120,6 +122,7 @@
          MaximumPageNumbersToDisplay = 5
           //,DelimiterBetweenPageNumbers = "-"
       })
+
 
 @section footer{
     <footer class="footer mt-auto py-3 ">
