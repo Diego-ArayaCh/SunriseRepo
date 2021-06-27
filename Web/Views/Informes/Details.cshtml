@@ -1,0 +1,193 @@
+﻿@model Infraestructure.Models.HISTORICO
+
+
+
+<h1 class="display-6" id="estiloColor">
+    Detalle de Informes
+</h1>
+<hr class="my-4">
+@Styles.Render("~/Content/STYLE-GENERAL/directory-list.css")
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h3 class="card-title">Informe #@Html.DisplayFor(model => model.ID)</h3>
+                <h6 class="text-muted">
+                    Tipo: @Html.DisplayFor(model => model.MOVIMIENTO.nombre)
+                </h6>
+                <h6>
+                    Fecha y Hora: @Html.DisplayFor(model => model.fechaHora)
+                </h6>
+
+                <h6>
+                    Detalle: @if (Model.detalle.IsEmpty() || Model.detalle == "")
+                    {
+                        <div style="display:inline;">No hay detalle</div>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => model.detalle)
+                    }
+                </h6>
+                <div class="box">
+                    <h3>Información General</h3>
+                    <ul class="directory-list">
+                        <li>
+                            Usuario
+                            <ul>
+                                <li>ID: #@Html.DisplayFor(model => model.IDUsuario)</li>
+                                <li>Cédula: @Html.DisplayFor(model => model.USUARIO.cedula)</li>
+                                <li>Nombre: @Html.DisplayFor(model => model.USUARIO.nombre) @if (Model.USUARIO.apellidos.IsEmpty() == false) { Model.USUARIO.apellidos.ToString(); }</li>
+                                <li>Rol: @Html.DisplayFor(model => model.USUARIO.ROL.descripcion)</li>
+                                <li>Correo: @Html.DisplayFor(model => model.USUARIO.correo)</li>
+                                <li>Telefono: @Html.DisplayFor(model => model.USUARIO.telefono)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            Sucursal
+                            <ul>
+                                @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL != null)
+                                {
+                                    <li>
+                                        Entrada
+                                        <ul>
+                                            <li>Nombre:  @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)</li>
+                                            <li>Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.direccion)</li>
+                                            <li>
+                                                Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
+                                                {
+                                                    <div style="display:inline;">Activo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="display:inline;">Inactivo</div>
+                                                }
+                                            </li>
+                                            <li>ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</li>
+                                        </ul>
+                                    </li>
+                                }
+                                @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1 != null)
+                                {
+                                    <li>
+                                        Salida
+                                        <ul>
+                                            <li>Nombre:  @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)</li>
+                                            <li>Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.direccion)</li>
+                                            <li>
+                                                Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
+                                                {
+                                                    <div style="display:inline;">Activo</div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="display:inline;">Inactivo</div>
+                                                }
+                                            </li>
+                                            <li>ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</li>
+                                        </ul>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+
+<br />
+
+<h3>Productos</h3>
+<hr class="my-4">
+<table class="table table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).PRODUCTOS.CATEGORIA.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).PRODUCTOS.marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).PRODUCTOS.nombre)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).cantidad)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.HistDetalleEntradaSalida.ElementAt(0).PRODUCTOS.estado)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.HistDetalleEntradaSalida.Count() == 0)
+        {
+
+
+            <tr class="table-warning">
+
+                <td colspan="5"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model.HistDetalleEntradaSalida)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PRODUCTOS.CATEGORIA.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PRODUCTOS.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>
+                    <td style="text-align:center">
+                        @if (@Html.DisplayFor(modelItem => item.PRODUCTOS.estado).ToString() == "1")
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            <div>Inactivo</div>
+                        }
+                    </td>
+
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@section Scripts{
+    <script src="~/Scripts/directory-list.js"></script>
+}
+
+<br />
+
+
+
+<p>
+
+</p>
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}

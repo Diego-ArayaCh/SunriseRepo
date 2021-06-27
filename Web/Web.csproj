@@ -193,6 +193,7 @@
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\STYLE-GENERAL\directory-list.css" />
     <Content Include="Content\STYLE-GENERAL\provider-list.css" />
     <Content Include="Content\STYLE-GENERAL\product-list.css" />
     <Content Include="Content\STYLE-GENERAL\layout-home-page.css" />
@@ -203,6 +204,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\directory-list.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -344,6 +346,7 @@
     <Content Include="Views\Informes\InformeEntrada.cshtml" />
     <Content Include="Views\Informes\InformeSalida.cshtml" />
     <Content Include="Views\Productos\Create.cshtml" />
+    <Content Include="Views\Informes\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -38,7 +38,7 @@ namespace Infraestructure.Repository
             }
             return lista;
         }
-        public HISTORICO GetEntradaByID(int pID)
+        public HISTORICO GetInformeByID(int pID)
         {
             HISTORICO oHistorico = null;
             using (MyContext ctx = new MyContext())
@@ -48,9 +48,14 @@ namespace Infraestructure.Repository
                 oHistorico = ctx.HISTORICO.
                     Include("MOVIMIENTO").
                     Include("USUARIO").
+                    Include("USUARIO.ROL").
                     Include("HistDetalleEntradaSalida").
+                    Include("HistDetalleEntradaSalida.PRODUCTOS").
+                    Include("HistDetalleEntradaSalida.PRODUCTOS.CATEGORIA").
+                    Include("HistDetalleEntradaSalida.PROVEEDORES").
                     Include("HistDetalleEntradaSalida.SUCURSAL").
-                      Where(p => p.ID == pID ).FirstOrDefault<HISTORICO>();
+                    Include("HistDetalleEntradaSalida.SUCURSAL1").
+                    Where(p => p.ID == pID ).FirstOrDefault<HISTORICO>();
 
             }
             return oHistorico;

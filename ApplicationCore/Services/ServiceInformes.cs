@@ -21,5 +21,10 @@ namespace ApplicationCore.Services
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetSalidas();
         }
+        public HISTORICO GetInformeById(int id)
+        {
+            RepositoryInforme repository = new RepositoryInforme();
+            return repository.GetInformeByID(id);
+        }
     }
 }
