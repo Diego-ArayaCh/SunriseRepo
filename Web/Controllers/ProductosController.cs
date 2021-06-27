@@ -151,16 +151,16 @@ namespace Web.Controllers
                     {
                         String pathImagen = ImageFile.FileName;
 
-                      //  string sourcePath = @"C:\Users\Public\TestFolder";
-                        string targetPath = @"/Content/IMAGES-PRODUCTS/";
+                      ////  string sourcePath = @"C:\Users\Public\TestFolder";
+                      //  string targetPath = @"/Content/IMAGES-PRODUCTS/";
 
-                        // Use Path class to manipulate file and directory paths.
-                        string sourceFile = pathImagen;
-                        string destFile = System.IO.Path.Combine(targetPath, pathImagen);
+                      //  // Use Path class to manipulate file and directory paths.
+                      //  string sourceFile = pathImagen;
+                      //  string destFile = System.IO.Path.Combine(targetPath, pathImagen);
 
-                        // To copy a file to another location and
-                        // overwrite the destination file if it already exists.
-                        System.IO.File.Copy(sourceFile, destFile, true);
+                      //  // To copy a file to another location and
+                      //  // overwrite the destination file if it already exists.
+                      //  System.IO.File.Copy(sourceFile, destFile, true);
 
                         oProducto.imagen = "/Content/IMAGES-PRODUCTS/"+pathImagen;
                         ModelState.Remove("imagen");
