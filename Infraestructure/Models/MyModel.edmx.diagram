@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e859bd25d56e4f0bb29fde5b3f313c19" Name="Diagram1">
+      <Diagram DiagramId="3a58d4176d7649ee94a52c5256b06b18" Name="Diagram1">
         <EntityTypeShape EntityType="SunriseBDModel.CATEGORIA" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.CONTACTO" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.HistDetalleCRUD" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
@@ -17,11 +17,10 @@
         <EntityTypeShape EntityType="SunriseBDModel.PROVEEDORES" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.ROL" Width="1.5" PointX="1.5" PointY="19.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.SUCURSAL" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SunriseBDModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.TipoCRUD" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
         <EntityTypeShape EntityType="SunriseBDModel.USUARIO" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
-        <AssociationConnector Association="SunriseBDModel.FK__PRODUCTOS__IDCat__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="SunriseBDModel.FK__CONTACTO__IDProv__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="SunriseBDModel.FK__PRODUCTOS__IDCat__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="SunriseBDModel.FK__CONTACTO__IDProv__412EB0B6" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_HCC" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_HC" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_HCTC" ManuallyRouted="false" />
@@ -34,8 +33,8 @@
         <AssociationConnector Association="SunriseBDModel.FK_HSE" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_HSS" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK__HISTORICO__IDUsu__2E1BDC42" ManuallyRouted="false" />
-        <AssociationConnector Association="SunriseBDModel.FK__HISTORICO__tipoM__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="SunriseBDModel.FK__PROVEEDOR__IDPai__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="SunriseBDModel.FK__HISTORICO__tipoM__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="SunriseBDModel.FK__PROVEEDOR__IDPai__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_P" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK_S" ManuallyRouted="false" />
         <AssociationConnector Association="SunriseBDModel.FK__USUARIO__IDRol__276EDEB3" ManuallyRouted="false" />

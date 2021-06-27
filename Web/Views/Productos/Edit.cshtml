@@ -116,7 +116,15 @@
             <div class="card mb-3" style="max-width: 100%; border:0px">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img id="imagenCapturada" style="width:300px;height:320px" src="~/Content/IMAGES-PAGES/imagen-no-disponible.png" />
+                        @try
+                        {
+                            <img id="imagenCapturada" src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)"
+                                 role="img" alt="Producto - @Html.DisplayNameFor(model => model.nombre)" style="width:300px;height:320px" />
+                        }
+                        catch (Exception e)
+                        {
+                            <img id="imagenCapturada" style="width:300px;height:320px" src="~/Content/IMAGES-PAGES/imagen-no-disponible.png" />
+                        }
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -126,7 +134,9 @@
                             <div class="form-group">
                                 <div class="col-md-10">
                                     @*<input id="inputImagen" type="file" class="custom-file-input" name="ImageFile" accept="image/*" required />*@
-                                    <input id="inputImagen" type="file"  class="custom-file-input" name="ImageFile" accept="image/*" required src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)">
+                                    <input id="inputImagen" type="file" class="custom-file-input" name="ImageFile" accept="image/*" required src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)">
+                                    @Html.HiddenFor(model => model.imagen)
+                                    @Html.ValidationMessageFor(model => model.imagen, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                         </div>

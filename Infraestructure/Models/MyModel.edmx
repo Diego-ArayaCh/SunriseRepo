@@ -104,7 +104,7 @@
           <Property Name="nombre" Type="varchar(max)" />
           <Property Name="marca" Type="varchar(max)" />
           <Property Name="detalle" Type="varchar(max)" />
-          <Property Name="imagen" Type="varchar(max)" />
+          <Property Name="imagen" Type="varbinary(max)" />
           <Property Name="stock" Type="int" />
           <Property Name="cantMin" Type="int" />
         </EntityType>
@@ -134,16 +134,6 @@
           <Property Name="direccion" Type="varchar(max)" />
           <Property Name="estado" Type="int" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="TipoCRUD">
           <Key>
             <PropertyRef Name="ID" />
@@ -156,7 +146,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="cedula" Type="varchar" MaxLength="9" />
+          <Property Name="cedula" Type="varchar" MaxLength="11" />
           <Property Name="estado" Type="int" />
           <Property Name="correo" Type="varchar(max)" />
           <Property Name="contrasenha" Type="varchar(max)" />
@@ -165,7 +155,7 @@
           <Property Name="IDRol" Type="int" />
           <Property Name="telefono" Type="varchar" MaxLength="20" />
         </EntityType>
-        <Association Name="FK__CONTACTO__IDProv__36B12243">
+        <Association Name="FK__CONTACTO__IDProv__412EB0B6">
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
           <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -189,7 +179,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HISTORICO__tipoM__2F10007B">
+        <Association Name="FK__HISTORICO__tipoM__4D94879B">
           <End Role="MOVIMIENTO" Type="Self.MOVIMIENTO" Multiplicity="0..1" />
           <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -201,7 +191,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PRODUCTOS__IDCat__3C69FB99">
+        <Association Name="FK__PRODUCTOS__IDCat__52593CB8">
           <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -213,7 +203,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PROVEEDOR__IDPai__33D4B598">
+        <Association Name="FK__PROVEEDOR__IDPai__534D60F1">
           <End Role="PAIS" Type="Self.PAIS" Multiplicity="0..1" />
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -431,10 +421,9 @@
           <EntitySet Name="PROVEEDORES" EntityType="Self.PROVEEDORES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoCRUD" EntityType="Self.TipoCRUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__CONTACTO__IDProv__36B12243" Association="Self.FK__CONTACTO__IDProv__36B12243">
+          <AssociationSet Name="FK__CONTACTO__IDProv__412EB0B6" Association="Self.FK__CONTACTO__IDProv__412EB0B6">
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
             <End Role="CONTACTO" EntitySet="CONTACTO" />
           </AssociationSet>
@@ -442,15 +431,15 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="HISTORICO" EntitySet="HISTORICO" />
           </AssociationSet>
-          <AssociationSet Name="FK__HISTORICO__tipoM__2F10007B" Association="Self.FK__HISTORICO__tipoM__2F10007B">
+          <AssociationSet Name="FK__HISTORICO__tipoM__4D94879B" Association="Self.FK__HISTORICO__tipoM__4D94879B">
             <End Role="MOVIMIENTO" EntitySet="MOVIMIENTO" />
             <End Role="HISTORICO" EntitySet="HISTORICO" />
           </AssociationSet>
-          <AssociationSet Name="FK__PRODUCTOS__IDCat__3C69FB99" Association="Self.FK__PRODUCTOS__IDCat__3C69FB99">
+          <AssociationSet Name="FK__PRODUCTOS__IDCat__52593CB8" Association="Self.FK__PRODUCTOS__IDCat__52593CB8">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__PROVEEDOR__IDPai__33D4B598" Association="Self.FK__PROVEEDOR__IDPai__33D4B598">
+          <AssociationSet Name="FK__PROVEEDOR__IDPai__534D60F1" Association="Self.FK__PROVEEDOR__IDPai__534D60F1">
             <End Role="PAIS" EntitySet="PAIS" />
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
           </AssociationSet>
@@ -531,7 +520,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Int32" />
-          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK__PRODUCTOS__IDCat__3C69FB99" FromRole="CATEGORIA" ToRole="PRODUCTOS" />
+          <NavigationProperty Name="PRODUCTOS" Relationship="Self.FK__PRODUCTOS__IDCat__52593CB8" FromRole="CATEGORIA" ToRole="PRODUCTOS" />
         </EntityType>
         <EntityType Name="CONTACTO">
           <Key>
@@ -543,7 +532,7 @@
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="correo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__CONTACTO__IDProv__36B12243" FromRole="CONTACTO" ToRole="PROVEEDORES" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__CONTACTO__IDProv__412EB0B6" FromRole="CONTACTO" ToRole="PROVEEDORES" />
           <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HCC" FromRole="CONTACTO" ToRole="HistDetalleCRUD" />
         </EntityType>
         <EntityType Name="HistDetalleCRUD">
@@ -593,7 +582,7 @@
           <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HC" FromRole="HISTORICO" ToRole="HistDetalleCRUD" />
           <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HES" FromRole="HISTORICO" ToRole="HistDetalleEntradaSalida" />
           <NavigationProperty Name="USUARIO" Relationship="Self.FK__HISTORICO__IDUsu__2E1BDC42" FromRole="HISTORICO" ToRole="USUARIO" />
-          <NavigationProperty Name="MOVIMIENTO" Relationship="Self.FK__HISTORICO__tipoM__2F10007B" FromRole="HISTORICO" ToRole="MOVIMIENTO" />
+          <NavigationProperty Name="MOVIMIENTO" Relationship="Self.FK__HISTORICO__tipoM__4D94879B" FromRole="HISTORICO" ToRole="MOVIMIENTO" />
         </EntityType>
         <EntityType Name="MOVIMIENTO">
           <Key>
@@ -603,7 +592,7 @@
           <Property Name="nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Int32" />
-          <NavigationProperty Name="HISTORICO" Relationship="Self.FK__HISTORICO__tipoM__2F10007B" FromRole="MOVIMIENTO" ToRole="HISTORICO" />
+          <NavigationProperty Name="HISTORICO" Relationship="Self.FK__HISTORICO__tipoM__4D94879B" FromRole="MOVIMIENTO" ToRole="HISTORICO" />
         </EntityType>
         <EntityType Name="PAIS">
           <Key>
@@ -611,7 +600,7 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__PROVEEDOR__IDPai__33D4B598" FromRole="PAIS" ToRole="PROVEEDORES" />
+          <NavigationProperty Name="PROVEEDORES" Relationship="Self.FK__PROVEEDOR__IDPai__534D60F1" FromRole="PAIS" ToRole="PROVEEDORES" />
         </EntityType>
         <EntityType Name="ProdSuc">
           <Key>
@@ -637,10 +626,10 @@
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="detalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="stock" Type="Int32" />
           <Property Name="cantMin" Type="Int32" />
-          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTOS__IDCat__3C69FB99" FromRole="PRODUCTOS" ToRole="CATEGORIA" />
+          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTOS__IDCat__52593CB8" FromRole="PRODUCTOS" ToRole="CATEGORIA" />
           <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HPC" FromRole="PRODUCTOS" ToRole="HistDetalleCRUD" />
           <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HESP" FromRole="PRODUCTOS" ToRole="HistDetalleEntradaSalida" />
           <NavigationProperty Name="ProdSuc" Relationship="Self.FK_P" FromRole="PRODUCTOS" ToRole="ProdSuc" />
@@ -655,10 +644,10 @@
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IDPais" Type="Int32" />
-          <NavigationProperty Name="CONTACTO" Relationship="Self.FK__CONTACTO__IDProv__36B12243" FromRole="PROVEEDORES" ToRole="CONTACTO" />
+          <NavigationProperty Name="CONTACTO" Relationship="Self.FK__CONTACTO__IDProv__412EB0B6" FromRole="PROVEEDORES" ToRole="CONTACTO" />
           <NavigationProperty Name="HistDetalleCRUD" Relationship="Self.FK_HPProvC" FromRole="PROVEEDORES" ToRole="HistDetalleCRUD" />
           <NavigationProperty Name="HistDetalleEntradaSalida" Relationship="Self.FK_HESProv" FromRole="PROVEEDORES" ToRole="HistDetalleEntradaSalida" />
-          <NavigationProperty Name="PAIS" Relationship="Self.FK__PROVEEDOR__IDPai__33D4B598" FromRole="PROVEEDORES" ToRole="PAIS" />
+          <NavigationProperty Name="PAIS" Relationship="Self.FK__PROVEEDOR__IDPai__534D60F1" FromRole="PROVEEDORES" ToRole="PAIS" />
           <NavigationProperty Name="PRODUCTOS" Relationship="Self.ProdProv" FromRole="PROVEEDORES" ToRole="PRODUCTOS" />
         </EntityType>
         <EntityType Name="ROL">
@@ -681,16 +670,6 @@
           <NavigationProperty Name="HistDetalleEntradaSalida1" Relationship="Self.FK_HSS" FromRole="SUCURSAL" ToRole="HistDetalleEntradaSalida" />
           <NavigationProperty Name="ProdSuc" Relationship="Self.FK_S" FromRole="SUCURSAL" ToRole="ProdSuc" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="TipoCRUD">
           <Key>
             <PropertyRef Name="ID" />
@@ -704,7 +683,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="cedula" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="cedula" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="estado" Type="Int32" />
           <Property Name="correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="contrasenha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -716,7 +695,7 @@
           <NavigationProperty Name="HISTORICO" Relationship="Self.FK__HISTORICO__IDUsu__2E1BDC42" FromRole="USUARIO" ToRole="HISTORICO" />
           <NavigationProperty Name="ROL" Relationship="Self.FK__USUARIO__IDRol__276EDEB3" FromRole="USUARIO" ToRole="ROL" />
         </EntityType>
-        <Association Name="FK__PRODUCTOS__IDCat__3C69FB99">
+        <Association Name="FK__PRODUCTOS__IDCat__52593CB8">
           <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -728,7 +707,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CONTACTO__IDProv__36B12243">
+        <Association Name="FK__CONTACTO__IDProv__412EB0B6">
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="0..1" />
           <End Role="CONTACTO" Type="Self.CONTACTO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -884,7 +863,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__HISTORICO__tipoM__2F10007B">
+        <Association Name="FK__HISTORICO__tipoM__4D94879B">
           <End Role="MOVIMIENTO" Type="Self.MOVIMIENTO" Multiplicity="0..1" />
           <End Role="HISTORICO" Type="Self.HISTORICO" Multiplicity="*" />
           <ReferentialConstraint>
@@ -896,7 +875,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PROVEEDOR__IDPai__33D4B598">
+        <Association Name="FK__PROVEEDOR__IDPai__534D60F1">
           <End Role="PAIS" Type="Self.PAIS" Multiplicity="0..1" />
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -948,7 +927,7 @@
           <End Role="PRODUCTOS" Type="Self.PRODUCTOS" Multiplicity="*" />
           <End Role="PROVEEDORES" Type="Self.PROVEEDORES" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="SunriseBDEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SunriseBDEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" />
           <EntitySet Name="CONTACTO" EntityType="Self.CONTACTO" />
           <EntitySet Name="HistDetalleCRUD" EntityType="Self.HistDetalleCRUD" />
@@ -961,14 +940,13 @@
           <EntitySet Name="PROVEEDORES" EntityType="Self.PROVEEDORES" />
           <EntitySet Name="ROL" EntityType="Self.ROL" />
           <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TipoCRUD" EntityType="Self.TipoCRUD" />
           <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
-          <AssociationSet Name="FK__PRODUCTOS__IDCat__3C69FB99" Association="Self.FK__PRODUCTOS__IDCat__3C69FB99">
+          <AssociationSet Name="FK__PRODUCTOS__IDCat__52593CB8" Association="Self.FK__PRODUCTOS__IDCat__52593CB8">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
             <End Role="PRODUCTOS" EntitySet="PRODUCTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK__CONTACTO__IDProv__36B12243" Association="Self.FK__CONTACTO__IDProv__36B12243">
+          <AssociationSet Name="FK__CONTACTO__IDProv__412EB0B6" Association="Self.FK__CONTACTO__IDProv__412EB0B6">
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
             <End Role="CONTACTO" EntitySet="CONTACTO" />
           </AssociationSet>
@@ -1020,11 +998,11 @@
             <End Role="USUARIO" EntitySet="USUARIO" />
             <End Role="HISTORICO" EntitySet="HISTORICO" />
           </AssociationSet>
-          <AssociationSet Name="FK__HISTORICO__tipoM__2F10007B" Association="Self.FK__HISTORICO__tipoM__2F10007B">
+          <AssociationSet Name="FK__HISTORICO__tipoM__4D94879B" Association="Self.FK__HISTORICO__tipoM__4D94879B">
             <End Role="MOVIMIENTO" EntitySet="MOVIMIENTO" />
             <End Role="HISTORICO" EntitySet="HISTORICO" />
           </AssociationSet>
-          <AssociationSet Name="FK__PROVEEDOR__IDPai__33D4B598" Association="Self.FK__PROVEEDOR__IDPai__33D4B598">
+          <AssociationSet Name="FK__PROVEEDOR__IDPai__534D60F1" Association="Self.FK__PROVEEDOR__IDPai__534D60F1">
             <End Role="PAIS" EntitySet="PAIS" />
             <End Role="PROVEEDORES" EntitySet="PROVEEDORES" />
           </AssociationSet>
@@ -1050,7 +1028,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SunriseBDModelStoreContainer" CdmEntityContainer="SunriseBDEntities">
+        <EntityContainerMapping StorageEntityContainer="SunriseBDModelStoreContainer" CdmEntityContainer="SunriseBDEntities1">
           <EntitySetMapping Name="CATEGORIA">
             <EntityTypeMapping TypeName="SunriseBDModel.CATEGORIA">
               <MappingFragment StoreEntitySet="CATEGORIA">
@@ -1181,17 +1159,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="SunriseBDModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TipoCRUD">
             <EntityTypeMapping TypeName="SunriseBDModel.TipoCRUD">
               <MappingFragment StoreEntitySet="TipoCRUD">
@@ -1240,7 +1207,7 @@
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

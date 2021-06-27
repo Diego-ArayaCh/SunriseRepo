@@ -164,13 +164,7 @@ namespace Web.Controllers
                 {
                     // Valida Errores si Javascript está deshabilitado
                     Util.ValidateErrors(this);
-
-                    //ViewBag.IdCategoria = listaCategorias(oProducto.IDCategoria);
-                    //ViewBag.IdSucursal = listaSucursales(oProducto.ProdSuc);
-                    //ViewBag.IdProveedor = listaProveedores(null);
-
-                    ViewBag.IdCategoria = listaCategorias();
-                    //ViewBag.IdSucursal = listaSucursales(null);
+                    ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
                     ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
 
                     return View("Create", oProducto);
@@ -208,6 +202,17 @@ namespace Web.Controllers
                         ModelState.Remove("imagen");
                     }
 
+                }
+                if (oProducto.imagen != null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        if (oProducto.imagen != target.ToArray())
+                        {
+                            oProducto.imagen = target.ToArray();
+                        }
+                    }
                 }
                 if (ModelState.IsValid)
                 {

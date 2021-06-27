@@ -111,9 +111,6 @@
     <Compile Include="Models\SUCURSAL.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>MyModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TipoCRUD.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -126,18 +123,6 @@
     <Compile Include="Repository\RepositoryProveedor.cs" />
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <None Include="App.config" />
-    <EntityDeploy Include="Models\MyModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Models\MyModel.edmx.diagram">
-      <DependentUpon>MyModel.edmx</DependentUpon>
-    </None>
-    <None Include="packages.config" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="Models\MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -149,6 +134,17 @@
       <DependentUpon>MyModel.edmx</DependentUpon>
       <LastGenOutput>MyModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Models\MyModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\MyModel.edmx.diagram">
+      <DependentUpon>MyModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
