@@ -25,18 +25,20 @@
         </p>
     </div>
     <div class="sub-container-2">
-        <form>
+        @using (Html.BeginForm())
+        {
             <div class="form-group">
                 <div class="form-group">
                     <div class="input-group mb-10">
-                        <input class="form-control" type="text" placeholder="Buscar producto">
+                        @Html.TextBox("filtroBuscarProducto", "", new { @class = "form-control", @placeholder = "Buscar producto" })
+                        @*<input class="form-control" type="text" placeholder="Buscar producto">*@
                         <div class="input-group-append">
                             <button class="btn btn-primary " type="submit">Buscar</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        }
     </div>
 </div>
 
@@ -61,7 +63,7 @@
             <th>Opciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody >
         @if (Model.Count() == 0)
         {
             <tr class="table-warning">
@@ -103,7 +105,6 @@
                 </tr>
             }
         }
-
     </tbody>
 </table>
 
@@ -127,4 +128,16 @@
             <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
         </div>
     </footer>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryajax")
+    <script type="text/javascript">
+    $(function () {
+        var lista = @Html.Raw(Json.Encode(ViewBag.listaNombres));
+        $("#filtroBuscarProducto").autocomplete({
+            source: lista
+        });
+    });
+    </script>
 }

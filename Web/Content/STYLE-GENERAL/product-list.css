@@ -11,15 +11,30 @@
     margin-bottom:20px
 }
 
+
 #estiloColorHover2 a:hover {
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+#estiloColorHover2 a {
+    font-size: large;
     background: -webkit-linear-gradient(left, red, gold);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     color: white;
 }
-#estiloColorHover2 a {
+
+
+#estiloColorHover3 a:hover {
+    background: -webkit-linear-gradient(left, red, gold);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    color: white;
+}
+
+#estiloColorHover3 a {
     text-decoration: none;
     font-size: large;
     color: #55595c
 }
-

@@ -102,19 +102,31 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.ProdSuc)
+            @if (Model.ProdSuc.Count() == 0)
             {
-                <tr class="table-secondary">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
-                    </td>
-                    <td style="text-align:center">
-                        @Html.DisplayFor(modelItem => item.cant)
-                    </td>
+
+
+                <tr class="table-warning">
+
+                    <td colspan="3"><div class="text-center">No hay registros</div> </td>
                 </tr>
+            }
+            else
+            {
+                foreach (var item in Model.ProdSuc)
+                {
+                    <tr class="table-secondary">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
+                        </td>
+                        <td style="text-align:center">
+                            @Html.DisplayFor(modelItem => item.cant)
+                        </td>
+                    </tr>
+                }
             }
             </tbody>
     </table>
@@ -143,29 +155,41 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.PROVEEDORES)
+            @if (Model.PROVEEDORES.Count() == 0)
             {
-                <tr class="table-secondary">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PAIS.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.direccion)
-                    </td>
-                    <td style="text-align:center">
-                        @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
-                        {
-                            <div>Activo</div>
-                        }
-                        else
-                        {
-                            <div>Inactivo</div>
-                        }
-                    </td>
+
+
+                <tr class="table-warning">
+
+                    <td colspan="4"><div class="text-center">No hay registros</div> </td>
                 </tr>
+            }
+            else
+            {
+                foreach (var item in Model.PROVEEDORES)
+                {
+                    <tr class="table-secondary">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PAIS.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.direccion)
+                        </td>
+                        <td style="text-align:center">
+                            @if (@Html.DisplayFor(modelItem => item.estado).ToString() == "1")
+                            {
+                                <div>Activo</div>
+                            }
+                            else
+                            {
+                                <div>Inactivo</div>
+                            }
+                        </td>
+                    </tr>
+                }
             }
             </tbody>
     </table>
@@ -173,10 +197,10 @@
 <br />
 
 
+<div style="margin-top:10px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver al listado de productos", "IndexAdmin")
+</div>
 
-<p>
-    @Html.ActionLink("Regresar al listado", "IndexAdmin")
-</p>
 
 @section footer{
     <footer class="footer mt-auto py-3 ">
