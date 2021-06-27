@@ -33,7 +33,7 @@ namespace Infraestructure.Models
         public string nombre { get; set; }
         public string marca { get; set; }
         public string detalle { get; set; }
-        public string imagen { get; set; }
+        public byte[] imagen { get; set; }
         public Nullable<int> stock { get; set; }
         public Nullable<int> cantMin { get; set; }
     
