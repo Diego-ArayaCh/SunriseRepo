@@ -242,7 +242,93 @@ namespace Infraestructure.Repository
             }
         }
 
-        public PRODUCTOS Save(PRODUCTOS pProducto, string[] selectedSucursales, string[] selectedProveedores)
+        public PRODUCTOS Save(PRODUCTOS pProducto, string[] selectedProveedores)
+        {
+            int retorno = 0;
+            PRODUCTOS oProducto = null;
+            try
+            {
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    oProducto = GetProductoByID((int)pProducto.ID);
+
+                    if (oProducto == null)
+                    {
+                        using (var transaccion = ctx.Database.BeginTransaction())
+                        {
+                            ctx.PRODUCTOS.Add(pProducto);
+                            retorno = ctx.SaveChanges();
+
+                            //Insertar
+                            if (selectedProveedores != null)
+                            {
+                                pProducto.PROVEEDORES = new List<PROVEEDORES>();
+                                foreach (var proveedor in selectedProveedores)
+                                {
+                                    var proveedorToAdd = GetProveedoresByID(int.Parse(proveedor));
+                                    ctx.PROVEEDORES.Attach(proveedorToAdd); //sin esto, EF intentará crear una categoría
+                                    pProducto.PROVEEDORES.Add(proveedorToAdd);// asociar a la categoría existente con el libro
+
+                                    retorno = ctx.SaveChanges();
+
+                                }
+                            }
+
+                            // Commit 
+                            transaccion.Commit();
+                        }
+
+                    }
+                    else
+                    {
+
+                        //Registradas: 1,2,3
+                        //Actualizar: 1,3,4
+
+                        //Actualizar Producto
+                        ctx.PRODUCTOS.Add(pProducto);
+                        ctx.Entry(pProducto).State = EntityState.Modified;
+                        retorno = ctx.SaveChanges();
+
+                        //Actualizar Proveedores
+                        var selectedProveedoresID = new HashSet<string>(selectedProveedores);
+                        if (selectedProveedores != null)
+                        {
+                            ctx.Entry(pProducto).Collection(p => p.PROVEEDORES).Load();
+
+                            var newProveedorForProducto = ctx.PROVEEDORES
+                             .Where(x => selectedProveedoresID.Contains(x.ID.ToString())).ToList();
+
+                            pProducto.PROVEEDORES = newProveedorForProducto;
+                            ctx.Entry(pProducto).State = EntityState.Modified;
+                            retorno = ctx.SaveChanges();
+                        }
+
+                    }
+                }
+
+
+                if (retorno >= 0)
+                    oProducto = GetProductoByID((int)pProducto.ID);
+
+                return oProducto;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+        }
+
+        public PRODUCTOS Save__AUX(PRODUCTOS pProducto, string[] selectedSucursales, string[] selectedProveedores)
         {
             int retorno = 0;
             PRODUCTOS oProducto = null;
@@ -358,104 +444,6 @@ namespace Infraestructure.Repository
                 Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
                 throw new Exception(mensaje);
             }
-        }
-
-
-
-        public PRODUCTOS Save___AUX(PRODUCTOS pProducto, string[] selectedSucursales, string[] selectedProveedores)
-        {
-            int retorno = 0;
-            PRODUCTOS oProducto = null;
-
-            using (MyContext ctx = new MyContext())
-            {
-                using (var transaccion = ctx.Database.BeginTransaction())
-                {
-                    ctx.Configuration.LazyLoadingEnabled = false;
-                    oProducto = GetProductoByID((int)pProducto.ID);
-                    if (oProducto == null)
-                    {
-                        //Insertar
-                        if (selectedProveedores != null)
-                        {
-                            pProducto.PROVEEDORES = new List<PROVEEDORES>();
-                            foreach (var proveedor in selectedProveedores)
-                            {
-                                var proveedorToAdd = GetProveedoresByID(int.Parse(proveedor));
-                                ctx.PROVEEDORES.Attach(proveedorToAdd); //sin esto, EF intentará crear una categoría
-                                pProducto.PROVEEDORES.Add(proveedorToAdd);// asociar a la categoría existente con el libro
-                            }
-                        }
-
-                        if (selectedSucursales != null)
-                        {
-                            pProducto.ProdSuc = new List<ProdSuc>();
-                            foreach (var sucursales in selectedSucursales)
-                            {
-                                var sucursalGenerica = GetSucursalesByID(int.Parse(sucursales));
-
-                                ProdSuc psGenerico = new ProdSuc();
-                                psGenerico.IDProducto = pProducto.ID;
-                                psGenerico.IDSucursal = sucursalGenerica.ID;
-
-                                ctx.ProdSuc.Attach(psGenerico); //sin esto, EF intentará crear una categoría
-                                pProducto.ProdSuc.Add(psGenerico);// asociar a la categoría existente con el libro
-
-                            }
-                        }
-
-                        ctx.PRODUCTOS.Add(pProducto);
-                        //SaveChanges
-                        //guarda todos los cambios realizados en el contexto de la base de datos.
-                        retorno = ctx.SaveChanges();
-                        //retorna número de filas afectadas
-                    }
-                    else
-                    {
-
-                        //Registradas: 1,2,3
-                        //Actualizar: 1,3,4
-
-                        //Actualizar Producto
-                        ctx.PRODUCTOS.Add(pProducto);
-                        ctx.Entry(pProducto).State = EntityState.Modified;
-                        retorno = ctx.SaveChanges();
-
-                        //Actualizar Proveedores
-                        var selectedProveedoresID = new HashSet<string>(selectedProveedores);
-                        if (selectedProveedores != null)
-                        {
-                            ctx.Entry(pProducto).Collection(p => p.PROVEEDORES).Load();
-                            var newProveedorForProducto = ctx.PROVEEDORES
-                             .Where(x => selectedProveedoresID.Contains(x.ID.ToString())).ToList();
-
-                            pProducto.PROVEEDORES = newProveedorForProducto;
-                            ctx.Entry(pProducto).State = EntityState.Modified;
-                            retorno = ctx.SaveChanges();
-                        }
-
-                        //Actualizar Sucursales
-                        var selectedSucarsalesID = new HashSet<string>(selectedSucursales);
-                        if (selectedSucursales != null)
-                        {
-                            ctx.Entry(pProducto).Collection(p => p.ProdSuc).Load();
-
-                            var new_PS_ForProducto = ctx.ProdSuc
-                             .Where(x => selectedSucarsalesID.Contains(x.IDSucursal.ToString())).ToList();
-
-                            pProducto.ProdSuc = new_PS_ForProducto;
-                            ctx.Entry(pProducto).State = EntityState.Modified;
-                            retorno = ctx.SaveChanges();
-                        }
-
-                    }
-                }
-            }
-
-            if (retorno >= 0)
-                oProducto = GetProductoByID((int)pProducto.ID);
-
-            return oProducto;
         }
 
     }

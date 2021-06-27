@@ -39,7 +39,9 @@
             </div>
         </div>
         <div class="col-md-4">
-            <img src=" @Html.DisplayFor(model => model.imagen)" width="280px" height="310px"/>
+            @*<img src=" @Html.DisplayFor(model => model.imagen)" width="280px" height="310px" />*@
+            <img src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)"
+                 role="img" alt="Producto - @Html.DisplayNameFor(model => model.nombre)" width="280px" height="310px" />
         </div>
     </div>
 </div>

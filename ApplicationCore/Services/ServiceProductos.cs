@@ -40,6 +40,12 @@ namespace ApplicationCore.Services
             return repository.GetSucursales();
         }
 
+        public SUCURSAL GetSucursalesByID(int id)
+        {
+            RepositoryProducto repository = new RepositoryProducto();
+            return repository.GetSucursalesByID(id);
+        }
+
         public IEnumerable<PROVEEDORES> GetProveedores()
         {
             RepositoryProducto repository = new RepositoryProducto();
@@ -52,10 +58,10 @@ namespace ApplicationCore.Services
             return repository.GetProductoByID(pID);
         }
 
-        public PRODUCTOS Save(PRODUCTOS oProducto,  string[] selectedSucursales, string[] selectedProveedores)
+        public PRODUCTOS Save(PRODUCTOS oProducto,  string[] selectedProveedores)
         {
             RepositoryProducto repository = new RepositoryProducto();
-            return repository.Save(oProducto, selectedSucursales, selectedProveedores);
+            return repository.Save(oProducto, selectedProveedores);
         }
 
     }

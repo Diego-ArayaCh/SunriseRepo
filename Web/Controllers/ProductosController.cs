@@ -10,6 +10,7 @@ using PagedList.Mvc;
 using PagedList;
 using Web.Utils;
 using System.Diagnostics;
+using System.IO;
 
 namespace Web.Controllers
 {
@@ -139,9 +140,9 @@ namespace Web.Controllers
 
         // POST: Libro/Edit/5
         [HttpPost]
-        public ActionResult Save(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores)
+        public ActionResult Save(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores)
         {
-
+            MemoryStream target = new MemoryStream();
             ServiceProductos _ServiceProducto = new ServiceProductos();
             try
             {
@@ -149,27 +150,15 @@ namespace Web.Controllers
                 {
                     if (ImageFile != null)
                     {
-                        String pathImagen = ImageFile.FileName;
-
-                      ////  string sourcePath = @"C:\Users\Public\TestFolder";
-                      //  string targetPath = @"/Content/IMAGES-PRODUCTS/";
-
-                      //  // Use Path class to manipulate file and directory paths.
-                      //  string sourceFile = pathImagen;
-                      //  string destFile = System.IO.Path.Combine(targetPath, pathImagen);
-
-                      //  // To copy a file to another location and
-                      //  // overwrite the destination file if it already exists.
-                      //  System.IO.File.Copy(sourceFile, destFile, true);
-
-                        oProducto.imagen = "/Content/IMAGES-PRODUCTS/"+pathImagen;
+                        ImageFile.InputStream.CopyTo(target);
+                        oProducto.imagen = target.ToArray();
                         ModelState.Remove("imagen");
                     }
 
                 }
                 if (ModelState.IsValid)
                 {
-                    PRODUCTOS oProductoI = _ServiceProducto.Save(oProducto, selectedSucursales, selectedProveedores);
+                    PRODUCTOS oProductoI = _ServiceProducto.Save(oProducto, selectedProveedores);
                 }
                 else
                 {
@@ -181,8 +170,8 @@ namespace Web.Controllers
                     //ViewBag.IdProveedor = listaProveedores(null);
 
                     ViewBag.IdCategoria = listaCategorias();
-                    ViewBag.IdSucursal = listaSucursales(null);
-                    ViewBag.IdProveedor = listaProveedores(null);
+                    //ViewBag.IdSucursal = listaSucursales(null);
+                    ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
 
                     return View("Create", oProducto);
                 }
@@ -196,23 +185,46 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Producto";
+                TempData["Redirect"] = "Productos";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
             }
         }
 
-
-
-
-
-        // GET: Libro/Edit/5
-        public ActionResult Edit(int? id)
+        [HttpPost]
+        public ActionResult Save2(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores)
         {
+            MemoryStream target = new MemoryStream();
+            ServiceProductos _ServiceProducto = new ServiceProductos();
             try
             {
-                return View();
+                if (oProducto.imagen == null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        oProducto.imagen = target.ToArray();
+                        ModelState.Remove("imagen");
+                    }
+
+                }
+                if (ModelState.IsValid)
+                {
+                    PRODUCTOS oProductoI = _ServiceProducto.Save(oProducto, selectedProveedores);
+                }
+                else
+                {
+                    // Valida Errores si Javascript está deshabilitado
+                    Util.ValidateErrors(this);
+                    ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                    ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                    return View("Edit", oProducto);
+                }
+
+
+                return RedirectToAction("IndexAdmin");
 
             }
             catch (Exception ex)
@@ -220,12 +232,64 @@ namespace Web.Controllers
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Libro";
+                TempData["Redirect"] = "Productos";
                 TempData["Redirect-Action"] = "IndexAdmin";
                 // Redireccion a la captura del Error
                 return RedirectToAction("Default", "Error");
             }
         }
+
+
+        // GET: Libro/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            PRODUCTOS oPRODUCTOS = null;
+
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("IndexAdmin");
+                }
+
+                oPRODUCTOS = _ServiceProducto.GetProductoByID(id.Value);
+                if (oPRODUCTOS == null)
+                {
+                    TempData["Message"] = "No existe el producto solicitado";
+                    TempData["Redirect"] = "Productos";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
+                
+                //Lista de autores
+                //List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                //foreach (var item in oPRODUCTOS.ProdSuc)
+                //{
+                //    listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                //}
+
+                ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oPRODUCTOS.IDCategoria));
+                //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+                ViewBag.IdProveedor = listaProveedores(oPRODUCTOS.PROVEEDORES);
+
+                return View(oPRODUCTOS);
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+
 
 
     }
