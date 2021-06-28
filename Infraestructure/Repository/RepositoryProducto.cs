@@ -371,6 +371,7 @@ namespace Infraestructure.Repository
                                     ProdSuc psGenerico = new ProdSuc();
                                     psGenerico.IDProducto = pProducto.ID;
                                     psGenerico.IDSucursal = sucursalGenerica.ID;
+                                    psGenerico.cant = 0;
 
                                     //ctx.ProdSuc.Attach(psGenerico); //sin esto, EF intentará crear una categoría
                                     pProducto.ProdSuc.Add(psGenerico);// asociar a la categoría existente con el libro

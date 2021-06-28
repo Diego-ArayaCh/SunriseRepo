@@ -315,6 +315,76 @@ namespace Web.Controllers
             }
         }
 
+
+        //METODOS QUE TRABAJAN CON LAS SUCURSALES
+        [HttpPost]
+        public ActionResult Save2_AUX(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores, string estado)
+        {
+            MemoryStream target = new MemoryStream();
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            try
+            {
+                if (oProducto.imagen == null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        oProducto.imagen = target.ToArray();
+                        ModelState.Remove("imagen");
+                    }
+
+                }
+                if (oProducto.imagen != null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        if (oProducto.imagen != target.ToArray())
+                        {
+                            oProducto.imagen = target.ToArray();
+                        }
+                    }
+                }
+
+                oProducto.estado = estado.Equals("1") ? 1 : 2;
+
+                if (ModelState.IsValid)
+                {
+                    PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                }
+                else
+                {
+                   // Lista de autores
+                    List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                    foreach (var item in oProducto.ProdSuc)
+                    {
+                        listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                    }
+
+                    ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                    ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+                    ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+                    ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));
+
+                    return View("Edit", oProducto);
+                }
+
+
+                return RedirectToAction("IndexAdmin");
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
         [HttpPost]
         public ActionResult Save_AUX(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores)
         {
