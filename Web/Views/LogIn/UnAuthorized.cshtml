@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "UnAuthorized";
+    Layout = "~/Views/Shared/_LogIn.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div style="padding: 40px 15px; text-align: center;">
+                <h1 class="display-6">
+                    Oops!
+                </h1>
+                <h1 id="estiloColor">
+                    No está autorizado
+                </h1>
+                <hr class="my-4">
+                <div>
+                    <p class="lead">
+                        Si el problema persiste, favor contactar con gerencia
+                    </p>
+                </div>
+                <div style="margin-top: 15px; margin-bottom: 15px;">
+                    <input type="button" value="Regresar" class="btn btn-primary" style="margin-right:10px;" onclick="goBack()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+

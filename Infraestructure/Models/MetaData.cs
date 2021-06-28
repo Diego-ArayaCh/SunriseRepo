@@ -194,6 +194,7 @@ namespace Infraestructure.Models
         public Nullable<int> estado { get; set; }
         [Display(Name = "Correo Electrónico")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "{0} no tiene formato válido")]
         public string correo { get; set; }
         [Display(Name = "Contraseña")]
         [Required(ErrorMessage = "{0} es un dato requerido")]

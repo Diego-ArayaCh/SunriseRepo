@@ -11,11 +11,13 @@ using PagedList;
 using Web.Utils;
 using System.Diagnostics;
 using System.IO;
+using Web.Security;
 
 namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
+        [CustomAuthorize((int)Roles.Administrador)]
         // GET: Productos
         public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
         {
@@ -183,7 +185,7 @@ namespace Web.Controllers
                 else
                 {
                     // Valida Errores si Javascript está deshabilitado
-                    Util.ValidateErrors(this);
+                    Web.Utils.Util.ValidateErrors(this);
                     ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
                     ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
 
@@ -252,7 +254,7 @@ namespace Web.Controllers
                 else
                 {
                     // Valida Errores si Javascript está deshabilitado
-                    Util.ValidateErrors(this);
+                    Web.Utils.Util.ValidateErrors(this);
                     ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
                     ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
                     ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));

@@ -7,35 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Sunrise Computers</title>
     <link rel=" icon" href="~/Content/IMAGES-PAGES/sol-barra-web.png" />
-    <link href="~/Content/STYLE-GENERAL/layout-home-page.css" rel="stylesheet" />
-    <link href="~/Content/STYLE-GENERAL/product-list.css" rel="stylesheet" />
-    <link href="~/Content/STYLE-GENERAL/provider-list.css" rel="stylesheet" />
 
+    @Styles.Render("~/Content/STYLE-GENERAL/layout-home-page.css")
+    @Styles.Render("~/Content/STYLE-GENERAL/product-list.css")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("styles", required: false)
-
 
 </head>
 <body>
-    @Html.Partial("_Menu")
-
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="~/Content/IMAGES-PAGES/sol-logo.png" style="height:75px; width:120px; padding-left:20px" />
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <h3 id="estiloColor">
+            Favor Autenticarse para Ingresar al Sistema. ¡Gracias!
+        </h3>
+    </nav>
     <main class="main-container-page">
-        <div>
-            @RenderBody()
-        </div>
+
+        @RenderBody()
+
     </main>
 
-    @RenderSection("footer", false)
-
-
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/popper")
+
+    @Scripts.Render("~/bundles/jqueryui")
+
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/sweetalert")
     @RenderSection("scripts", required: false)
-
     @if (ViewBag.NotificationMessage != null)
     {
         <script>
@@ -43,4 +47,6 @@
         </script>
     }
 </body>
+
+
 </html>

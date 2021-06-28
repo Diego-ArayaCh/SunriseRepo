@@ -121,6 +121,7 @@
     <Compile Include="Repository\RepositoryInforme.cs" />
     <Compile Include="Repository\RepositoryProducto.cs" />
     <Compile Include="Repository\RepositoryProveedor.cs" />
+    <Compile Include="Repository\RepositoryUsuario.cs" />
     <Compile Include="Utils\Log.cs" />
   </ItemGroup>
   <ItemGroup>
