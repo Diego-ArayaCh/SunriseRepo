@@ -409,28 +409,17 @@ namespace Infraestructure.Repository
                             ctx.Entry(pProducto).State = EntityState.Modified;
                             retorno = ctx.SaveChanges();
                         }
-
-                        //Actualizar Sucursales
-                        var selectedSucarsalesID = new HashSet<string>(selectedSucursales);
                         if (selectedSucursales != null)
                         {
-                            ctx.Entry(pProducto).Collection(p => p.ProdSuc).Load();
-
-                            var new_PS_ForProducto = ctx.ProdSuc
-                             .Where(x => selectedSucarsalesID.Contains(x.IDSucursal.ToString())).ToList();
-
-                            pProducto.ProdSuc = new_PS_ForProducto;
-                            ctx.Entry(pProducto).State = EntityState.Modified;
-                            retorno = ctx.SaveChanges();
+                            //Actualizar Productos-Sucursales
                         }
-
                     }
+
+                    if (retorno >= 0)
+                        oProducto = GetProductoByID((int)pProducto.ID);
+
+                    return oProducto;
                 }
-
-                if (retorno >= 0)
-                    oProducto = GetProductoByID((int)pProducto.ID);
-
-                return oProducto;
             }
             catch (DbUpdateException dbEx)
             {
