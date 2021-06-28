@@ -13,8 +13,8 @@
 
 
 #estiloColorHover2 a:hover {
-    text-transform: uppercase;
-    text-decoration: underline;
+/*    text-transform: uppercase;*/
+      text-decoration: underline;
 }
 
 #estiloColorHover2 a {
