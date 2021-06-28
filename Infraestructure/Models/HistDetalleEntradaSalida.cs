@@ -11,7 +11,9 @@ namespace Infraestructure.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
+    [MetadataType(typeof(HistoricoDetalleEntradaSalidaMetaData))]
     public partial class HistDetalleEntradaSalida
     {
         public int IDHistorico { get; set; }
