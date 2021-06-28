@@ -64,5 +64,11 @@ namespace ApplicationCore.Services
             return repository.Save(oProducto, selectedProveedores);
         }
 
+        public PRODUCTOS Save_AUX(PRODUCTOS oProducto, string[] selectedSucursales, string[] selectedProveedores)
+        {
+            RepositoryProducto repository = new RepositoryProducto();
+            return repository.Save__AUX(oProducto, selectedSucursales, selectedProveedores);
+        }
+
     }
 }
