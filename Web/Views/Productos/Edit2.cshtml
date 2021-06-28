@@ -1,0 +1,267 @@
+﻿@model Infraestructure.Models.PRODUCTOS
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+
+<ul class="nav nav-tabs" style="width:100%">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#Informacion">Información General</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Imagen">Imagen</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Existencias">Existencias</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Crear">Actualizar</a>
+    </li>
+
+</ul>
+<div style="height:480px">
+    @using (Html.BeginForm("Save2_AUX", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="myTabContent" class="tab-content" style="width:100%">
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.stock)
+
+            <div class="tab-pane fade active show" id="Informacion">
+
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                    Información General
+                </h1>
+                <hr class="my-4">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.serial, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-lg-12">
+                        @Html.EditorFor(model => model.serial, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.serial, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.marca, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-lg-10">
+                                @Html.EditorFor(model => model.marca, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.marca, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-lg-12">
+                                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.detalle, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.detalle, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.detalle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CATEGORIA.descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("IDCategoria", null,
+                                            "Seleccione una categoría",
+                                                htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.IDCategoria, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="Imagen" style="z-index:1">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center;">
+                    Imagen
+                </h1>
+                <hr class="my-4">
+                <div class="card mb-3" style="max-width: 100%; border:0px">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            @try
+                            {
+                                <img id="imagenCapturada" src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)"
+                                     role="img" alt="Producto - @Html.DisplayNameFor(model => model.nombre)" style="width:300px;height:320px" />
+                            }
+                            catch (Exception e)
+                            {
+                                <img id="imagenCapturada" style="width:300px;height:320px" src="~/Content/IMAGES-PAGES/imagen-no-disponible.png" />
+                            }
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Favor seleccionar una imagen para el producto</h5>
+                                <p class="card-text">Con el boton colocado debajo, puede seleccionar una imagen de su ordenador</p>
+                                <br />
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        @*<input id="inputImagen" type="file" class="custom-file-input" name="ImageFile" accept="image/*" required />*@
+                                        <input id="inputImagen" type="file" class="custom-file-input" name="ImageFile" accept="image/*" required src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)">
+                                        @Html.HiddenFor(model => model.imagen)
+                                        @Html.ValidationMessageFor(model => model.imagen, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade " id="Existencias" style="z-index:2">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center;">
+                    Existencias
+                </h1>
+                <hr class="my-4">
+                <p class="lead">
+                    Favor colocar la cantidad mínima aceptable en inventario del producto, así como su proveedor
+                </p>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label("Estado del producto", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("estado", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.cantMin, htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.cantMin, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.cantMin, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ProdSuc.First().SUCURSAL, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.DropDownList("selectedSucursales",
+                                    (MultiSelectList)ViewBag.IdSucursal,
+                                         htmlAttributes: new { @class = "form-control", multiple = "" })
+                                @Html.ValidationMessageFor(model => model.ProdSuc, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label("Proveedores", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                            <div class="col-md-12">
+                                @Html.DropDownList("selectedProveedores",
+                                 (MultiSelectList)ViewBag.IdProveedor,
+                                  htmlAttributes: new { @class = "form-control", multiple = "" })
+                                @*new { htmlAttributes = new { @class = "form-control" }, multiple = "" })*@
+                                @Html.ValidationMessageFor(model => model.PROVEEDORES, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+                <div class="tab-pane fade " id="Crear" style="z-index:3">
+                    <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                        Confirmación de Actualización
+                    </h1>
+                    <hr class="my-4">
+                    <p class="lead" style=" text-align: center; margin-top:20px">
+                        ¡ATENCIÓN! Se actualizara el producto especificado en la Base de Datos
+                    </p>
+
+                    <input type="submit" value="Actualizar Producto" class="btn btn-primary"
+                           style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
+
+                </div>
+
+            </div> @*final de los tabs*@
+    }
+</div>
+
+<br />
+
+<div style="margin-top:20px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver al listado de productos", "IndexAdmin")
+</div>
+
+
+
+
+
+
+
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/bootstrap-Select/css")*@
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        function readURL(input) {
+            if (input.files && input.files[0]) { //Revisamos que el input tenga contenido
+                var reader = new FileReader(); //Leemos el contenido
+
+                reader.onload = function (e) { //Al cargar el contenido lo pasamos como atributo de la imagen de arriba
+                    $('#imagenCapturada').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#inputImagen").change(function () { //Cuando el input cambie (se cargue un nuevo archivo) se va a ejecutar de nuevo el cambio de imagen y se verá reflejado.
+            readURL(this);
+        });
+
+
+    </script>
+
+}

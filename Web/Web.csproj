@@ -357,6 +357,8 @@
     <Content Include="Views\Shared\_LogIn.cshtml" />
     <Content Include="Views\LogIn\UnAuthorized.cshtml" />
     <Content Include="Views\LogIn\Index.cshtml" />
+    <Content Include="Views\Productos\Create2.cshtml" />
+    <Content Include="Views\Productos\Edit2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

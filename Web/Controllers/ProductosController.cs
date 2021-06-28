@@ -17,7 +17,7 @@ namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
-        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -316,8 +316,138 @@ namespace Web.Controllers
         }
 
 
+        //=================================================================================================================================================
+        //=================================================================================================================================================
+        //=================================================================================================================================================
         //METODOS QUE TRABAJAN CON LAS SUCURSALES
-        [HttpPost]
+
+        public ActionResult Create2()
+        {
+            //Lista de autores
+            ViewBag.IdCategoria = listaCategorias();
+            ViewBag.IdSucursal = listaSucursales(null);
+            ViewBag.IdProveedor = listaProveedores(null);
+
+            return View();
+        }
+
+        public ActionResult Edit2(int? id)
+        {
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            PRODUCTOS oPRODUCTOS = null;
+
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("IndexAdmin");
+                }
+
+                oPRODUCTOS = _ServiceProducto.GetProductoByID(id.Value);
+                if (oPRODUCTOS == null)
+                {
+                    TempData["Message"] = "No existe el producto solicitado";
+                    TempData["Redirect"] = "Productos";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
+
+                //Lista de autores
+                ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                foreach (var item in oPRODUCTOS.ProdSuc)
+                {
+                    listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                }
+                ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oPRODUCTOS.IDCategoria));
+                ViewBag.IdProveedor = listaProveedores(oPRODUCTOS.PROVEEDORES);
+                ViewBag.estado = listaEstados(Convert.ToInt32(oPRODUCTOS.estado));
+
+                return View(oPRODUCTOS);
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+        [HttpPost] //CREAR
+        public ActionResult Save_AUX(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores)
+        {
+            MemoryStream target = new MemoryStream();
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            try
+            {
+                if (oProducto.imagen == null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        oProducto.imagen = target.ToArray();
+                        ModelState.Remove("imagen");
+                    }
+
+                }
+                if (oProducto.imagen != null)
+                {
+                    if (ImageFile != null)
+                    {
+                        ImageFile.InputStream.CopyTo(target);
+                        if (oProducto.imagen != target.ToArray())
+                        {
+                            oProducto.imagen = target.ToArray();
+                        }
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    oProducto.estado = 2;
+                    oProducto.stock = 0;
+                    PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                }
+                else
+                {
+                    // Valida Errores si Javascript está deshabilitado
+                    Web.Utils.Util.ValidateErrors(this);
+                    ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                    ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                    ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                    foreach (var item in oProducto.ProdSuc)
+                    {
+                        listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                    }
+                    ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                    return View("Create2", oProducto);
+                }
+
+                return RedirectToAction("IndexAdmin");
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Producto";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+        [HttpPost] //EDITAR
         public ActionResult Save2_AUX(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores, string estado)
         {
             MemoryStream target = new MemoryStream();
@@ -354,19 +484,19 @@ namespace Web.Controllers
                 }
                 else
                 {
-                   // Lista de autores
-                    List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                    // Lista de autores
+                    ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
                     foreach (var item in oProducto.ProdSuc)
                     {
-                        listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
                     }
+                    ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
 
                     ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
-                    ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
                     ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
                     ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));
 
-                    return View("Edit", oProducto);
+                    return View("Edit2", oProducto);
                 }
 
 
@@ -384,73 +514,6 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
-
-        [HttpPost]
-        public ActionResult Save_AUX(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedSucursales, string[] selectedProveedores)
-        {
-            MemoryStream target = new MemoryStream();
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            try
-            {
-                if (oProducto.imagen == null)
-                {
-                    if (ImageFile != null)
-                    {
-                        ImageFile.InputStream.CopyTo(target);
-                        oProducto.imagen = target.ToArray();
-                        ModelState.Remove("imagen");
-                    }
-
-                }
-                if (oProducto.imagen != null)
-                {
-                    if (ImageFile != null)
-                    {
-                        ImageFile.InputStream.CopyTo(target);
-                        if (oProducto.imagen != target.ToArray())
-                        {
-                            oProducto.imagen = target.ToArray();
-                        }
-                    }
-                }
-
-                if (ModelState.IsValid)
-                {
-                    oProducto.estado = 1;
-                    oProducto.stock = 0;
-                    PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
-                }
-                else
-                {
-                    // Valida Errores si Javascript está deshabilitado
-                    Web.Utils.Util.ValidateErrors(this);
-                    ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
-                    ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
-
-                    List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
-                    foreach(var item  in oProducto.ProdSuc)
-                    {
-                        listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
-                    }
-                    ViewBag.IdProveedor = listaSucursales(listaSucursalesAux);
-
-                    return View("Create", oProducto);
-                }
-
-                return RedirectToAction("IndexAdmin");
-
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Producto";
-                TempData["Redirect-Action"] = "IndexAdmin";
-                // Redireccion a la captura del Error
-                return RedirectToAction("Default", "Error");
-            }
-            }
 
     }
 }

@@ -137,7 +137,7 @@ namespace Infraestructure.Models
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public byte[] imagen { get; set; }
         [Display(Name = "Stock")]
-        [Required(ErrorMessage = "{0} es un dato requerido")]
+       // [Required(ErrorMessage = "{0} es un dato requerido")]
         public Nullable<int> stock { get; set; }
         [Display(Name = "Cantidad Mínima")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
