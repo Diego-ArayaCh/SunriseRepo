@@ -32,6 +32,7 @@
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.stock)
 
         <div class="tab-pane fade active show" id="Informacion">
 
@@ -152,17 +153,16 @@
             </h1>
             <hr class="my-4">
             <p class="lead">
-                Favor colocar la cantidad disponible inicial de producto, asi como su cantidad minima
-                aceptable en inventario
+                Favor colocar la cantidad mínima aceptable en inventario del producto, así como su proveedor
             </p>
 
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.stock, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label("Estado del producto", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.stock, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+                            @Html.DropDownList("estado", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
                         </div>
                     </div>
                 </div>
@@ -179,32 +179,17 @@
 
             <br />
 
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        @Html.Label("Estado del producto", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
-                        <div class="col-md-10">
-                            @*@Html.DropDownList("selectedSucursales",
-                                (MultiSelectList)ViewBag.IdSucursal,
-                                     htmlAttributes: new { @class = "form-control", multiple = "" })
-                            @new { htmlAttributes = new { @class = "form-control" }, multiple = "" })@*@
-                            @Html.ValidationMessageFor(model => model.ProdSuc, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        @Html.Label("Proveedores", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
-                        <div class="col-md-12">
-                            @Html.DropDownList("selectedProveedores",
-                             (MultiSelectList)ViewBag.IdProveedor,
-                              htmlAttributes: new { @class = "form-control", multiple = "" })
-                            @*new { htmlAttributes = new { @class = "form-control" }, multiple = "" })*@
-                            @Html.ValidationMessageFor(model => model.PROVEEDORES, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
+            <div class="form-group">
+                @Html.Label("Proveedores", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                <div class="col-md-12">
+                    @Html.DropDownList("selectedProveedores",
+                     (MultiSelectList)ViewBag.IdProveedor,
+                      htmlAttributes: new { @class = "form-control", multiple = "" })
+                    @*new { htmlAttributes = new { @class = "form-control" }, multiple = "" })*@
+                    @Html.ValidationMessageFor(model => model.PROVEEDORES, "", new { @class = "text-danger" })
                 </div>
             </div>
+
         </div>
 
         <div class="tab-pane fade " id="Crear" style="z-index:3">

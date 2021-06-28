@@ -124,6 +124,24 @@ namespace Web.Controllers
             return new MultiSelectList(listaProveedores, "ID", "nombre", listaProveedoresSelect);
 
         }
+        public IEnumerable<SelectListItem> listaEstados(int seleccionado)
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem{Text = "Activo", Value = "1"},
+                new SelectListItem{Text = "Inactivo", Value = "2"},
+            };
+            foreach (var item in items)
+            {
+                if (item.Value == seleccionado+"")
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+
+            return items;
+        }
 
 
 
@@ -158,6 +176,8 @@ namespace Web.Controllers
                 }
                 if (ModelState.IsValid)
                 {
+                    oProducto.estado = 1;
+                    oProducto.stock = 0;
                     PRODUCTOS oProductoI = _ServiceProducto.Save(oProducto, selectedProveedores);
                 }
                 else
@@ -187,7 +207,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Save2(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores)
+        public ActionResult Save2(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores, string estado)
         {
             MemoryStream target = new MemoryStream();
             ServiceProductos _ServiceProducto = new ServiceProductos();
@@ -214,6 +234,17 @@ namespace Web.Controllers
                         }
                     }
                 }
+
+                if (estado.Equals("1"))
+                {
+                    oProducto.estado = 1;//activo
+                }
+                else
+                {
+                    oProducto.estado = 2;//inactivo
+                }
+
+
                 if (ModelState.IsValid)
                 {
                     PRODUCTOS oProductoI = _ServiceProducto.Save(oProducto, selectedProveedores);
@@ -224,6 +255,7 @@ namespace Web.Controllers
                     Util.ValidateErrors(this);
                     ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
                     ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+                    ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));
 
                     return View("Edit", oProducto);
                 }
@@ -279,6 +311,7 @@ namespace Web.Controllers
                 ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oPRODUCTOS.IDCategoria));
                 //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
                 ViewBag.IdProveedor = listaProveedores(oPRODUCTOS.PROVEEDORES);
+                ViewBag.estado = listaEstados(Convert.ToInt32(oPRODUCTOS.estado));
 
                 return View(oPRODUCTOS);
             }
