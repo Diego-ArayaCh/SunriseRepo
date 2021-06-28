@@ -17,8 +17,7 @@ namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
-        [CustomAuthorize((int)Roles.Administrador)]
-        // GET: Productos
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -53,7 +52,7 @@ namespace Web.Controllers
 
         }
 
-        // GET: Productos/Details/5
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult Details(int? id)
         {
             ServiceProductos _ServiceProducto = new ServiceProductos();
@@ -83,6 +82,66 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador)]
+        public ActionResult Create()
+        {
+            //Lista de autores
+            ViewBag.IdCategoria = listaCategorias();
+            ViewBag.IdSucursal = listaSucursales(null);
+            ViewBag.IdProveedor = listaProveedores(null);
+
+            return View();
+        }
+
+        [CustomAuthorize((int)Roles.Administrador)]
+        public ActionResult Edit(int? id)
+        {
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            PRODUCTOS oPRODUCTOS = null;
+
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("IndexAdmin");
+                }
+
+                oPRODUCTOS = _ServiceProducto.GetProductoByID(id.Value);
+                if (oPRODUCTOS == null)
+                {
+                    TempData["Message"] = "No existe el producto solicitado";
+                    TempData["Redirect"] = "Productos";
+                    TempData["Redirect-Action"] = "IndexAdmin";
+                    // Redireccion a la captura del Error
+                    return RedirectToAction("Default", "Error");
+                }
+
+                //Lista de autores
+                //List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                //foreach (var item in oPRODUCTOS.ProdSuc)
+                //{
+                //    listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                //}
+
+                ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oPRODUCTOS.IDCategoria));
+                //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+                ViewBag.IdProveedor = listaProveedores(oPRODUCTOS.PROVEEDORES);
+                ViewBag.estado = listaEstados(Convert.ToInt32(oPRODUCTOS.estado));
+
+                return View(oPRODUCTOS);
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
 
 
         private SelectList listaCategorias(int IDCategoria = 0)
@@ -145,20 +204,6 @@ namespace Web.Controllers
             return items;
         }
 
-
-
-        // GET: Libro/Create
-        public ActionResult Create()
-        {
-            //Lista de autores
-            ViewBag.IdCategoria = listaCategorias();
-            ViewBag.IdSucursal = listaSucursales(null);
-            ViewBag.IdProveedor = listaProveedores(null);
-
-            return View();
-        }
-
-        // POST: Libro/Edit/5
         [HttpPost]
         public ActionResult Save(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores)
         {
@@ -277,60 +322,6 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
-
-
-        // GET: Libro/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            PRODUCTOS oPRODUCTOS = null;
-
-            try
-            {
-                // Si va null
-                if (id == null)
-                {
-                    return RedirectToAction("IndexAdmin");
-                }
-
-                oPRODUCTOS = _ServiceProducto.GetProductoByID(id.Value);
-                if (oPRODUCTOS == null)
-                {
-                    TempData["Message"] = "No existe el producto solicitado";
-                    TempData["Redirect"] = "Productos";
-                    TempData["Redirect-Action"] = "IndexAdmin";
-                    // Redireccion a la captura del Error
-                    return RedirectToAction("Default", "Error");
-                }
-                
-                //Lista de autores
-                //List<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
-                //foreach (var item in oPRODUCTOS.ProdSuc)
-                //{
-                //    listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
-                //}
-
-                ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oPRODUCTOS.IDCategoria));
-                //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
-                ViewBag.IdProveedor = listaProveedores(oPRODUCTOS.PROVEEDORES);
-                ViewBag.estado = listaEstados(Convert.ToInt32(oPRODUCTOS.estado));
-
-                return View(oPRODUCTOS);
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Productos";
-                TempData["Redirect-Action"] = "IndexAdmin";
-                // Redireccion a la captura del Error
-                return RedirectToAction("Default", "Error");
-            }
-        }
-
-
-
 
     }
 }
