@@ -23,18 +23,20 @@
         </p>
     </div>
     <div class="sub-container-2">
-        <form>
+        @using (Html.BeginForm())
+        {
             <div class="form-group">
                 <div class="form-group">
                     <div class="input-group mb-10">
-                        <input class="form-control" type="text" placeholder="Buscar proveedor">
+                        @Html.TextBox("filtroBuscarProveedor", "", new { @class = "form-control", @placeholder = "Buscar producto" })
+                        @*<input class="form-control" type="text" placeholder="Buscar producto">*@
                         <div class="input-group-append">
                             <button class="btn btn-primary " type="submit">Buscar</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        }
     </div>
 </div>
 

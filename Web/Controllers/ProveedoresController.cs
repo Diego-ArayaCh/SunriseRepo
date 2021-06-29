@@ -14,19 +14,19 @@ namespace Web.Controllers
     {
         // GET: Proveedores
         //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
-        public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
+        public ActionResult IndexAdmin(int? page, string filtroBuscarProveedor)
         {
             IEnumerable<PROVEEDORES> lista = null;
             try
             {
                 ServiceProveedores _ServiceProveedores = new ServiceProveedores();
-                if (string.IsNullOrEmpty(filtroBuscarProducto))
+                if (string.IsNullOrEmpty(filtroBuscarProveedor))
                 {
                     lista = _ServiceProveedores.GetProveedores();
                 }
                 else
                 {
-                    lista = _ServiceProveedores.GetProductosxNombre(filtroBuscarProducto);
+                    lista = _ServiceProveedores.GetProductosxNombre(filtroBuscarProveedor);
                 }
                 //Lista autocompletado de productos
                 ViewBag.listaNombres = _ServiceProveedores.GetProveedoresNombre();
@@ -81,7 +81,7 @@ namespace Web.Controllers
             //Lista de autores
 
             ViewBag.IDPais = listaPaises();
-
+            ViewBag.Contacto = listaContactos(null);
 
             return View();
         }
@@ -155,6 +155,7 @@ namespace Web.Controllers
 
 
         }
+
         public IEnumerable<SelectListItem> listaEstados(int seleccionado)
         {
             IList<SelectListItem> items = new List<SelectListItem>
@@ -174,45 +175,45 @@ namespace Web.Controllers
             return items;
         }
         [HttpPost]
-        public ActionResult Save(PROVEEDORES oProveedores)
+        public ActionResult Save(PROVEEDORES oProveedores,List<CONTACTO> selectedContactos)
         {
-           
-            //ServiceProveedores serviceProveedores = new ServiceProveedores();
-            //try
-            //{
-                
-            //    if (ModelState.IsValid)
-            //    {
-            //        oProveedores.estado = 1;
-                   
-            //        PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores, null);
-            //    }
-            //    else
-            //    {
-            //        // Valida Errores si Javascript está deshabilitado
-            //        Web.Utils.Util.ValidateErrors(this);
-            //        ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
-            //        //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
-                   
-            //        ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
+
+            ServiceProveedores serviceProveedores = new ServiceProveedores();
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    oProveedores.estado = 1;
+
+                    PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores, selectedContactos);
+                }
+                else
+                {
+                    // Valida Errores si Javascript está deshabilitado
+                    Web.Utils.Util.ValidateErrors(this);
+                    ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
+                    //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                    ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
 
                     return View("Create", oProveedores);
-            //    }
+                }
 
 
-            //    return RedirectToAction("IndexAdmin");
+                return RedirectToAction("IndexAdmin");
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    // Salvar el error en un archivo 
-            //    Log.Error(ex, MethodBase.GetCurrentMethod());
-            //    TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-            //    TempData["Redirect"] = "Productos";
-            //    TempData["Redirect-Action"] = "IndexAdmin";
-            //    // Redireccion a la captura del Error
-            //    return RedirectToAction("Default", "Error");
-            //}
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
         }
     }
 }

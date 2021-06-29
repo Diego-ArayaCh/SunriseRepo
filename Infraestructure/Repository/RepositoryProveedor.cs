@@ -174,6 +174,10 @@ namespace Infraestructure.Repository
                     {
                         lista = ctx.CONTACTO.Where(x => x.IDProv == id).ToList();
                     }
+                    else
+                    {
+                        lista = ctx.CONTACTO.ToList();
+                    }
                   
                    
                 }
