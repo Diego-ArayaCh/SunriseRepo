@@ -359,6 +359,7 @@
     <Content Include="Views\LogIn\Index.cshtml" />
     <Content Include="Views\Productos\Create2.cshtml" />
     <Content Include="Views\Productos\Edit2.cshtml" />
+    <Content Include="Views\Proveedores\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
