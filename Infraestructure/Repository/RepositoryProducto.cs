@@ -411,47 +411,60 @@ namespace Infraestructure.Repository
                         }
                         if (selectedSucursales != null)
                         {
-                            ////Actualizar Sucursales
-                            //var selectedSucarsalesID = new HashSet<string>(selectedSucursales);
-                            //if (selectedSucursales != null)
-                            //{
-                            //    ctx.Entry(pProducto).Collection(p => p.ProdSuc).Load();
+                            //Actualizar Sucursales
+                            var selectedSucarsalesID = new HashSet<string>(selectedSucursales);
+                            if (selectedSucursales != null)
+                            {
+                                ctx.Entry(pProducto).Collection(p => p.ProdSuc).Load();
 
-                            //    var new_PS_ForProducto = ctx.ProdSuc
-                            //     .Where(x => selectedSucarsalesID.Contains(x.SUCURSAL.ID.ToString())).ToList();
+                                var new_PS_ForProducto = ctx.SUCURSAL
+                                 .Where(x => selectedSucarsalesID.Contains(x.ID.ToString())).ToList();
+                                ICollection<ProdSuc>  insertPS = new List<ProdSuc>();
+                                foreach (SUCURSAL suc in new_PS_ForProducto)
+                                {
+                                    ProdSuc s = new ProdSuc();
+                                    s.IDSucursal = suc.ID;
+                                    s.IDProducto = oProducto.ID;
+                                    s.cant = 0;
+                                    foreach(ProdSuc ps in oProducto.ProdSuc)
+                                    {
+                                        if (ps.IDSucursal == suc.ID) s.cant = ps.cant;
+                                    }
+                                    insertPS.Add(s);
+                                }
+                                pProducto.ProdSuc = insertPS;
+                                ctx.Entry(pProducto).State = EntityState.Modified;
 
-                            //    pProducto.ProdSuc = new_PS_ForProducto;
-                            //    ctx.Entry(pProducto).State = EntityState.Modified;
+                                retorno = ctx.SaveChanges();
+                            }
 
-                            //    retorno = ctx.SaveChanges();
-                            //}
 
 
                             //PRODUCTOS originalProducto = GetProductoByID(pProducto.ID);
-                            //foreach (var sucursales in selectedSucursales)
+                            //foreach (string sucursal in selectedSucursales)
                             //{
-                            //  //  var sucursalGenerica = GetSucursalesByID(int.Parse(sucursales));
+                            //    //  var sucursalGenerica = GetSucursalesByID(int.Parse(sucursales));
 
-                            //    ProdSuc psGenerico = new ProdSuc();
-                            //    psGenerico.IDProducto = pProducto.ID;
-                            //    psGenerico.IDSucursal = int.Parse(sucursales);
+                            //    //ProdSuc psGenerico = new ProdSuc();
+                            //    //psGenerico.IDProducto = pProducto.ID;
+                            //    //psGenerico.IDSucursal = int.Parse(sucursales);
 
-                            //    if(pProducto.ProdSuc)
+                                
 
 
-                            //    //Si no lo contiene, que lo agregue
-                            //    foreach (var item in originalProducto.ProdSuc)
-                            //    {
-                            //        if(item.IDSucursal==psGenerico.IDSucursal &&
-                            //                item.IDProducto == psGenerico.IDProducto)
-                            //        {
-                            //            psGenerico.cant = 0;
-                            //            pProducto.ProdSuc.Add(psGenerico); // agrega la relacion
-                            //            // ctx.Entry(pProducto).State = EntityState.Modified;
-                            //            retorno = ctx.SaveChanges();
-                            //        }
-                            //    }
-                            //    }
+                            //        ////Si no lo contiene, que lo agregue
+                            //        //foreach (var item in originalProducto.ProdSuc.)
+                            //        //{
+                            //        //    //if (item.IDSucursal == psGenerico.IDSucursal &&
+                            //        //    //        item.IDProducto == psGenerico.IDProducto)
+                            //        //    if(item.IDSucursal!=Convert.ToInt32(sucursal)){
+                            //        //        psGenerico.cant = 0;
+                            //        //        pProducto.ProdSuc.Add(psGenerico); // agrega la relacion
+                            //        //                                           // ctx.Entry(pProducto).State = EntityState.Modified;
+                            //        //        retorno = ctx.SaveChanges();
+                            //        //    }
+                            //        //}
+                            //}
 
 
                             //}
