@@ -488,7 +488,7 @@ namespace Web.Controllers
                     ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
                     foreach (var item in oProducto.ProdSuc)
                     {
-                        listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
                     }
                     ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
 

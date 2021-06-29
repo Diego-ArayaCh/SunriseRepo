@@ -411,8 +411,78 @@ namespace Infraestructure.Repository
                         }
                         if (selectedSucursales != null)
                         {
-                            //Actualizar Productos-Sucursales
+                            ////Actualizar Sucursales
+                            //var selectedSucarsalesID = new HashSet<string>(selectedSucursales);
+                            //if (selectedSucursales != null)
+                            //{
+                            //    ctx.Entry(pProducto).Collection(p => p.ProdSuc).Load();
+
+                            //    var new_PS_ForProducto = ctx.ProdSuc
+                            //     .Where(x => selectedSucarsalesID.Contains(x.SUCURSAL.ID.ToString())).ToList();
+
+                            //    pProducto.ProdSuc = new_PS_ForProducto;
+                            //    ctx.Entry(pProducto).State = EntityState.Modified;
+
+                            //    retorno = ctx.SaveChanges();
+                            //}
+
+
+                            //PRODUCTOS originalProducto = GetProductoByID(pProducto.ID);
+                            //foreach (var sucursales in selectedSucursales)
+                            //{
+                            //  //  var sucursalGenerica = GetSucursalesByID(int.Parse(sucursales));
+
+                            //    ProdSuc psGenerico = new ProdSuc();
+                            //    psGenerico.IDProducto = pProducto.ID;
+                            //    psGenerico.IDSucursal = int.Parse(sucursales);
+
+                            //    if(pProducto.ProdSuc)
+
+
+                            //    //Si no lo contiene, que lo agregue
+                            //    foreach (var item in originalProducto.ProdSuc)
+                            //    {
+                            //        if(item.IDSucursal==psGenerico.IDSucursal &&
+                            //                item.IDProducto == psGenerico.IDProducto)
+                            //        {
+                            //            psGenerico.cant = 0;
+                            //            pProducto.ProdSuc.Add(psGenerico); // agrega la relacion
+                            //            // ctx.Entry(pProducto).State = EntityState.Modified;
+                            //            retorno = ctx.SaveChanges();
+                            //        }
+                            //    }
+                            //    }
+
+
+                            //}
+
+                            ////Si ya no existe, que lo borre
+                            //ICollection<ProdSuc> listaTemporalPS_Nueva = new List<ProdSuc>(); //Lista de objetos de VIEW
+                            //ICollection<ProdSuc> listaTemporalPS_Vieja = pProducto.ProdSuc; //Lista de objetos en BD
+
+                            ////Guardo y construyo los objetos de la VIEW
+                            //foreach (var sucursales in selectedSucursales)
+                            //{
+                            //    var sucursalGenerica = GetSucursalesByID(int.Parse(sucursales));
+                            //    ProdSuc psGenerico = new ProdSuc();
+                            //    psGenerico.IDProducto = pProducto.ID;
+                            //    psGenerico.IDSucursal = sucursalGenerica.ID;
+                            //    psGenerico.cant = 0;
+                            //    listaTemporalPS_Nueva.Append(psGenerico);
+                            //}
+
+                            ////Si ya no existe en el VIEW, lo elimine de la lista de BD
+                            //foreach (var psItemViejo in listaTemporalPS_Vieja)
+                            //{
+                            //    if (!listaTemporalPS_Nueva.Contains(psItemViejo))
+                            //    {
+                            //        pProducto.ProdSuc.Remove(psItemViejo);
+                            //        ctx.Entry(pProducto).State = EntityState.Modified;
+                            //        retorno = ctx.SaveChanges();
+                            //    }
+                            //}
                         }
+
                     }
 
                     if (retorno >= 0)
