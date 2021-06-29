@@ -29,70 +29,15 @@
                         @Html.DisplayFor(model => model.detalle)
                     }
                 </h6>
-                <div class="box">
-                    <h3>Información General</h3>
-                    <ul class="directory-list">
-                        <li>
-                            Usuario
-                            <ul>
-                                <li>ID: #@Html.DisplayFor(model => model.IDUsuario)</li>
-                                <li>Cédula: @Html.DisplayFor(model => model.USUARIO.cedula)</li>
-                                <li>Nombre: @Html.DisplayFor(model => model.USUARIO.nombre) @if (Model.USUARIO.apellidos.IsEmpty() == false) { Model.USUARIO.apellidos.ToString(); }</li>
-                                <li>Rol: @Html.DisplayFor(model => model.USUARIO.ROL.descripcion)</li>
-                                <li>Correo: @Html.DisplayFor(model => model.USUARIO.correo)</li>
-                                <li>Telefono: @Html.DisplayFor(model => model.USUARIO.telefono)</li>
-                            </ul>
-                        </li>
-                        <li>
-                            Sucursal
-                            <ul>
-                                @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL != null)
-                                {
-                                    <li>
-                                        Entrada
-                                        <ul>
-                                            <li>Nombre:  @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)</li>
-                                            <li>Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.direccion)</li>
-                                            <li>
-                                                Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
-                                                {
-                                                    <div style="display:inline;">Activo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="display:inline;">Inactivo</div>
-                                                }
-                                            </li>
-                                            <li>ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</li>
-                                        </ul>
-                                    </li>
-                                }
-                                @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1 != null)
-                                {
-                                    <li>
-                                        Salida
-                                        <ul>
-                                            <li>Nombre:  @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)</li>
-                                            <li>Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.direccion)</li>
-                                            <li>
-                                                Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
-                                                {
-                                                    <div style="display:inline;">Activo</div>
-                                                }
-                                                else
-                                                {
-                                                    <div style="display:inline;">Inactivo</div>
-                                                }
-                                            </li>
-                                            <li>ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</li>
-                                        </ul>
-                                    </li>
-                                }
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
+                <hr />
+                <h4 class="card-title">Información General</h4>
+                <h5 class="card-title">Usuario</h5>
+                <p class="card-text">ID: #@Html.DisplayFor(model => model.IDUsuario)</p>
+                <p class="card-text">Cédula: @Html.DisplayFor(model => model.USUARIO.cedula)</p>
+                <p class="card-text">Nombre: @Html.DisplayFor(model => model.USUARIO.nombre) @if (Model.USUARIO.apellidos.IsEmpty() == false) { Model.USUARIO.apellidos.ToString(); }</p>
+                <p class="card-text">Rol: @Html.DisplayFor(model => model.USUARIO.ROL.descripcion)</p>
+                <p class="card-text">Correo: @Html.DisplayFor(model => model.USUARIO.correo)</p>
+                <p class="card-text">Telefono: @Html.DisplayFor(model => model.USUARIO.telefono)</p>
             </div>
         </div>
     </div>
@@ -169,10 +114,80 @@
 
     </tbody>
 </table>
+<br/>
+<h3>Sucursusal</h3>
+<hr class="my-4">
+<div class="container">
+    <div class="row">
 
-@section Scripts{
-    <script src="~/Scripts/directory-list.js"></script>
-}
+        @if (Model.HistDetalleEntradaSalida.Count() == 0)
+        {
+            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-warning">
+                <div class="card-header  bg-warning text-white" style="text-align: center">
+                    No disponible
+                </div>
+                <div class="card-body" style="text-align: center">
+                    <h5 class="card-title">Información:</h5>
+                    <p class="card-text"> No hay contactos registrados para este proveedor</p>
+
+                </div>
+            </div>
+        }
+        else
+        {
+            if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL != null)
+            {
+
+                <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
+                    <div class="card-header bg-success text-white">
+                        Sucursal de Entrada: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.nombre)
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Información:</h5>
+                        <p class="card-text">Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.direccion)</p>
+                        <p class="card-text">
+                            Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
+                            {
+                                <div style="display:inline;">Activo</div>
+                            }
+                            else
+                            {
+                                <div style="display:inline;">Inactivo</div>
+                            }
+                        </p>
+                        <p class="card-text">ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
+                    </div>
+                </div>
+            }
+            if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1 != null)
+            {
+
+                <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
+                    <div class="card-header bg-success text-white">
+                        Sucursal de Entrada: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Información:</h5>
+                        <p class="card-text">Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.direccion)</p>
+                        <p class="card-text">
+                            Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
+                            {
+                                <div style="display:inline;">Activo</div>
+                            }
+                            else
+                            {
+                                <div style="display:inline;">Inactivo</div>
+                            }
+                        </p>
+                        <p class="card-text">ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+
 
 <br />
 
