@@ -50,47 +50,65 @@
             </div>
         </div>
 
-        @*<div class="tab-pane fade " id="Registrarse">
+        <div class="tab-pane fade " id="Registrarse">
             <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
                 Registrarse
             </h1>
             <hr class="my-4" style="width:75%;transform: translateX(-50%); margin-left: 50%;">
-            <form style="width:50%; transform: translateX(-50%); margin-left: 50%;">
-
+            <div style="width:50%; transform: translateX(-50%); margin-left: 50%;">
+                @using (Html.BeginForm("Registrar", "LogIn", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group ">
-                    <label for="Cedula">Cedula</label>
-                    <input type="text" class="form-control" id="Cedula">
+                    @Html.LabelFor(model => model.cedula)
+                    @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group " style="margin-top:10px">
-                    <label for="Nombre">Nombre</label>
-                    <input type="text" class="form-control" id="Nombre">
+                    @Html.LabelFor(model => model.nombre)
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group " style="margin-top:10px">
-                    <label for="Apellidos">Apellidos</label>
-                    <input type="text" class="form-control" id="Apellidos">
+                    @Html.LabelFor(model => model.apellidos)
+                    @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="form-group " style="margin-top:10px">
-                    <label for="Telefono">Teléfono</label>
-                    <input type="text" class="form-control" id="Telefono">
-                </div>
+                    <div class="form-group " style="margin-top:10px">
+                    @Html.LabelFor(model => model.telefono))
+                    @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.correo)
+                        @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                    </div>
 
-                <div class="form-group " style="margin-top:10px">
-                    <label for="CorreoElectronico">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="CorreoElectronico">
-                </div>
+                    <div class="form-group" style="margin-top:20px">
+                        @Html.LabelFor(model => model.contrasenha)
+                        @Html.EditorFor(model => model.contrasenha, new { htmlAttributes = new { @class = "form-control", type = "password" } })
+                        @Html.ValidationMessageFor(model => model.contrasenha, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group " style="margin-top:10px">
+                        <label for="Contrasenia2"> Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="Contrasenia2" name="Contrasenia2">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px">Registrarse</button>
 
-                <div class="form-group " style="margin-top:10px">
-                    <label for="Contrasenia">Contraseña</label>
-                    <input type="password" class="form-control" id="Contrasenia">
-                </div>
+                }
 
-                <button type="submit" class="btn btn-primary" style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:20px">Registrarse</button>
+                
 
-            </form>
-        </div>*@
+                
+
+            </div>
+        </div>
 
     </div>
 

@@ -37,7 +37,7 @@ namespace ApplicationCore.Services
         {
             RepositoryUsuario repository = new RepositoryUsuario();
             usuario.contrasenha = Cryptography.EncrypthAES(usuario.contrasenha);
-            return repository.Save(usuario);
+             return repository.Save(usuario);
         }
     }
 }

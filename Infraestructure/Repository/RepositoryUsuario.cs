@@ -54,6 +54,10 @@ namespace Infraestructure.Repository
                     oUsuario = GetUsuarioByID(usuario.ID);
                     if (oUsuario == null)
                     {
+                        ROL rol = ctx.ROL.Find(2);
+                        usuario.IDRol = 2;
+                        usuario.ROL = rol;
+                        usuario.estado = 0;
                         ctx.USUARIO.Add(usuario);
                     }
                     else

@@ -57,7 +57,36 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+        [HttpPost]
+        public ActionResult Registrar(USUARIO user, string Contrasenia2)
+        {
+            USUARIO rUsuario = user;
+            try
+            {
+                if (rUsuario.contrasenha == Contrasenia2)
+                {
+                    new ServiceUsuario().Save(rUsuario);
+                    ModelState.Clear();
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro exitoso", "Su usuario se ha registrado exitosamente \n Espere aprobación de un Administrador", SweetAlertMessageType.success);
+                }
+                else
+                {
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro Fallido", "Contraseña erronea pendejo le toca revisar", SweetAlertMessageType.warning);
+                }
 
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+
+            return View("Index");
+        }
 
         public ActionResult UnAuthorized()
         {
