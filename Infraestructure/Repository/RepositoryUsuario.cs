@@ -119,7 +119,36 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+        public ICollection<USUARIO> GetUsuariosEncargados()
+        {
+            try
+            {
 
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    return ctx.USUARIO.
+                              Include("ROL").
+                              Where(p => p.IDRol == 2).ToList();
+                }
+
+                
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+
+
+        }
 
     }
 }

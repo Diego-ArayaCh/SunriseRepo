@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Infraestructure.Models.USUARIO>
+
+@{
+    ViewBag.Title = "Mantenimiento de Permisos";
+}
+
+<h2>Mantenimiento de Permisos</h2>
+
+<p>
+    @Html.ActionLink("Registrar Nuevo", "Index")
+</p>
+
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                @Html.DisplayNameFor(model => model.cedula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.correo)
+            </th>
+            <th>
+                Nombre Completo
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDRol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telefono)
+            </th>
+            <th>Habilitar</th>
+            <th>Deshabilitar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr class="table-warning">
+
+                <td colspan="5"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cedula)
+                    </td>
+                    <td>
+                        @if (item.estado == 1)
+                        {
+                            <div>Activo</div>
+                        }
+                        else
+                        {
+                            if (item.estado == 0)
+                            {
+                                <div>Pendiente</div>
+                            }
+                            else
+                            {
+                                <div>Inactivo</div>
+                            }
+
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.correo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre) @Html.DisplayFor(modelItem => item.apellidos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ROL.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.telefono)
+                    </td>
+                    <td>
+                        @if (item.estado != 1)
+                        {
+                            @Html.ActionLink("Habilitar", "Habilitar", new {@class ="btn btn-primary", id = item.ID }, new { @class = "btn btn-outline-dark btn-sm" })
+                        }
+                        else
+                        {
+                            <div>No disponible</div>
+                        }
+
+                    </td>
+                    <td>
+                        @if (item.estado != 2)
+                        {
+                            @Html.ActionLink("Deshabilitar", "Deshabilitar", new {id = item.ID },new { @class = "btn btn-outline-dark btn-sm" })
+                        }
+                        else
+                        {
+                            <div>No disponible</div>
+                        }
+
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}

@@ -367,6 +367,7 @@
     <Content Include="Views\Proveedores\_Contacto.cshtml" />
     <Content Include="Views\Proveedores\Edit.cshtml" />
     <Content Include="Views\Proveedores\vista.cshtml" />
+    <Content Include="Views\LogIn\EditPermisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

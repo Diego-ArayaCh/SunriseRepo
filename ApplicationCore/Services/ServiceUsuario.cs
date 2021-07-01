@@ -18,7 +18,7 @@ namespace ApplicationCore.Services
             // Encriptar el password para poder compararlo
             // string crytpPasswd = Cryptography.EncrypthAES(password);
 
-           // return repository.GetUsuario(email, crytpPasswd); //ESTA ES LA QUE SE USA
+            // return repository.GetUsuario(email, crytpPasswd); //ESTA ES LA QUE SE USA
 
             return repository.GetUsuario(email, password);
         }
@@ -27,8 +27,8 @@ namespace ApplicationCore.Services
         {
             RepositoryUsuario repository = new RepositoryUsuario();
             USUARIO oUsuario = repository.GetUsuarioByID(id);
-            // oUsuario.contrasenha = Cryptography.DecrypthAES(oUsuario.contrasenha); //ESTA ES LA QUE SE USA
-            oUsuario.contrasenha =oUsuario.contrasenha;
+            oUsuario.contrasenha = Cryptography.DecrypthAES(oUsuario.contrasenha); //ESTA ES LA QUE SE USA
+            oUsuario.contrasenha = oUsuario.contrasenha;
 
             return oUsuario;
         }
@@ -37,8 +37,12 @@ namespace ApplicationCore.Services
         {
             RepositoryUsuario repository = new RepositoryUsuario();
             usuario.contrasenha = Cryptography.EncrypthAES(usuario.contrasenha);
-             return repository.Save(usuario);
+            return repository.Save(usuario);
         }
+        public ICollection<USUARIO> GetUsuariosEncargados(){
+            return new RepositoryUsuario().GetUsuariosEncargados();
+        }
+        
     }
 }
 
