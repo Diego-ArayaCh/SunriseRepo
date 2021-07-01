@@ -34,7 +34,7 @@
                 <div class="dropdown-menu">
                     @Html.ActionLink("Productos", "IndexAdmin", "Productos", null, new { @class = "dropdown-item" })
                     @Html.ActionLink("Proveedores", "IndexAdmin", "Proveedores", null, new { @class = "dropdown-item" })
-                    <a class="dropdown-item" href="#">Usuarios</a>
+                    @Html.ActionLink("Usuarios", "EditPermisos", "LogIn", null, new { @class = "dropdown-item" })
                 </div>
             </li>
             <li class="nav-item">

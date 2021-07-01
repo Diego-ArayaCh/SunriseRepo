@@ -134,8 +134,71 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+        //Mantenimiento de aprobaciones
+        public ActionResult EditPermisos()
+        {
+            return View(new ServiceUsuario().GetUsuariosEncargados());
+        }
+        public ActionResult Habilitar(int? id)
+        {
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                USUARIO user = new ServiceUsuario().GetUsuarioByID(id.Value);
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Home"); //preguntar si vamos usar la pagina "error"
+                }
+
+                user.estado = 1;
+                new ServiceUsuario().Save(user);
+                ViewBag.titulo = "Mantenimiento de Permisos";
+                
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View("EditPermisos", new ServiceUsuario().GetUsuariosEncargados());
+        }
+        public ActionResult Deshabilitar(int? id)
+        {
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                USUARIO user = new ServiceUsuario().GetUsuarioByID(id.Value);
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Home"); //preguntar si vamos usar la pagina "error"
+                }
+
+                user.estado = 2;
+                new ServiceUsuario().Save(user);
+                ViewBag.titulo = "Mantenimiento de Permisos";
 
 
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View("EditPermisos", new ServiceUsuario().GetUsuariosEncargados());
+        }
 
     }
 }

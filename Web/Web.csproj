@@ -360,6 +360,7 @@
     <Content Include="Views\Productos\Create2.cshtml" />
     <Content Include="Views\Productos\Edit2.cshtml" />
     <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\LogIn\EditPermisos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
