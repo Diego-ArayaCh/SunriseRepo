@@ -18,7 +18,6 @@ namespace Web.Controllers
             return View();
         }
 
-
         public ActionResult Login(USUARIO usuario)
         {
             ServiceUsuario _ServiceUsuario = new ServiceUsuario();
@@ -57,6 +56,7 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+
         [HttpPost]
         public ActionResult Registrar(USUARIO user, string Contrasenia2)
         {
@@ -114,7 +114,6 @@ namespace Web.Controllers
             }
         }
 
-
         public ActionResult Logout()
         {
             try
@@ -134,11 +133,13 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+
         //Mantenimiento de aprobaciones
         public ActionResult EditPermisos()
         {
             return View(new ServiceUsuario().GetUsuariosEncargados());
         }
+
         public ActionResult Habilitar(int? id)
         {
             try
@@ -169,6 +170,7 @@ namespace Web.Controllers
 
             return View("EditPermisos", new ServiceUsuario().GetUsuariosEncargados());
         }
+
         public ActionResult Deshabilitar(int? id)
         {
             try

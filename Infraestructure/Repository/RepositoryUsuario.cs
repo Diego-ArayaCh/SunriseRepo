@@ -11,6 +11,7 @@ namespace Infraestructure.Repository
 {
     public class RepositoryUsuario
     {
+
         public USUARIO GetUsuarioByID(int id)
         {
             USUARIO usuario = null;
@@ -119,6 +120,7 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+
         public ICollection<USUARIO> GetUsuariosEncargados()
         {
             try
