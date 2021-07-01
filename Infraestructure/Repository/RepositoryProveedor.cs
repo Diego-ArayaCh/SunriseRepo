@@ -196,8 +196,12 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
-        public PROVEEDORES Save(PROVEEDORES pProveedor, List<CONTACTO> selectedContacto)
+       
+        public PROVEEDORES Save(PROVEEDORES pProveedor,List<CONTACTO> contactos)
         {
+         
+          
+            
             int retorno = 0;
             PROVEEDORES oProveedor = null;
             try
@@ -209,26 +213,26 @@ namespace Infraestructure.Repository
 
                     if (oProveedor == null)//si es null es nuevo y sino es edit
                     {
+                        pProveedor.CONTACTO = new List<CONTACTO>();
                         using (var transaccion = ctx.Database.BeginTransaction())
                         {
                             ctx.PROVEEDORES.Add(pProveedor);
                             retorno = ctx.SaveChanges();
 
                             //Insertar
-                            if (selectedContacto != null)
+
+
+
+                            foreach (var contacto in contactos)
                             {
-                                pProveedor.CONTACTO = new List<CONTACTO>();
 
-                                foreach (var contacto in selectedContacto)
-                                {
+                                //ctx.CONTACTO.Attach(contacto); //sin esto, EF intentará crear una categoría
+                                pProveedor.CONTACTO.Add(contacto);// asociar a la categoría existente con el libro
 
-                                    //ctx.PROVEEDORES.Attach(contactoToAdd); //sin esto, EF intentará crear una categoría
-                                    pProveedor.CONTACTO.Add(contacto);// asociar a la categoría existente con el libro
+                                retorno = ctx.SaveChanges();
 
-                                    retorno = ctx.SaveChanges();
-
-                                }
                             }
+
 
 
                             // Commit 
@@ -243,52 +247,55 @@ namespace Infraestructure.Repository
                         //Actualizar: 1,3,4
 
                         //Actualizar proveedor
+
+
                         ctx.PROVEEDORES.Add(pProveedor);
                         ctx.Entry(pProveedor).State = EntityState.Modified;
                         retorno = ctx.SaveChanges();
 
                         //Actualizar contactos
-                        List<String> listContactosID = new List<String>();
-                        foreach (var item in selectedContacto)
+                        using (var transaccion = ctx.Database.BeginTransaction())
                         {
-                            listContactosID.Add(item.ID.ToString());
-                        }
 
-                        var listContactos = new HashSet<string>(listContactosID);
-                        if (selectedContacto != null)
-                        {
-                            ctx.Entry(pProveedor).Collection(p => p.CONTACTO).Load();
+                            List<String> listContactosID = new List<String>();
+                            foreach (var item in contactos)
+                            {
+                                listContactosID.Add(item.ID.ToString());
+                            }
+
+                            var listContactos = new HashSet<string>(listContactosID);
+                            if (pProveedor.CONTACTO != null)
+
+                                ctx.Entry(pProveedor).Collection(p => p.CONTACTO).Load();
 
                             var new_C_ForProveedor = ctx.CONTACTO
                              .Where(x => listContactos.Contains(x.ID.ToString())).ToList();
                             ICollection<CONTACTO> insertPS = new List<CONTACTO>();
-                            foreach (CONTACTO itemContacto in new_C_ForProveedor)
+                            foreach (CONTACTO itemContacto in contactos)
                             {
 
                                 CONTACTO oContacto = new CONTACTO();
                                 oContacto.ID = itemContacto.ID;
-                                oContacto.IDProv = oProveedor.ID;
-
-                                foreach (CONTACTO c in oProveedor.CONTACTO)
-                                {
-                                    if (c.ID == itemContacto.ID)
-                                    {
-                                        oContacto.nombre = c.nombre;
-                                        oContacto.telefono = c.telefono;
-                                        oContacto.correo = c.correo;
-                                        oContacto.estado = c.estado;
-
-
-                                    }
-                                }
+                                oContacto.IDProv = pProveedor.ID;
+                                oContacto.nombre = itemContacto.nombre;
+                                oContacto.telefono = itemContacto.telefono;
+                                oContacto.correo = itemContacto.correo;
+                                oContacto.estado = itemContacto.estado;
+                                
                                 insertPS.Add(oContacto);
+
+
+
+
+
                             }
                             pProveedor.CONTACTO = insertPS;
                             ctx.Entry(pProveedor).State = EntityState.Modified;
 
                             retorno = ctx.SaveChanges();
-
+                            transaccion.Commit();
                         }
+                    }
                     }
 
 
@@ -297,8 +304,8 @@ namespace Infraestructure.Repository
 
                     return oProveedor;
 
-
-                }
+                
+                
             }
             catch (DbUpdateException dbEx)
             {

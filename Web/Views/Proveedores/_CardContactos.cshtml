@@ -1,0 +1,71 @@
+﻿@model Web.ViewModel.CrudContactos
+
+
+
+<div class="row" id="resultado">
+    <div style="text-align:center; font-size:large; background-color: @ViewBag.backgroundColor; color: white; width: 100%">
+        @ViewBag.mensaje
+    </div>
+    <br />
+    <br />
+    @if (Model.Items.Count() == 0)
+    {
+        <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-warning">
+            <div class="card-header  bg-warning text-white" style="text-align: center">
+                No disponible
+            </div>
+            <div class="card-body" style="text-align: center">
+                <h5 class="card-title">Información:</h5>
+                <p class="card-text"> No hay contactos registrados para este proveedor</p>
+              
+            </div>
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model.Items)
+        {
+           
+            @Html.HiddenFor(modelItem => item.ID);
+            @Html.HiddenFor(modelItem => item.IDProv);
+            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
+                <div class="card-header header-contact bg-success text-white">
+                    <div class="row">
+                        @Html.DisplayFor(modelItem => item.nombre, new
+                  {
+                      htmlAttributes = new { @class = "col-9 name-contact" }
+                  })
+                        @Ajax.ActionLink("X", "RemoverContacto", "Proveedores",
+                         new { id = item.IDProvisional },
+                         new AjaxOptions
+                         {
+                             UpdateTargetId = "resultado",
+                             InsertionMode = InsertionMode.Replace,
+                         }, new { @class = " delete-contact col-2" })
+
+
+
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Información:</h5>
+                    <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
+                    <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+                </div>
+                <div class="card-footer text-center">
+                    @Ajax.ActionLink("Actualizar", "ObtenerContacto", "Proveedores",
+                          new { id = item.IDProvisional },
+                          new AjaxOptions
+                               {
+                              UpdateTargetId = "modal-content",
+                              InsertionMode = InsertionMode.Replace,
+                              OnComplete = "mostrarModal()"
+                          }, new { @class = "btn btn-warning update-contact" })
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

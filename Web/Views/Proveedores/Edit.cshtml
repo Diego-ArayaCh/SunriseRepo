@@ -1,0 +1,291 @@
+﻿@model Infraestructure.Models.PROVEEDORES
+
+@{
+    ViewBag.Title = "Editar";
+}
+<style>
+    /*.header-contact{
+        display: inline;
+    }*/
+    /*.update-contact {
+         text-align:center;
+    }*/
+    .delete-contact {
+        text-decoration: none;
+        position: absolute;
+        left: 315px;
+        /*display: inline;*/
+        /* margin-left: 80%;*/
+        background: -webkit-linear-gradient(left, red, gold);
+        color: white;
+        text-align: center;
+        border-radius: 20px;
+        font-weight: bolder;
+    }
+
+        .delete-contact:hover {
+            background: white;
+            color: black;
+        }
+</style>
+
+<ul class="nav nav-tabs" style="width:100%">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#Informacion">Información General</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Contactos">Contactos</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Crear">Actualizar</a>
+    </li>
+
+
+
+
+</ul>
+<div style="height:480px">
+    @using (Html.BeginForm("Save", "Proveedores", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div id="myTabContent" class="tab-content" style="width:100%">
+        @Html.HiddenFor(model => model.ID)
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="tab-pane fade active show" id="Informacion">
+
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Información General
+            </h1>
+            <hr class="my-4">
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-lg-5" })
+                <div class="col-lg-12">
+                    @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.direccion, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-lg-10">
+                            @Html.EditorFor(model => model.direccion, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IDPais, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-12">
+                            @Html.DropDownListFor(model => model.IDPais, null,
+"Seleccione una categoría",
+htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IDPais, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.Label("Estado del proveedor", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.estado, null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div style="margin-top:20px" id="estiloColorHover3">
+                @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+            </div>
+        </div>
+
+
+
+        <div class="tab-pane fade  show" id="Contactos">
+
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Contactos
+            </h1>
+            <hr class="my-4">
+            <div class="container">
+
+                @Ajax.ActionLink("Nuevo", "ModalNuevo",
+                       new { },
+                       new AjaxOptions
+                            {
+                           UpdateTargetId = "modal-content",
+                           InsertionMode = InsertionMode.Replace,
+                           OnComplete = "mostrarModal()"
+                       }, new { @class = "btn btn-info" })
+                <hr />
+                <br />
+
+
+                <div class="row" id="resultado">
+                    <div style="text-align:center; font-size:large; background-color: @ViewBag.backgroundColor; color: white; width: 100%">
+                        @ViewBag.mensaje
+                    </div>
+                    <br />
+                    <br />
+                    @if (((List<Web.ViewModel.ViewModelContactos>)ViewBag.contactos).Count() == 0)
+                    {
+                        <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-warning">
+                            <div class="card-header  bg-warning text-white" style="text-align: center">
+                                No disponible
+                            </div>
+                            <div class="card-body" style="text-align: center">
+                                <h5 class="card-title">Información:</h5>
+                                <p class="card-text"> No hay contactos registrados para este proveedor</p>
+
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        foreach (var item in ((List<Web.ViewModel.ViewModelContactos>)ViewBag.contactos))
+                        {
+                            @Html.HiddenFor(modelItem => item);
+                            @Html.HiddenFor(modelItem => item.ID);
+                            @Html.HiddenFor(modelItem => item.IDProv);
+                     
+                            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
+                                <div class="card-header header-contact bg-success text-white">
+                                    <div class="row">
+                                        @Html.DisplayFor(modelItem => item.nombre, new
+                                  {
+                                      htmlAttributes = new { @class = "col-9 name-contact" }
+                                  })
+                                        @Ajax.ActionLink("X", "RemoverContacto", "Proveedores",
+                                         new { id = item.IDProvisional },
+                                         new AjaxOptions
+                                         {
+                                             UpdateTargetId = "resultado",
+                                             InsertionMode = InsertionMode.Replace,
+                                         }, new { @class = " delete-contact col-2" })
+
+
+
+                                    </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Información:</h5>
+                                    <p class="card-text"> Correo: @Html.DisplayFor(modelItem => item.correo)</p>
+                                    <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    @Ajax.ActionLink("Actualizar", "ObtenerContacto", "Proveedores",
+                                          new { id = item.IDProvisional },
+                                          new AjaxOptions
+                                               {
+                                              UpdateTargetId = "modal-content",
+                                              InsertionMode = InsertionMode.Replace,
+                                              OnComplete = "mostrarModal()"
+                                          }, new { @class = "btn btn-warning update-contact" })
+                                </div>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+            </div>
+            <div style="margin-top:20px" id="estiloColorHover3">
+                @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+            </div>
+        </div>
+
+
+
+
+
+
+        <div class="tab-pane fade " id="Crear" style="z-index:3">
+           
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Confirmación de creación
+            </h1>
+            <hr class="my-4">
+            <p class="lead" style=" text-align: center; margin-top:20px">
+                ¡ATENCION! Se guardará el proveedor especificado en la Base de Datos
+            </p>
+
+            <input type="submit" value="Registrar Proveedor" class="btn btn-primary"
+                   style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
+            <div style="margin-top:20px" id="estiloColorHover3">
+                @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+            </div>
+        </div>
+        <br />
+
+
+
+
+
+
+
+        <br />
+
+
+
+
+    </div> @*final de los tabs*@
+
+    }
+    <input type="hidden" id="campoOculto" />
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div id="modal-content" class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/bootstrap-Select/css")*@
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+
+
+    <script type="text/javascript">
+        function mostrarModal(id) {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('show');
+        }
+        function CerrarModal() {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('hide');
+        }
+    </script>
+    @if (ViewBag.NotificationMessage != null)
+    {
+        <script>
+            @Html.Raw(@ViewBag.NotificationMessage);
+        </script>
+    }
+}

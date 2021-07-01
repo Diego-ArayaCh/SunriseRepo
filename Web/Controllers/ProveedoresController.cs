@@ -3,15 +3,23 @@ using Infraestructure.Models;
 using PagedList;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
+using Web.Security;
+using Web.ViewModel;
+
+
+using Web.Utils;
+using System.Diagnostics;
+
 
 namespace Web.Controllers
 {
+   
     public class ProveedoresController : Controller
     {
+        #region Acciones normales
+       
         // GET: Proveedores
         //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProveedor)
@@ -43,11 +51,9 @@ namespace Web.Controllers
             int pageSize = 5;
             int pageNumber = page ?? 1;
             return View(lista.ToPagedList(pageNumber, pageSize));
-          
+
 
         }
-
-
         // GET: Proveedores/Details/5
         //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult Details(int? id)
@@ -76,17 +82,19 @@ namespace Web.Controllers
                 return RedirectToAction("IndexAdmin");
             }
         }
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Create()
         {
             //Lista de autores
-
-            ViewBag.IDPais = listaPaises();
-            ViewBag.Contacto = listaContactos(null);
-
+            ViewBag.BackgroundColor = "white";
+            ViewBag.IDPais = listaPaises(0);
+            ViewBag.estado = listaEstados(1);
+            CrudContactos.Instancia.Items.Clear();
             return View();
         }
         public ActionResult Edit(int? id)
         {
+            CrudContactos.Instancia.Items.Clear();
             ServiceProveedores _ServiceProveedor = new ServiceProveedores();
             PROVEEDORES oPROVEEDORES = null;
 
@@ -114,10 +122,21 @@ namespace Web.Controllers
                 //{
                 //    listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
                 //}
-
+                ViewBag.estado = listaEstados(Convert.ToInt32(oPROVEEDORES.estado));
                 ViewBag.IDPais = listaPaises(Convert.ToInt32(oPROVEEDORES.IDPais));
                 //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
-                ViewBag.selectedContactos = listaContactos(oPROVEEDORES.ID);
+                foreach (var item in listaContactos(oPROVEEDORES.ID))
+                {
+                    ViewModelContactos oViewModelContactos = new ViewModelContactos();
+                    oViewModelContactos.ID = item.ID;
+                    oViewModelContactos.IDProv = item.IDProv;
+                    oViewModelContactos.nombre = item.nombre;
+                    oViewModelContactos.telefono = item.telefono;
+                    oViewModelContactos.correo = item.correo;
+                    oViewModelContactos.contacto = item;
+                    CrudContactos.Instancia.GuardarContacto(oViewModelContactos);
+                }
+                ViewBag.contactos = CrudContactos.Instancia.Items;
                 ViewBag.estado = listaEstados(Convert.ToInt32(oPROVEEDORES.estado));
 
                 return View(oPROVEEDORES);
@@ -133,17 +152,179 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+        [HttpPost]
+        public ActionResult Save(PROVEEDORES oProveedores)
+        {
+            List<CONTACTO> contactos = new List<CONTACTO>();
+            ServiceProveedores serviceProveedores = new ServiceProveedores();
+            try
+            {
+                ServiceProveedores _service = new ServiceProveedores();
+                PROVEEDORES oProveedor = new PROVEEDORES();
+                oProveedor = _service.GetProveedorByID(oProveedores.ID);
+                if (oProveedor == null)
+                {
+                    oProveedores.estado = 1;
+                    if (CrudContactos.Instancia.Items.Count == 0)
+                    {
+                        return View("Create", oProveedores);
+                    }
+                    else
+                    {
+                       
+                        foreach (var item in CrudContactos.Instancia.Items)
+                        {
+                            CONTACTO oContacto = new CONTACTO();
+                            oContacto.correo = item.correo;
+                            oContacto.estado = 1;
+                            oContacto.nombre = item.nombre;
+                            oContacto.telefono = item.telefono;
+                           contactos.Add(oContacto);
+                        }
+                    }
+                    if (ModelState.IsValid)
+                    {
+
+
+                        PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores,contactos);
+                    }
+                    else
+                    {
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
+                        //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
+
+                        return View("Create", oProveedores);
+                    }
+                }
+                else
+                {
+
+                    if (CrudContactos.Instancia.Items.Count == 0)
+                    {
+                        return View("Edit", oProveedores);
+                    }
+                    else
+                    {
+                        foreach (var item in CrudContactos.Instancia.Items)
+                        {
+                            CONTACTO oContacto = new CONTACTO();
+                            oContacto.ID = item.ID;
+                            oContacto.IDProv = item.IDProv;
+                            oContacto.nombre = item.nombre;
+                            oContacto.telefono = item.telefono;
+                            oContacto.correo = item.correo;
+                            contactos.Add(oContacto);
+
+                        }
+                    }
+
+
+
+                    
+
+
+
+
+                    if (ModelState.IsValid)
+                    {
+
+                        var d = oProveedores.CONTACTO;
+                        PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores, contactos);
+                    }
+                    else
+                    {
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
+                        //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
+
+                        return View("Create", oProveedores);
+                    }
+                }
+                
+
+               
+
+
+                return RedirectToAction("IndexAdmin");
+
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
+                TempData["Redirect"] = "Productos";
+                TempData["Redirect-Action"] = "IndexAdmin";
+                // Redireccion a la captura del Error
+                return RedirectToAction("Default", "Error");
+            }
+        }
+        #endregion
+        #region CRUD Contactos
+        public ActionResult GuardarContacto(ViewModelContactos oViewModelContacto)
+        {
+            if (ValidarCamposVaciosContactos(oViewModelContacto))
+            {
+                ViewBag.mensaje = "El contacto contiene datos sin llenar";
+                ViewBag.BackgroundColor = "red";
+                return PartialView("_CardContactos", CrudContactos.Instancia);
+            }
+            if (ValidarRepetidos(oViewModelContacto))
+            {
+
+                ViewBag.mensaje = "El contacto está repetido";
+                ViewBag.BackgroundColor = "red";
+                return PartialView("_CardContactos", CrudContactos.Instancia);
+            }
+            ViewBag.BackgroundColor = "white";
+
+            CrudContactos.Instancia.GuardarContacto(oViewModelContacto);
+
+            return PartialView("_CardContactos", CrudContactos.Instancia);
+
+        }
+        public ActionResult ObtenerContacto(int id)
+        {
+            ViewModelContactos model = CrudContactos.Instancia.ObtenerContacto(id);
+            return PartialView("_Contacto",model);
+        }
+        public ActionResult RemoverContacto(int id)
+        {
+            CrudContactos.Instancia.RemoverContacto(id);
+
+
+            return PartialView("_CardContactos", CrudContactos.Instancia);
+        }
+        public ActionResult ActualizarContacto(int id)
+        {
+
+
+            CrudContactos.Instancia.ActualizarContacto(id);
+
+
+
+            return PartialView("_CardContactos", CrudContactos.Instancia);
+        }
+        #endregion
+        #region Listados
         private SelectList listaPaises(int IDPais = 0)
         {
             //Lista de autores
             ServiceProveedores _ServiceProveedor = new ServiceProveedores();
             IEnumerable<PAIS> listaPaises = _ServiceProveedor.GetPaises();
-            //Autor SelectAutor = listaAutores.Where(c => c.IdAutor == idAutor).FirstOrDefault();
+           
 
             //crea un combo box, los objetos son: lista, valor del objeto , y objeto a mostrar, y seleccionado
             return new SelectList(listaPaises, "ID", "nombre", IDPais);
         }
-        private SelectList listaContactos(int? id)
+        private IEnumerable<CONTACTO> listaContactos(int? id)
         {
             //Lista de autores
             ServiceProveedores _ServiceProveedor = new ServiceProveedores();
@@ -151,7 +332,7 @@ namespace Web.Controllers
             //Autor SelectAutor = listaAutores.Where(c => c.IdAutor == idAutor).FirstOrDefault();
 
             //crea un combo box, los objetos son: lista, valor del objeto , y objeto a mostrar, y seleccionado
-            return new SelectList(selectedContactos, "ID", "nombre");
+            return selectedContactos;
 
 
         }
@@ -174,46 +355,45 @@ namespace Web.Controllers
 
             return items;
         }
-        [HttpPost]
-        public ActionResult Save(PROVEEDORES oProveedores,List<CONTACTO> selectedContactos)
+        #endregion
+        #region Validaciones
+        public bool ValidarCamposVaciosContactos(ViewModelContactos oViewModelContacto)
         {
-
-            ServiceProveedores serviceProveedores = new ServiceProveedores();
-            try
-            {
-
-                if (ModelState.IsValid)
+            bool isNull = false;
+          
+                if (oViewModelContacto.nombre == null || oViewModelContacto.correo == null || oViewModelContacto.telefono  == null)
                 {
-                    oProveedores.estado = 1;
-
-                    PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores, selectedContactos);
+                    isNull = true;
                 }
-                else
-                {
-                    // Valida Errores si Javascript está deshabilitado
-                    Web.Utils.Util.ValidateErrors(this);
-                    ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
-                    //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
-
-                    ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
-
-                    return View("Create", oProveedores);
-                }
-
-
-                return RedirectToAction("IndexAdmin");
-
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                TempData["Message"] = "Error al procesar los datos! " + ex.Message;
-                TempData["Redirect"] = "Productos";
-                TempData["Redirect-Action"] = "IndexAdmin";
-                // Redireccion a la captura del Error
-                return RedirectToAction("Default", "Error");
-            }
+            
+            return isNull;
         }
+        public bool ValidarRepetidos(ViewModelContactos oViewModelContacto)
+        {
+            bool isRepeat = false;
+            foreach (var item in CrudContactos.Instancia.Items)
+            {
+                if (oViewModelContacto.nombre.Trim() == item.nombre.Trim() && oViewModelContacto.correo.Trim() == item.correo.Trim() && oViewModelContacto.telefono.Trim() == item.telefono.Trim())
+                {
+                    isRepeat = true;
+                }
+            }
+
+
+            return isRepeat;
+        }
+        #endregion
+        #region utilitarios
+        public ActionResult ModalNuevo()
+        {
+            ViewModelContactos model = new ViewModelContactos();
+
+            return PartialView("_Contacto", model);
+        }
+        #endregion
+
+
+
+       
     }
 }

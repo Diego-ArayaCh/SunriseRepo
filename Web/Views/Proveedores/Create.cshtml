@@ -3,7 +3,32 @@
 @{
     ViewBag.Title = "Crear";
 }
+<style>
 
+    /*.header-contact{
+        display: inline;
+    }*/
+    /*.update-contact {
+         text-align:center;
+    }*/
+    .delete-contact {
+        text-decoration: none;
+        position: absolute;
+        left: 315px;
+        /*display: inline;*/
+        /* margin-left: 80%;*/
+        background: -webkit-linear-gradient(left, red, gold);
+        color: white;
+        text-align: center;
+        border-radius: 20px;
+        font-weight: bolder;
+    }
+
+        .delete-contact:hover {
+            background: white;
+            color: black;
+        }
+</style>
 
 <ul class="nav nav-tabs" style="width:100%">
 
@@ -62,16 +87,31 @@
                             @Html.LabelFor(model => model.IDPais, htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-12">
                                 @Html.DropDownListFor(model => model.IDPais,
-                                    (SelectList)ViewBag.IDPais,
-                                            "Seleccione una categoría",
-                                                htmlAttributes: new { @class = "form-control" })
+                                (SelectList)ViewBag.IDPais,
+                                "Seleccione un país",
+                                htmlAttributes: new { @class = "form-control" })
+
                                 @Html.ValidationMessageFor(model => model.IDPais, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.Label("Estado del proveedor", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.estado, null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
                             </div>
                         </div>
                     </div>
                 </div>
                 <br />
+                <div style="margin-top:20px" id="estiloColorHover3">
+                    @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+                </div>
             </div>
+
+
 
             <div class="tab-pane fade  show" id="Contactos">
 
@@ -79,25 +119,47 @@
                     Contactos
                 </h1>
                 <hr class="my-4">
+                <div class="container">
 
-                <div class="col-6">
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.IDPais, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.CONTACTO,
-                                (SelectList)ViewBag.Contacto,
-                                        "Seleccione un contacto",
-                                            htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CONTACTO, "", new { @class = "text-danger" })
+                    @Ajax.ActionLink("Nuevo", "ModalNuevo",
+                           new { },
+                           new AjaxOptions
+                                {
+                               UpdateTargetId = "modal-content",
+                               InsertionMode = InsertionMode.Replace,
+                               OnComplete = "mostrarModal()"
+                           }, new { @class = "btn btn-info" })
+                    <hr />
+                    <br />
+
+
+                    <div class="row" id="resultado">
+                        <div style="background-color:@ViewBag.backgroundColor; color:white; width: 100%">
+                            @ViewBag.mensaje
                         </div>
+                        <br />
+                        <br />
+                        <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-warning">
+                            <div class="card-header   bg-warning text-white" style="text-align: center">
+                                No disponible
+                            </div>
+                            <div class="card-body" style="text-align: center">
+                                <h5 class="card-title">Información:</h5>
+                                <p class="card-text"> No hay contactos registrados</p>
+
+                            </div>
+                        </div>
+
                     </div>
+
                 </div>
-
-                <br />
-
-
-
+                <div style="margin-top:20px" id="estiloColorHover3">
+                    @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+                </div>
             </div>
+
+
+
 
 
 
@@ -112,19 +174,37 @@
 
                 <input type="submit" value="Registrar Proveedor" class="btn btn-primary"
                        style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
-
+                <div style="margin-top:20px" id="estiloColorHover3">
+                    @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+                </div>
             </div>
+            <br />
+
+
+
+
+
+
+
+            <br />
+
+
+
 
         </div> @*final de los tabs*@
 
-
     }
-</div>
-    <br />
+    <input type="hidden" id="campoOculto" />
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div id="modal-content" class="modal-content">
 
-    <div style="margin-top:20px" id="estiloColorHover3">
-        @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
+            </div>
+        </div>
     </div>
+</div>
+
+<br />
 
 
 
@@ -133,10 +213,27 @@
 
 
 
-    @section Scripts {
-        @*@Scripts.Render("~/bundles/bootstrap-select")
-            @Styles.Render("~/Content/bootstrap-Select/css")*@
-        @Scripts.Render("~/bundles/jqueryval")
 
 
-    }
+@section Scripts {
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/bootstrap-Select/css")*@
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+
+
+    <script type="text/javascript">
+        function mostrarModal(id) {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('show');
+        }
+        function CerrarModal() {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('hide');
+        }
+    </script>
+
+}

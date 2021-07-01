@@ -40,10 +40,10 @@ namespace ApplicationCore.Services
             RepositoryProveedor repository = new RepositoryProveedor();
             return repository.GetProveedorByID(pID);
         }
-        public PROVEEDORES Save(PROVEEDORES oProveedor, List<CONTACTO> selectedContacto)
+        public PROVEEDORES Save(PROVEEDORES oProveedor, List<CONTACTO> contactos)
         {
             RepositoryProveedor repository = new RepositoryProveedor();
-            return repository.Save(oProveedor, selectedContacto);
+            return repository.Save(oProveedor,contactos);
         }
         public CONTACTO GetContactoByID(int id)
         {

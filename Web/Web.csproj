@@ -166,6 +166,8 @@
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\SweetAlertHelper.cs" />
     <Compile Include="Utils\Util.cs" />
+    <Compile Include="ViewModel\CrudContactos.cs" />
+    <Compile Include="ViewModel\ViewModelContactos.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -175,6 +177,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\IMAGES-PAGES\ajaxLoading.gif" />
     <Content Include="Content\IMAGES-PAGES\gift_cargando_partialView.gif" />
     <Content Include="Content\IMAGES-PAGES\imagen-no-disponible.png" />
     <Content Include="Content\IMAGES-PRODUCTS\11900K.jpg" />
@@ -360,6 +363,10 @@
     <Content Include="Views\Productos\Create2.cshtml" />
     <Content Include="Views\Productos\Edit2.cshtml" />
     <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\Proveedores\_CardContactos.cshtml" />
+    <Content Include="Views\Proveedores\_Contacto.cshtml" />
+    <Content Include="Views\Proveedores\Edit.cshtml" />
+    <Content Include="Views\Proveedores\vista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
