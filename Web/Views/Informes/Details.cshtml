@@ -11,7 +11,7 @@
     <div class="row no-gutters">
         <div class="col-lg-8">
             <div class="card-body">
-                <h3 class="card-title">Informe #@Html.DisplayFor(model => model.ID)</h3>
+                <h3 class="card-title" >Informe #@Html.DisplayFor(model => model.ID)</h3>
                 <h6 class="text-muted">
                     Tipo: @Html.DisplayFor(model => model.MOVIMIENTO.nombre)
                 </h6>
@@ -30,11 +30,13 @@
                     }
                 </h6>
                 <hr />
-                <h4 class="card-title">Información General</h4>
-                <h5 class="card-title">Usuario</h5>
-                <p class="card-text">ID: #@Html.DisplayFor(model => model.IDUsuario)</p>
+                <h4 class="card-title" id="estiloColor">Información General</h4>
+                <h5 class="card-title">Usuario a cargo del movimiento:</h5>
+                @*<p class="card-text">ID: #@Html.DisplayFor(model => model.IDUsuario)</p>*@
                 <p class="card-text">Cédula: @Html.DisplayFor(model => model.USUARIO.cedula)</p>
-                <p class="card-text">Nombre: @Html.DisplayFor(model => model.USUARIO.nombre) @if (Model.USUARIO.apellidos.IsEmpty() == false) { Model.USUARIO.apellidos.ToString(); }</p>
+                <p class="card-text">Nombre: @Html.DisplayFor(model => model.USUARIO.nombre) 
+                        @if (Model.USUARIO.apellidos.IsEmpty() == false)
+                                {@Html.DisplayFor(model => model.USUARIO.apellidos)}</p>
                 <p class="card-text">Rol: @Html.DisplayFor(model => model.USUARIO.ROL.descripcion)</p>
                 <p class="card-text">Correo: @Html.DisplayFor(model => model.USUARIO.correo)</p>
                 <p class="card-text">Telefono: @Html.DisplayFor(model => model.USUARIO.telefono)</p>
@@ -146,16 +148,16 @@
                         <h5 class="card-title">Información:</h5>
                         <p class="card-text">Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.direccion)</p>
                         <p class="card-text">
-                            Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
+                            @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
                             {
-                                <div style="display:inline;">Activo</div>
+                            <div>  Estado: Activo</div>
                             }
                             else
                             {
-                                <div style="display:inline;">Inactivo</div>
+                            <div> Estado: Inactivo</div>
                             }
                         </p>
-                        <p class="card-text">ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
+                        <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
                     </div>
                 </div>
             }
@@ -170,16 +172,16 @@
                         <h5 class="card-title">Información:</h5>
                         <p class="card-text">Dirección: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.direccion)</p>
                         <p class="card-text">
-                            Estado:  @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
+                           @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
                             {
-                                <div style="display:inline;">Activo</div>
+                                <div> Estado: Activo</div>
                             }
                             else
                             {
-                                <div style="display:inline;">Inactivo</div>
+                                <div> Estado: Inactivo</div>
                             }
                         </p>
-                        <p class="card-text">ID: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
+                        <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
                     </div>
                 </div>
             }
