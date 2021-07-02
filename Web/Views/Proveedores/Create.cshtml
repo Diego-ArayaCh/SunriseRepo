@@ -112,17 +112,17 @@
                 <hr class="my-4">
                 <div class="container">
 
-                    @Ajax.ActionLink("Nuevo", "ModalNuevo",
+                    @Ajax.ActionLink("< < Nuevo > >", "ModalNuevo",
                            new { },
                            new AjaxOptions
-                                {
+                           {
                                UpdateTargetId = "modal-content",
                                InsertionMode = InsertionMode.Replace,
                                OnComplete = "mostrarModal()"
-                           }, new { @class = "btn btn-info" })
+                           }, new { @class = "btn btn-primary",
+                               style = " text-align: center; margin-left: 50%; transform: translateX(-50%);"})
                     <hr />
                     <br />
-
 
                     <div class="row" id="resultado">
                         <div style="text-align:center; font-size:large; background-color: @ViewBag.backgroundColor; color: white; width: 100%">
