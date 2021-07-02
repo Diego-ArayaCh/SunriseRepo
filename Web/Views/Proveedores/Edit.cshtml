@@ -83,9 +83,8 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        @Html.LabelFor(model => model.IDPais, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label>País </label>
                         <div class="col-md-12">
-                           
                             @Html.DropDownListFor(model => model.IDPais, (SelectList)ViewBag.pais,
                                  "Seleccione un país",
                                  htmlAttributes: new { @class = "form-control" })
@@ -93,13 +92,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        @Html.Label("Estado del proveedor", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
-                        <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.estado, null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
-                        </div>
+            </div>
+            <br />
+            <div class="col-6">
+                <div class="form-group">
+                    @Html.Label("Estado del proveedor", htmlAttributes: new { @class = "control-label col-md-2", style = "width:1000px" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.estado, null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.estado, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
