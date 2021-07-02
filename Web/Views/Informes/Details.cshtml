@@ -157,16 +157,16 @@
                         <div>  Estado de la Sucursal: Inactivo</div>
                             }
                         </p>
-                        <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
+                        <p class="card-text">Identificador de Sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
                     </div>
                 </div>
             }
             if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1 != null)
             {
 
-                <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12  card  mb-3  border border-success">
-                    <div class="card-header bg-success text-white">
-                        Sucursal de Entrada: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)
+                <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12  card  mb-3  border border-warning">
+                    <div class="card-header bg-warning text-white">
+                        Sucursal de Salida: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.nombre)
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Información:</h5>
@@ -181,7 +181,7 @@
                         <div>  Estado de la Sucursal: Inactivo</div>
                             }
                         </p>
-                        <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
+                        <p class="card-text">Identificador de Sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
                     </div>
                 </div>
             }
