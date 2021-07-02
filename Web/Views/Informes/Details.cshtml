@@ -150,11 +150,11 @@
                         <p class="card-text">
                             @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.estado == 1)
                             {
-                            <div>  Estado: Activo</div>
+                            <div>  Estado de la Sucursal: Activo</div>
                             }
                             else
                             {
-                            <div> Estado: Inactivo</div>
+                        <div>  Estado de la Sucursal: Inactivo</div>
                             }
                         </p>
                         <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL.ID)</p>
@@ -174,11 +174,11 @@
                         <p class="card-text">
                            @if (Model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.estado == 1)
                             {
-                                <div> Estado: Activo</div>
+                            <div>  Estado de la Sucursal: Activo</div>
                             }
                             else
                             {
-                                <div> Estado: Inactivo</div>
+                        <div>  Estado de la Sucursal: Inactivo</div>
                             }
                         </p>
                         <p class="card-text">Identificador de sucursal: @Html.DisplayFor(model => model.HistDetalleEntradaSalida.ElementAt(0).SUCURSAL1.ID)</p>
