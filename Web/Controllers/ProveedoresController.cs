@@ -11,7 +11,7 @@ using Web.ViewModel;
 
 using Web.Utils;
 using System.Diagnostics;
-
+using Web.Util;
 
 namespace Web.Controllers
 {
@@ -82,14 +82,16 @@ namespace Web.Controllers
                 return RedirectToAction("IndexAdmin");
             }
         }
-        [CustomAuthorize((int)Roles.Administrador)]
+       // [CustomAuthorize((int)Roles.Administrador)]
+       
         public ActionResult Create()
         {
             //Lista de autores
             ViewBag.BackgroundColor = "white";
-            ViewBag.IDPais = listaPaises(0);
+            ViewBag.pais = listaPaises();
             ViewBag.estado = listaEstados(1);
             CrudContactos.Instancia.Items.Clear();
+            ViewBag.contactos = CrudContactos.Instancia.Items;
             return View();
         }
         public ActionResult Edit(int? id)
@@ -123,7 +125,7 @@ namespace Web.Controllers
                 //    listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
                 //}
                 ViewBag.estado = listaEstados(Convert.ToInt32(oPROVEEDORES.estado));
-                ViewBag.IDPais = listaPaises(Convert.ToInt32(oPROVEEDORES.IDPais));
+                ViewBag.pais = listaPaises(Convert.ToInt32(oPROVEEDORES.IDPais));
                 //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
                 foreach (var item in listaContactos(oPROVEEDORES.ID))
                 {
@@ -152,8 +154,10 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
         }
+
+
         [HttpPost]
-        public ActionResult Save(PROVEEDORES oProveedores)
+        public ActionResult Save(PROVEEDORES pProveedores)
         {
             List<CONTACTO> contactos = new List<CONTACTO>();
             ServiceProveedores serviceProveedores = new ServiceProveedores();
@@ -161,13 +165,48 @@ namespace Web.Controllers
             {
                 ServiceProveedores _service = new ServiceProveedores();
                 PROVEEDORES oProveedor = new PROVEEDORES();
-                oProveedor = _service.GetProveedorByID(oProveedores.ID);
+                oProveedor = _service.GetProveedorByID(pProveedores.ID);
                 if (oProveedor == null)
                 {
-                    oProveedores.estado = 1;
-                    if (CrudContactos.Instancia.Items.Count == 0)
+                    pProveedores.estado = 1;
+                    if (!ModelState.IsValid)
                     {
-                        return View("Create", oProveedores);
+
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Hay campos sin llenar", SweetAlertMessageType.error);
+                        return View("Create", pProveedores);
+
+                    }
+                    if (ValidarListaContactos(pProveedores) && pProveedores.IDPais==null)
+                    {
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Seleccione un país y registre contactos", SweetAlertMessageType.error);
+                        return View("Create", pProveedores);
+                    }
+
+
+                   
+                    if (pProveedores.IDPais==null)
+                    {
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Seleccione un país", SweetAlertMessageType.error);
+                        return View("Create", pProveedores);
+                    }
+                    if (ValidarListaContactos(pProveedores))
+                    {
+                        
+                       
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error","No hay contactos registrados",SweetAlertMessageType.error);
+                        return View("Create", pProveedores);
                     }
                     else
                     {
@@ -186,26 +225,62 @@ namespace Web.Controllers
                     {
 
 
-                        PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores,contactos);
+                        PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores,contactos);
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Éxito", "Se creó correctamente el proveedor", SweetAlertMessageType.success);
                     }
                     else
                     {
                         // Valida Errores si Javascript está deshabilitado
                         Web.Utils.Util.ValidateErrors(this);
-                        ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
                         //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
 
-                        ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
 
-                        return View("Create", oProveedores);
+                        return View("Create", pProveedores);
                     }
                 }
                 else
                 {
-
-                    if (CrudContactos.Instancia.Items.Count == 0)
+                    
+                    if (!ModelState.IsValid)
                     {
-                        return View("Edit", oProveedores);
+
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Hay campos sin llenar", SweetAlertMessageType.error);
+                        return View("Edit", pProveedores);
+
+                    }
+                    if (ValidarListaContactos(pProveedores) && pProveedores.IDPais == null)
+                    {
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Seleccione un país y registre contactos", SweetAlertMessageType.error);
+                        return View("Edit", pProveedores);
+                    }
+
+
+                   
+                    if (pProveedores.IDPais == null)
+                    {
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "Seleccione un país", SweetAlertMessageType.error);
+                        return View("Edit", pProveedores);
+                    }
+                    if (ValidarListaContactos(pProveedores))
+                    {
+
+
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
+                        ViewBag.contactos = CrudContactos.Instancia.Items;
+                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Error", "No hay contactos registrados", SweetAlertMessageType.error);
+                        return View("Edit", pProveedores);
                     }
                     else
                     {
@@ -222,29 +297,30 @@ namespace Web.Controllers
                         }
                     }
 
+                    
+
 
 
                     
 
 
-
-
                     if (ModelState.IsValid)
                     {
 
-                        var d = oProveedores.CONTACTO;
-                        PROVEEDORES oProveedores1 = serviceProveedores.Save(oProveedores, contactos);
+                        
+                        PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores, contactos);
+                       // ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Éxito", "Se actualizó correctamente el proveedor", SweetAlertMessageType.success);
                     }
                     else
                     {
                         // Valida Errores si Javascript está deshabilitado
                         Web.Utils.Util.ValidateErrors(this);
-                        ViewBag.IDPais = listaPaises(Convert.ToInt32(oProveedores.IDPais));
-                        //ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+                        ViewBag.pais = listaPaises(Convert.ToInt32(pProveedores.IDPais));
+                    
 
-                        ViewBag.estado = listaEstados(Convert.ToInt32(oProveedores.estado));
+                        ViewBag.estado = listaEstados(Convert.ToInt32(pProveedores.estado));
 
-                        return View("Create", oProveedores);
+                        return View("Edit", pProveedores);
                     }
                 }
                 
@@ -270,6 +346,26 @@ namespace Web.Controllers
         #region CRUD Contactos
         public ActionResult GuardarContacto(ViewModelContactos oViewModelContacto)
         {
+            try
+            {
+                Convert.ToInt64(oViewModelContacto.telefono);
+            }
+            catch (Exception)
+            {
+                ViewBag.mensaje = "El teléfono del contacto debe contener sólo números";
+                ViewBag.BackgroundColor = "red";
+                return PartialView("_CardContactos", CrudContactos.Instancia);
+
+            }
+
+
+
+            if (oViewModelContacto.telefono.Length !=8 )
+            {
+                ViewBag.mensaje = "El teléfono del contacto debe contener 8 dígitos";
+                ViewBag.BackgroundColor = "red";
+                return PartialView("_CardContactos", CrudContactos.Instancia);
+            }
             if (ValidarCamposVaciosContactos(oViewModelContacto))
             {
                 ViewBag.mensaje = "El contacto contiene datos sin llenar";
@@ -286,7 +382,7 @@ namespace Web.Controllers
             ViewBag.BackgroundColor = "white";
 
             CrudContactos.Instancia.GuardarContacto(oViewModelContacto);
-
+           
             return PartialView("_CardContactos", CrudContactos.Instancia);
 
         }
@@ -339,10 +435,11 @@ namespace Web.Controllers
 
         public IEnumerable<SelectListItem> listaEstados(int seleccionado)
         {
+            
             IList<SelectListItem> items = new List<SelectListItem>
             {
                 new SelectListItem{Text = "Activo", Value = "1"},
-                new SelectListItem{Text = "Inactivo", Value = "2"},
+                new SelectListItem{Text = "Inactivo", Value = "0"},
             };
             foreach (var item in items)
             {
@@ -381,6 +478,20 @@ namespace Web.Controllers
 
 
             return isRepeat;
+        }
+        public bool ValidarListaContactos(PROVEEDORES pProveedores)
+        {
+            bool isEmpty = false;
+            if (CrudContactos.Instancia.Items.Count == 0)
+            {
+                isEmpty = true;
+               
+
+               
+
+               
+            }
+            return isEmpty;
         }
         #endregion
         #region utilitarios

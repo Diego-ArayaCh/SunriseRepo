@@ -42,7 +42,7 @@
         <a class="nav-link" data-toggle="tab" href="#Crear">Actualizar</a>
     </li>
 
-
+   
 
 
 </ul>
@@ -85,9 +85,10 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.IDPais, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-12">
-                            @Html.DropDownListFor(model => model.IDPais, null,
-"Seleccione una categoría",
-htmlAttributes: new { @class = "form-control" })
+                           
+                            @Html.DropDownListFor(model => model.IDPais, (SelectList)ViewBag.pais,
+                                 "Seleccione un país",
+                                 htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.IDPais, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -212,14 +213,14 @@ htmlAttributes: new { @class = "form-control" })
         <div class="tab-pane fade " id="Crear" style="z-index:3">
            
             <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
-                Confirmación de creación
+                Confirmación de actualización
             </h1>
             <hr class="my-4">
             <p class="lead" style=" text-align: center; margin-top:20px">
-                ¡ATENCION! Se guardará el proveedor especificado en la Base de Datos
+                ¡ATENCION! Se actualizará el proveedor especificado en la Base de Datos
             </p>
 
-            <input type="submit" value="Registrar Proveedor" class="btn btn-primary"
+            <input type="submit" value="Actualizar Proveedor" class="btn btn-primary"
                    style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
             <div style="margin-top:20px" id="estiloColorHover3">
                 @Html.ActionLink("<< Volver al listado de proveedores", "IndexAdmin")
@@ -282,10 +283,5 @@ htmlAttributes: new { @class = "form-control" })
             $('#myModal').modal('hide');
         }
     </script>
-    @if (ViewBag.NotificationMessage != null)
-    {
-        <script>
-            @Html.Raw(@ViewBag.NotificationMessage);
-        </script>
-    }
+  
 }

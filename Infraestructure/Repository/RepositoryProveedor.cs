@@ -213,6 +213,7 @@ namespace Infraestructure.Repository
 
                     if (oProveedor == null)//si es null es nuevo y sino es edit
                     {
+                        pProveedor.estado = 1;
                         pProveedor.CONTACTO = new List<CONTACTO>();
                         using (var transaccion = ctx.Database.BeginTransaction())
                         {

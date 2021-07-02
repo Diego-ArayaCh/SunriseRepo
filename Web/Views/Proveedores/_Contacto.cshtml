@@ -19,20 +19,22 @@
     <div id="modal-body" class="modal-body">
         <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-12 card  mb-3  border border-success">
             <div class="card-header bg-success text-white">
-                Nombre:   @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                Nombre:   @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control",@type = "name" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" ,  })
             </div>
             <div class="card-body">
                 <h5 class="card-title">Información:</h5>
                 <p class="card-text">
-                    Correo:  @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control" } })
+                    Correo:  @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control",@type = "email" } })
                     @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
                 </p>
                 <p class="card-text">
-                    Teléfono:  @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                    Teléfono:  @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control",@required="required", @maxlength = "8", @type = "tel"} })
                     @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
                 </p>
             </div>
+            
+            
             @Html.HiddenFor(model => model.IDProvisional)
         </div>
     </div>
