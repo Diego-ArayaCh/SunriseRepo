@@ -24,7 +24,7 @@ namespace Web.Controllers
             USUARIO oUsuario = null;
             try
             {
-                if (ModelState.IsValid==false)
+                if (ModelState.IsValid == false)
                 {
                     oUsuario = _ServiceUsuario.GetUsuario(usuario.correo, usuario.contrasenha);
 
@@ -33,7 +33,7 @@ namespace Web.Controllers
                         //Se crea variable USER en la session, para validar permisos y demas
                         Session["User"] = oUsuario;
 
-                        Log.Info($"Accede {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL. descripcion}");
+                        Log.Info($"Accede {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL.descripcion}");
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -53,6 +53,82 @@ namespace Web.Controllers
                 // Pasar el Error a la página que lo muestra
                 TempData["Message"] = ex.Message;
                 TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+        public ActionResult Logout()
+        {
+            try
+            {
+                Log.Info("Usuario desconectado!");
+                Session["User"] = null;
+                return RedirectToAction("Index", "LogIn");
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData["Redirect"] = "LogIn";
+                TempData["Redirect-Action"] = "Index";
+                return RedirectToAction("Default", "Error");
+            }
+        }
+
+        public ActionResult VerPerfil(int? id)
+        {
+            ServiceUsuario _ServiceUsuario = new ServiceUsuario();
+            USUARIO oUsuario = null;
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("IndexAdmin");
+                }
+                oUsuario = _ServiceUsuario.GetUsuarioByID(Convert.ToInt32(id));
+
+                if (oUsuario == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                    //preguntar si vamos usar la pagina "error"
+                }
+
+                ViewBag.titulo = "Ver Perfil";
+                return View(oUsuario);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult UnAuthorized()
+        {
+            try
+            {
+                ViewBag.Message = "No autorizado";
+
+                if (Session["User"] != null)
+                {
+                    USUARIO oUsuario = Session["User"] as USUARIO;
+                    Log.Warn($"El usuario {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL.descripcion}, intentó acceder una página sin permisos  ");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData["Redirect"] = "LogIn";
+                TempData["Redirect-Action"] = "Index";
                 return RedirectToAction("Default", "Error");
             }
         }
@@ -88,52 +164,6 @@ namespace Web.Controllers
             return View("Index");
         }
 
-        public ActionResult UnAuthorized()
-        {
-            try
-            {
-                ViewBag.Message = "No autorizado";
-
-                if (Session["User"] != null)
-                {
-                    USUARIO oUsuario = Session["User"] as USUARIO;
-                    Log.Warn($"El usuario {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL.descripcion}, intentó acceder una página sin permisos  ");
-                }
-
-                return View();
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                // Pasar el Error a la página que lo muestra
-                TempData["Message"] = ex.Message;
-                TempData["Redirect"] = "LogIn";
-                TempData["Redirect-Action"] = "Index";
-                return RedirectToAction("Default", "Error");
-            }
-        }
-
-        public ActionResult Logout()
-        {
-            try
-            {
-                Log.Info("Usuario desconectado!");
-                Session["User"] = null;
-                return RedirectToAction("Index", "LogIn");
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                // Pasar el Error a la página que lo muestra
-                TempData["Message"] = ex.Message;
-                TempData["Redirect"] = "LogIn";
-                TempData["Redirect-Action"] = "Index";
-                return RedirectToAction("Default", "Error");
-            }
-        }
-
         //Mantenimiento de aprobaciones
         public ActionResult EditPermisos()
         {
@@ -159,7 +189,7 @@ namespace Web.Controllers
                 user.estado = 1;
                 new ServiceUsuario().Save(user);
                 ViewBag.titulo = "Mantenimiento de Permisos";
-                
+
 
             }
             catch (Exception ex)

@@ -45,6 +45,7 @@
                 @{
                     string nombre = "";
                     string email = "Perfil";
+                    int identificador = 0;
                     Infraestructure.Models.USUARIO oUsuario;
                     //Validar si existe en la sesión
                     if (Session["User"] != null)
@@ -54,26 +55,27 @@
                         {
                             nombre = $"{oUsuario.nombre} {oUsuario.apellidos}";
                             email = oUsuario.correo;
+                            identificador= oUsuario.ID;
                         }
                     }
                 }
-                <div class="dropdown-menu">
-                    @if (Session["User"] != null)
-                    {
-                        <span class="dropdown-item" style="color:forestgreen; font-weight:bolder!important">En línea: @nombre </span>
-                        <div class="dropdown-divider"></div>
-                    }
-                    @if (Session["User"] == null)
-                    {
-                        @Html.ActionLink("Ingresar", "Index", "LogIn", null, new { @class = "dropdown-item"})
-                    }
-                    else
-                    {
-                        <a class="dropdown-item" href="#">Perfil</a>
-                        @Html.ActionLink("Salir", "Logout", "LogIn", null, new { @class = "dropdown-item ", style = "color:red; font-weight:bolder" })
-                    }
+            <div class="dropdown-menu">
+                @if (Session["User"] != null)
+                {
+                    <span class="dropdown-item" style="color:forestgreen; font-weight:bolder!important">En línea: @nombre </span>
+                    <div class="dropdown-divider"></div>
+                }
+                @if (Session["User"] == null)
+                {
+                    @Html.ActionLink("Ingresar", "Index", "LogIn", null, new { @class = "dropdown-item" })
+                }
+                else
+                {
+                    @Html.ActionLink("Perfil", "VerPerfil", "LogIn", new { id = @identificador }, new { @class = "dropdown-item "})
+                    @Html.ActionLink("Salir", "Logout", "LogIn", null, new { @class = "dropdown-item ", style = "color:red; font-weight:bolder" })
+                }
 
-                </div>
+            </div>
             </li>
         </ul>
     </div>
