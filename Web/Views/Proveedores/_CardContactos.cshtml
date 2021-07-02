@@ -17,7 +17,7 @@
             <div class="card-body" style="text-align: center">
                 <h5 class="card-title">Información:</h5>
                 <p class="card-text"> No hay contactos registrados para este proveedor</p>
-              
+
             </div>
         </div>
     }
@@ -25,12 +25,12 @@
     {
         foreach (var item in Model.Items)
         {
-           
-            @Html.HiddenFor(modelItem => item.ID);
-            @Html.HiddenFor(modelItem => item.IDProv);
-            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-success">
-                <div class="card-header header-contact bg-success text-white">
-                    <div class="row">
+
+            @Html.HiddenFor(modelItem => item.ID)
+            @Html.HiddenFor(modelItem => item.IDProv)
+            <div style="margin: 1.5px; --bs-gutter-x: 0;" class="col-5 card  mb-3  border border-primary">
+                <div class="card-header header-contact bg-dark text-white">
+                    <div class="row" style="padding-left:5px">
                         @Html.DisplayFor(modelItem => item.nombre, new
                   {
                       htmlAttributes = new { @class = "col-9 name-contact" }
@@ -54,14 +54,14 @@
                     <p class="card-text">Teléfono: @Html.DisplayFor(modelItem => item.telefono)</p>
                 </div>
                 <div class="card-footer text-center">
-                    @Ajax.ActionLink("Actualizar", "ObtenerContacto", "Proveedores",
+                    @Ajax.ActionLink("Editar", "ObtenerContacto", "Proveedores",
                           new { id = item.IDProvisional },
                           new AjaxOptions
                                {
                               UpdateTargetId = "modal-content",
                               InsertionMode = InsertionMode.Replace,
                               OnComplete = "mostrarModal()"
-                          }, new { @class = "btn btn-warning update-contact" })
+                          }, new { @class = "btn btn-primary update-contact" })
                 </div>
             </div>
         }

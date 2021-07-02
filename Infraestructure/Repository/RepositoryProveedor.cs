@@ -95,7 +95,13 @@ namespace Infraestructure.Repository
             }
 
         }
-
+        public void DeleteNullsContactos()
+        {
+            using (SunriseBDEntities1 ctx = new SunriseBDEntities1())
+            {
+                ctx.Database.ExecuteSqlCommand("delete from CONTACTOS where idprov = {0}");
+            }
+        }
         public PROVEEDORES GetProveedorByID(int pID)
         {
             try
@@ -213,7 +219,7 @@ namespace Infraestructure.Repository
 
                     if (oProveedor == null)//si es null es nuevo y sino es edit
                     {
-                        pProveedor.estado = 1;
+                        pProveedor.estado = 0;
                         pProveedor.CONTACTO = new List<CONTACTO>();
                         using (var transaccion = ctx.Database.BeginTransaction())
                         {
@@ -281,7 +287,7 @@ namespace Infraestructure.Repository
                                 oContacto.nombre = itemContacto.nombre;
                                 oContacto.telefono = itemContacto.telefono;
                                 oContacto.correo = itemContacto.correo;
-                                oContacto.estado = itemContacto.estado;
+                                oContacto.estado = 1;
                                 
                                 insertPS.Add(oContacto);
 
@@ -293,14 +299,24 @@ namespace Infraestructure.Repository
                             pProveedor.CONTACTO = insertPS;
                             ctx.Entry(pProveedor).State = EntityState.Modified;
 
+                           
+                           
                             retorno = ctx.SaveChanges();
                             transaccion.Commit();
                         }
                     }
                     }
+                using (MyContext context = new MyContext())
+                {
+                    List<CONTACTO> listaNull = context.CONTACTO.Where(c => c.IDProv == null).ToList();
+                    foreach (var item in listaNull)
+                    {
+                        context.Entry(item).State = EntityState.Deleted;
+                        retorno = context.SaveChanges();
+                    }
+                }
 
-
-                    if (retorno >= 0)
+                if (retorno >= 0)
                         oProveedor = GetProveedorByID((int)pProveedor.ID);
 
                     return oProveedor;
