@@ -5,79 +5,71 @@
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
 }
 
-<h2>VerPerfil</h2>
+<h1 class="display-6" id="estiloColor">
+    Perfil de Usuario
+</h1>
+<hr class="my-4">
 
-<div>
-    <h4>USUARIO</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.cedula)
-        </dt>
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h3 class="card-title"> @Html.DisplayFor(model => model.nombre)  @Html.DisplayFor(model => model.apellidos)</h3>
+                <h6 class="text-muted">
+                    Rol: @Html.DisplayFor(model => model.ROL.descripcion)
+                </h6>
+                <br />
+                <p class="card-text">
+                    Cedula: @Html.DisplayFor(model => model.cedula)
+                </p>
+                <p class="card-text">
+                    Correo Electronico: @Html.DisplayFor(model => model.correo)
+                </p>
+                <p class="card-text">
+                    Contrasenia: @Html.DisplayFor(model => model.contrasenha)
+                </p>
+                <p class="card-text">
+                    Numero de Telefono: @Html.DisplayFor(model => model.telefono)
+                </p>
+                <p class="card-text">
+                    Estado:  @if (@Html.DisplayFor(model => model.estado).ToString() == "1")
+                    {
+                        <Label>Activo </Label>
+                    }
+                    else if (@Html.DisplayFor(model => model.estado).ToString() == "2")
+                    {
+                        <Label>Inactivo </Label>
+                    }
+                    else if (@Html.DisplayFor(model => model.estado).ToString() == "0")
+                    {
+                        <Label>Pendiente </Label>
+                    }
+                </p>
+                <br />
 
-        <dd>
-            @Html.DisplayFor(model => model.cedula)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.estado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.correo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.correo)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.contrasenha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.contrasenha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.apellidos)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.apellidos)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IDRol)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IDRol)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.telefono)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.telefono)
-        </dd>
-
-    </dl>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img src="~/Content/IMAGES-PAGES/foto-perfil-DEMO.jpg"
+                 role="img" alt="Imagen - Perfil" style="width:300px; height:340px; border-radius:15%" />
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<br />
+
+<div style="margin-top:10px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver ", "Index", "Home") |
+    @Html.ActionLink(" Editar ", "EditarUsuario","LogIn", new { id = Model.ID })|
+</div>
+
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}
