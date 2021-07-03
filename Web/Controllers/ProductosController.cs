@@ -12,6 +12,7 @@ using Web.Utils;
 using System.Diagnostics;
 using System.IO;
 using Web.Security;
+using Web.Util;
 
 namespace Web.Controllers
 {
@@ -415,6 +416,10 @@ namespace Web.Controllers
                     oProducto.estado = 2;
                     oProducto.stock = 0;
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                                                                    "Registro", 
+                                                                    "Exito al guardar el producto", 
+                                                                    SweetAlertMessageType.success);
                 }
                 else
                 {
@@ -482,6 +487,10 @@ namespace Web.Controllers
                 if (ModelState.IsValid)
                 {
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                                                                  "Registro",
+                                                                  "Exito al actualizar el producto",
+                                                                  SweetAlertMessageType.success);
                 }
                 else
                 {

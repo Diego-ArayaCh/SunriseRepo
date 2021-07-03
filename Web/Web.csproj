@@ -180,6 +180,8 @@
     <Content Include="Content\IMAGES-PAGES\ajaxLoading.gif" />
     <Content Include="Content\IMAGES-PAGES\gift_cargando_partialView.gif" />
     <Content Include="Content\IMAGES-PAGES\imagen-no-disponible.png" />
+    <Content Include="Content\IMAGES-PAGES\user_offline_icon.png" />
+    <Content Include="Content\IMAGES-PAGES\user_online_icon.png" />
     <Content Include="Content\IMAGES-PRODUCTS\11900K.jpg" />
     <Content Include="Content\IMAGES-PRODUCTS\905P.jpg" />
     <Content Include="Content\IMAGES-PRODUCTS\B550.jpg" />
