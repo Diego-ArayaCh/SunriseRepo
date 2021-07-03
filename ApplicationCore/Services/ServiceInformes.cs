@@ -15,11 +15,21 @@ namespace ApplicationCore.Services
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetEntradas();
         }
+        public IEnumerable<HISTORICO> GetEntradas(DateTime from, DateTime to)
+        {
+            RepositoryInforme repository = new RepositoryInforme();
+            return repository.GetEntradas(from, to);
+        }
 
         public IEnumerable<HISTORICO> GetSalidas()
         {
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetSalidas();
+        }
+        public IEnumerable<HISTORICO> GetSalidas(DateTime from, DateTime to)
+        {
+            RepositoryInforme repository = new RepositoryInforme();
+            return repository.GetSalidas(from, to);
         }
         public HISTORICO GetInformeById(int id)
         {
