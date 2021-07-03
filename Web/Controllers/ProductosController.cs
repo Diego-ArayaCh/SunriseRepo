@@ -87,30 +87,39 @@ namespace Web.Controllers
         public ActionResult Inventario(int? page, string filtroBuscarProducto)
         {
             IEnumerable<PRODUCTOS> lista = null;
+            IEnumerable<PRODUCTOS> listaActivos = new List<PRODUCTOS>();
             try
             {
                 ServiceProductos _ServiceProducto = new ServiceProductos();
                 // Error porque viene en blanco 
                 if (string.IsNullOrEmpty(filtroBuscarProducto))
                 {
-                    lista = _ServiceProducto.GetProductos();
+                    lista = _ServiceProducto.GetProductosActivo();
                 }
                 else
                 {
-                    lista = _ServiceProducto.GetProductosxNombre(filtroBuscarProducto);
+                    lista = _ServiceProducto.GetProductosxNombreActivo(filtroBuscarProducto);
                 }
 
                 //Lista autocompletado de productos
                 ViewBag.listaNombres = _ServiceProducto.GetProductoNombres();
+                //foreach (PRODUCTOS item in lista)
+                //{
+                //    if (item.estado == 1)
+                //    {
+                //        listaActivos.Append(item);
+                //    }
+                //}
+                //lista = listaActivos;
             }
             catch (Exception ex)
             {
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
-                return RedirectToAction("IndexAdmin");
+                return RedirectToAction("Inventario");
             }
 
-            ViewBag.titulo = "Lista Productos";
+            ViewBag.titulo = "Lista Inventario";
 
             int pageSize = 6;
             int pageNumber = page ?? 1;

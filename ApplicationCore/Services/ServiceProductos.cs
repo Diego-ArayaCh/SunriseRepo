@@ -16,6 +16,12 @@ namespace ApplicationCore.Services
             return repository.GetProductos();
         }
 
+        public IEnumerable<PRODUCTOS> GetProductosActivo()
+        {
+            RepositoryProducto repository = new RepositoryProducto();
+            return repository.GetProductosActivo();
+        }
+
         public IEnumerable<string> GetProductoNombres()
         {
             RepositoryProducto repository = new RepositoryProducto();
@@ -26,6 +32,12 @@ namespace ApplicationCore.Services
         {
             RepositoryProducto repository = new RepositoryProducto();
             return repository.GetProductoByNombre(pFiltro);
+        }
+
+        public IEnumerable<PRODUCTOS> GetProductosxNombreActivo(string pFiltro)
+        {
+            RepositoryProducto repository = new RepositoryProducto();
+            return repository.GetProductoByNombreActivo(pFiltro);
         }
 
         public IEnumerable<CATEGORIA> GetCategorias()
