@@ -9,38 +9,41 @@ using System.Web.Mvc;
 using PagedList.Mvc;
 using PagedList;
 using System.Globalization;
+using Web.Security;
 
 namespace Web.Controllers
 {
     public class InformesController : Controller
     {
         // GET: Informe
-       /* public ActionResult InformeEntrada(int? page)
-        {
-            IEnumerable<HISTORICO> lista = null;
-            try
-            {
-                 ServiceInformes _ServiceInformes = new ServiceInformes();
+        /* public ActionResult InformeEntrada(int? page)
+         {
+             IEnumerable<HISTORICO> lista = null;
+             try
+             {
+                  ServiceInformes _ServiceInformes = new ServiceInformes();
 
-                lista = _ServiceInformes.GetEntradas();
-            }
-            catch (Exception ex)
-            {
-                // Salvar el error en un archivo 
-                Log.Error(ex, MethodBase.GetCurrentMethod());
-                return RedirectToAction("Index", "Home");
-            }
+                 lista = _ServiceInformes.GetEntradas();
+             }
+             catch (Exception ex)
+             {
+                 // Salvar el error en un archivo 
+                 Log.Error(ex, MethodBase.GetCurrentMethod());
+                 return RedirectToAction("Index", "Home");
+             }
 
-            ViewBag.titulo = "Lista Entradas";
+             ViewBag.titulo = "Lista Entradas";
 
-            int pageSize = 4;
-            int pageNumber = page ?? 1;
+             int pageSize = 4;
+             int pageNumber = page ?? 1;
 
-            return View(lista.ToPagedList(pageNumber,pageSize));
+             return View(lista.ToPagedList(pageNumber,pageSize));
 
-           
-        }*/
+
+         }*/
+
         //[HttpPost]
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult InformeEntrada(String from, String to, int? page)
         {
          
@@ -92,6 +95,7 @@ namespace Web.Controllers
 
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         // GET: Informe/Details/5
         public ActionResult Details(int? id)
         {
@@ -122,6 +126,7 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult InformeSalida(String from, String to, int? page)
         {
             IEnumerable<HISTORICO> lista = null;

@@ -320,7 +320,7 @@ namespace Web.Controllers
         //=================================================================================================================================================
         //=================================================================================================================================================
         //METODOS QUE TRABAJAN CON LAS SUCURSALES
-
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Create2()
         {
             //Lista de autores
@@ -331,6 +331,7 @@ namespace Web.Controllers
             return View();
         }
 
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Edit2(int? id)
         {
             ServiceProductos _ServiceProducto = new ServiceProductos();

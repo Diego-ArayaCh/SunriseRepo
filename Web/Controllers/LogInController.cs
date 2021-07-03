@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Security;
 using Web.Util;
 
 namespace Web.Controllers
@@ -77,6 +78,7 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult VerPerfil(int? id)
         {
             ServiceUsuario _ServiceUsuario = new ServiceUsuario();
