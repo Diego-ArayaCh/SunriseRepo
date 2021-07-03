@@ -17,7 +17,7 @@ namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
-        //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
         {
             IEnumerable<PRODUCTOS> lista = null;
