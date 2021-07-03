@@ -21,7 +21,7 @@ namespace Web.Controllers
         #region Acciones normales
        
         // GET: Proveedores
-        //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProveedor)
         {
             IEnumerable<PROVEEDORES> lista = null;
@@ -55,7 +55,7 @@ namespace Web.Controllers
 
         }
         // GET: Proveedores/Details/5
-        //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult Details(int? id)
         {
             ServiceProveedores _ServiceProveedor = new ServiceProveedores();
@@ -82,8 +82,7 @@ namespace Web.Controllers
                 return RedirectToAction("IndexAdmin");
             }
         }
-       // [CustomAuthorize((int)Roles.Administrador)]
-       
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Create()
         {
             //Lista de autores
@@ -94,6 +93,7 @@ namespace Web.Controllers
             ViewBag.contactos = CrudContactos.Instancia.Items;
             return View();
         }
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Edit(int? id)
         {
             CrudContactos.Instancia.Items.Clear();
