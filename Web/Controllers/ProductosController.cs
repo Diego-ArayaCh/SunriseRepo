@@ -12,12 +12,13 @@ using Web.Utils;
 using System.Diagnostics;
 using System.IO;
 using Web.Security;
+using Web.Util;
 
 namespace Web.Controllers
 {
     public class ProductosController : Controller
     {
-        //[CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult IndexAdmin(int? page, string filtroBuscarProducto)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -82,6 +83,116 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        public ActionResult Inventario(int? page, string filtroBuscarProducto)
+        {
+            IEnumerable<PRODUCTOS> lista = null;
+            IEnumerable<PRODUCTOS> listaActivos = new List<PRODUCTOS>();
+            try
+            {
+                ServiceProductos _ServiceProducto = new ServiceProductos();
+                // Error porque viene en blanco 
+                if (string.IsNullOrEmpty(filtroBuscarProducto))
+                {
+                    lista = _ServiceProducto.GetProductosActivo();
+                }
+                else
+                {
+                    lista = _ServiceProducto.GetProductosxNombreActivo(filtroBuscarProducto);
+                }
+
+                //Lista autocompletado de productos
+                ViewBag.listaNombres = _ServiceProducto.GetProductoNombres();
+                //foreach (PRODUCTOS item in lista)
+                //{
+                //    if (item.estado == 1)
+                //    {
+                //        listaActivos.Append(item);
+                //    }
+                //}
+                //lista = listaActivos;
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Inventario");
+            }
+
+            ViewBag.titulo = "Lista Inventario";
+
+            int pageSize = 6;
+            int pageNumber = page ?? 1;
+            return View(lista.ToPagedList(pageNumber, pageSize));
+        }
+
+        //
+        //
+        private SelectList listaCategorias(int IDCategoria = 0)
+        {
+            //Lista de autores
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            IEnumerable<CATEGORIA> listaCategorias = _ServiceProducto.GetCategorias();
+            //Autor SelectAutor = listaAutores.Where(c => c.IdAutor == idAutor).FirstOrDefault();
+
+            //crea un combo box, los objetos son: lista, valor del objeto , y objeto a mostrar, y seleccionado
+            return new SelectList(listaCategorias, "ID", "descripcion", IDCategoria);
+        }
+        private MultiSelectList listaSucursales(ICollection<SUCURSAL> sucursales)
+        {
+            //Lista de Categorias
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            IEnumerable<SUCURSAL> listaSucursales = _ServiceProducto.GetSucursales();
+            int[] listaSucursalesSelect = null;
+
+            if (sucursales != null)
+            {
+
+                listaSucursalesSelect = sucursales.Select(c => c.ID).ToArray();
+            }
+
+            return new MultiSelectList(listaSucursales, "ID", "nombre", listaSucursalesSelect);
+
+        }
+        private MultiSelectList listaProveedores(ICollection<PROVEEDORES> proveedores)
+        {
+            //Lista de Categorias
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
+            int[] listaProveedoresSelect = null;
+
+            if (proveedores != null)
+            {
+                listaProveedoresSelect = proveedores.Select(c => c.ID).ToArray();
+            }
+
+            return new MultiSelectList(listaProveedores, "ID", "nombre", listaProveedoresSelect);
+
+        }
+        public IEnumerable<SelectListItem> listaEstados(int seleccionado)
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem{Text = "Activo", Value = "1"},
+                new SelectListItem{Text = "Inactivo", Value = "2"},
+            };
+            foreach (var item in items)
+            {
+                if (item.Value == seleccionado+"")
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+
+            return items;
+        }
+        //
+        //
+        //=================================================================================================================================================
+        //=========< < M O D E L O - N U M E R O [1] > >===================================================================================================
+        //=================================================================================================================================================
+        //METODOS QUE TRABAJAN **SIN** LAS SUCURSALES
         [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Create()
         {
@@ -143,68 +254,7 @@ namespace Web.Controllers
             }
         }
 
-
-        private SelectList listaCategorias(int IDCategoria = 0)
-        {
-            //Lista de autores
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            IEnumerable<CATEGORIA> listaCategorias = _ServiceProducto.GetCategorias();
-            //Autor SelectAutor = listaAutores.Where(c => c.IdAutor == idAutor).FirstOrDefault();
-
-            //crea un combo box, los objetos son: lista, valor del objeto , y objeto a mostrar, y seleccionado
-            return new SelectList(listaCategorias, "ID", "descripcion", IDCategoria);
-        }
-        private MultiSelectList listaSucursales(ICollection<SUCURSAL> sucursales)
-        {
-            //Lista de Categorias
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            IEnumerable<SUCURSAL> listaSucursales = _ServiceProducto.GetSucursales();
-            int[] listaSucursalesSelect = null;
-
-            if (sucursales != null)
-            {
-
-                listaSucursalesSelect = sucursales.Select(c => c.ID).ToArray();
-            }
-
-            return new MultiSelectList(listaSucursales, "ID", "nombre", listaSucursalesSelect);
-
-        }
-        private MultiSelectList listaProveedores(ICollection<PROVEEDORES> proveedores)
-        {
-            //Lista de Categorias
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
-            int[] listaProveedoresSelect = null;
-
-            if (proveedores != null)
-            {
-                listaProveedoresSelect = proveedores.Select(c => c.ID).ToArray();
-            }
-
-            return new MultiSelectList(listaProveedores, "ID", "nombre", listaProveedoresSelect);
-
-        }
-        public IEnumerable<SelectListItem> listaEstados(int seleccionado)
-        {
-            IList<SelectListItem> items = new List<SelectListItem>
-            {
-                new SelectListItem{Text = "Activo", Value = "1"},
-                new SelectListItem{Text = "Inactivo", Value = "2"},
-            };
-            foreach (var item in items)
-            {
-                if (item.Value == seleccionado+"")
-                {
-                    item.Selected = true;
-                    break;
-                }
-            }
-
-            return items;
-        }
-
-        [HttpPost]
+        [HttpPost] //CREAR
         public ActionResult Save(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores)
         {
             MemoryStream target = new MemoryStream();
@@ -253,7 +303,7 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost] //EDITAR
         public ActionResult Save2(PRODUCTOS oProducto, HttpPostedFileBase ImageFile, string[] selectedProveedores, string estado)
         {
             MemoryStream target = new MemoryStream();
@@ -315,12 +365,13 @@ namespace Web.Controllers
             }
         }
 
-
+        //
+        //
         //=================================================================================================================================================
-        //=================================================================================================================================================
+        //=========< < M O D E L O - N U M E R O [2] > >===================================================================================================
         //=================================================================================================================================================
         //METODOS QUE TRABAJAN CON LAS SUCURSALES
-
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Create2()
         {
             //Lista de autores
@@ -331,6 +382,7 @@ namespace Web.Controllers
             return View();
         }
 
+        [CustomAuthorize((int)Roles.Administrador)]
         public ActionResult Edit2(int? id)
         {
             ServiceProductos _ServiceProducto = new ServiceProductos();
@@ -414,6 +466,10 @@ namespace Web.Controllers
                     oProducto.estado = 2;
                     oProducto.stock = 0;
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                                                                    "Registro", 
+                                                                    "Exito al guardar el producto", 
+                                                                    SweetAlertMessageType.success);
                 }
                 else
                 {
@@ -481,6 +537,10 @@ namespace Web.Controllers
                 if (ModelState.IsValid)
                 {
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                                                                  "Registro",
+                                                                  "Exito al actualizar el producto",
+                                                                  SweetAlertMessageType.success);
                 }
                 else
                 {

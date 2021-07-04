@@ -43,6 +43,35 @@ namespace Infraestructure.Repository
             }
         }
 
+        public IEnumerable<PRODUCTOS> GetProductosActivo()
+        {
+            try
+            {
+                IEnumerable<PRODUCTOS> lista = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    //lista = ctx.Libro.Include("PRODUCTOS").ToList();
+                    lista = ctx.PRODUCTOS.Include("CATEGORIA").ToList().
+                        FindAll(l => l.estado == 1);
+
+                }
+                return lista;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
         public PRODUCTOS GetProductoByID(int pID)
         {
             try
@@ -88,6 +117,35 @@ namespace Infraestructure.Repository
                     ctx.Configuration.LazyLoadingEnabled = false;
                     lista = ctx.PRODUCTOS.Include("CATEGORIA").ToList().
                          FindAll(l => l.nombre.ToLower().Contains(pFiltro.ToLower()));
+                }
+                return lista;
+            }
+
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
+        public IEnumerable<PRODUCTOS> GetProductoByNombreActivo(string pFiltro)
+        {
+            try
+            {
+                IEnumerable<PRODUCTOS> lista = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    lista = ctx.PRODUCTOS.Include("CATEGORIA").ToList().
+                         FindAll(l => l.nombre.ToLower().Contains(pFiltro.ToLower()) 
+                         && l.estado==1);
                 }
                 return lista;
             }
@@ -423,14 +481,14 @@ namespace Infraestructure.Repository
 
                                 var new_PS_ForProducto = ctx.SUCURSAL
                                  .Where(x => selectedSucarsalesID.Contains(x.ID.ToString())).ToList();
-                                ICollection<ProdSuc>  insertPS = new List<ProdSuc>();
+                                ICollection<ProdSuc> insertPS = new List<ProdSuc>();
                                 foreach (SUCURSAL suc in new_PS_ForProducto)
                                 {
                                     ProdSuc s = new ProdSuc();
                                     s.IDSucursal = suc.ID;
                                     s.IDProducto = oProducto.ID;
                                     s.cant = 0;
-                                    foreach(ProdSuc ps in oProducto.ProdSuc)
+                                    foreach (ProdSuc ps in oProducto.ProdSuc)
                                     {
                                         if (ps.IDSucursal == suc.ID) s.cant = ps.cant;
                                     }
