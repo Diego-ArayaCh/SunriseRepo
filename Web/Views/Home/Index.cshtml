@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Infraestructure.Models.PRODUCTOS>
+@{
     ViewBag.Title = "Inicio";
 }
 
@@ -9,12 +10,12 @@
     <p class="lead">Estos son los últimos datos generados por la aplicación, cualquier inconsistencia, favor llamar a su supervisor</p>
 </div>
 
-<div class="row " >
+<div class="row ">
     <div class="col-lg-4 col-md-5">
         <div class="card text-white bg-success mb-3 border border-white " style="max-width: 20rem;">
             <div class="card-header bg-dark font-weight-bold">Productos Registrados</div>
             <div class="card-body">
-                <h1 class="card-title font-weight-bold" style="text-align:center">#1067</h1>
+                <h1 class="card-title font-weight-bold" style="text-align:center">#@ViewBag.CantProductos</h1>
                 <h6 class="card-text">**Inventario total</h6>
             </div>
         </div>
@@ -23,7 +24,7 @@
         <div class="card text-white bg-warning mb-3 border border-white" style="max-width: 20rem;">
             <div class="card-header bg-dark">Entradas realizadas</div>
             <div class="card-body">
-                <h1 class="card-title font-weight-bold" style="text-align:center;">#2357</h1>
+                <h1 class="card-title font-weight-bold" style="text-align:center;">#@ViewBag.CantEntradas</h1>
                 <h6 class="card-text ">**Actualizado hace 24h</h6>
             </div>
         </div>
@@ -32,7 +33,7 @@
         <div class="card text-white bg-danger mb-3 border border-white" style="max-width: 20rem;">
             <div class="card-header bg-dark">Salidas realizadas</div>
             <div class="card-body">
-                <h1 class="card-title font-weight-bold" style="text-align:center">#4010</h1>
+                <h1 class="card-title font-weight-bold" style="text-align:center">#@ViewBag.CantSalidos</h1>
                 <h6 class="card-text ">**Actualizado hace 24h</h6>
             </div>
         </div>
@@ -58,60 +59,36 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-danger">
-                    <th scope="row">Procesador</th>
-                    <td>SDS4844</td>
-                    <td>RYZEN 9 5900X</td>
-                    <td>AMD</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">0</td>
-                    <td style="text-align:center">20</td>
-                </tr>
-                <tr class="table-danger">
-                    <th scope="row">Periférico</th>
-                    <td>OSID233</td>
-                    <td>GW2283</td>
-                    <td>BenQ</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">0</td>
-                    <td style="text-align:center">20</td>
-                </tr>
-                <tr class="table-warning">
-                    <th scope="row">Tarjeta de Video</th>
-                    <td>NV48394</td>
-                    <td>GEFORCE GT 1030</td>
-                    <td>Asus</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">3</td>
-                    <td style="text-align:center">15</td>
-                </tr>
-                <tr class="table-warning">
-                    <th scope="row">Tarjeta Madre</th>
-                    <td>TDH2335</td>
-                    <td>B460M AORUS ELITE</td>
-                    <td>GIGABYTE</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">6</td>
-                    <td style="text-align:center">20</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th scope="row">Procesador</th>
-                    <td>PSI3389</td>
-                    <td>I9 11900K</td>
-                    <td>Intel</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">15</td>
-                    <td style="text-align:center">18</td>
-                </tr>
-                <tr class="table-secondary">
-                    <th scope="row">Memoria RAM</th>
-                    <td>RAUE232</td>
-                    <td>GEIL SUPER LUCE</td>
-                    <td>TUF</td>
-                    <td>Alajuela Centro</td>
-                    <td style="text-align:center">16</td>
-                    <td style="text-align:center">20</td>
-                </tr>
+                @if (Model.Count() == 0)
+                {
+
+
+                    <tr class="table-warning">
+                        <td colspan="7"><div class="text-center">No hay registros</div> </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        foreach (var ps in item.ProdSuc)
+                        {
+                            if (ps.cant < item.cantMin)
+                            {
+                                <tr class=@(ps.cant <= item.cantMin/2?"table-danger":"table-warning")>
+                                    <th scope="row">@Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)</th>
+                                    <td>@Html.DisplayFor(modelItem => item.serial)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.marca)</td>
+                                    <td>@Html.DisplayFor(modelItem => ps.SUCURSAL.nombre)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(modelItem => ps.cant)</td>
+                                    <td style="text-align:center">@Html.DisplayFor(modelItem => item.cantMin)</td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+
 
 
 

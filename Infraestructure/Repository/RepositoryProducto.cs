@@ -20,7 +20,11 @@ namespace Infraestructure.Repository
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
                     //lista = ctx.Libro.Include("PRODUCTOS").ToList();
-                    lista = ctx.PRODUCTOS.Include("CATEGORIA").ToList();
+                    lista = ctx.PRODUCTOS.Include("CATEGORIA").
+                            Include("PROVEEDORES").
+                            Include("PROVEEDORES.PAIS").
+                            Include("ProdSuc").
+                            Include("ProdSuc.SUCURSAL").ToList();
 
                 }
                 return lista;
