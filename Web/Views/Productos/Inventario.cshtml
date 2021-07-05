@@ -52,7 +52,7 @@
                              alt="Imagen @Html.DisplayFor(modelItem => item.nombre)" class="img-thumbnail" style="width:100%; height:250px" />
                         <div class="card-body">
                             <h5 class="card-title">@Html.DisplayFor(modelItem => item.nombre)</h5>
-                            <h6 class="card-subtitle mb-2 text-muted"> Marca: @Html.DisplayFor(modelItem => item.marca)</h6>
+                            <h6 class="card-subtitle mb-2 text-muted"> Marca: @Html.DisplayFor(modelItem => item.marca) |  Cantidad: @Html.DisplayFor(modelItem => item.stock)</h6>
                             <p class="card-text">   Precio:  @Html.DisplayFor(modelItem => item.precio)</p>
                             @*@Html.ActionLink("Detalles", "Details", new { id = item.ID }, htmlAttributes: new { @class = "btn btn-primary btn-sm",
                             style = " text-align: center; margin-left: 50%; transform: translateX(-50%);"})*@
