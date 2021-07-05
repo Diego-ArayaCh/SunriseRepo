@@ -66,9 +66,9 @@ namespace Web.Controllers
                     foreach(HISTORICO hist in temp)
                     {
                         lista = new List<HISTORICO>();
-                        String[] cadena = hist.fechaHora.Split(' ');
-                        String fec = cadena[0] + "/" + cadena[1] + "/" + cadena[2];
-                        DateTime fecha = DateTime.ParseExact(fec, "MMM/dd/yyyy", CultureInfo.InvariantCulture);
+                        //String[] cadena = hist.fechaHora.Split(' ');
+                        //String fec = cadena[0] + "/" + cadena[1] + "/" + cadena[2];
+                        DateTime fecha = DateTime.ParseExact(hist.fechaHora, "dd/MM/yyyy hh:mmtt", CultureInfo.InvariantCulture);
                         if (DateTime.Compare(fecha, inicio) >= 0 && DateTime.Compare(fecha, fin)<=0){
                            alma.Add(hist);
                         }
@@ -149,9 +149,9 @@ namespace Web.Controllers
                     foreach (HISTORICO hist in temp)
                     {
                         lista = new List<HISTORICO>();
-                        String[] cadena = hist.fechaHora.Split(' ');
-                        String fec = cadena[0] + "/" + cadena[1] + "/" + cadena[2];
-                        DateTime fecha = DateTime.ParseExact(fec, "MMM/dd/yyyy", CultureInfo.InvariantCulture);
+                        //String[] cadena = hist.fechaHora.Split(' ');
+                        //String fec = cadena[0] + "/" + cadena[1] + "/" + cadena[2];
+                        DateTime fecha = DateTime.ParseExact(hist.fechaHora, "dd/MM/yyyy hh:mmtt", CultureInfo.InvariantCulture);
                         if (DateTime.Compare(fecha, inicio) >= 0 && DateTime.Compare(fecha, fin) <= 0)
                         {
                             alma.Add(hist);

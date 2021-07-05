@@ -23,25 +23,25 @@ namespace Web.Controllers
 
             int cantEntradas, cantSalidas;
 
-            cantEntradas = entradas.Count();
-            cantSalidas = salidas.Count();
+            //cantEntradas = entradas.Count();
+            //cantSalidas = salidas.Count();
 
-           /* cantEntradas = 0;cantSalidas = 0;
+            cantEntradas = 0;cantSalidas = 0;
             DateTime hora24 = DateTime.Now.Add(new TimeSpan(-24, 0, 0));
             foreach(HISTORICO ent in entradas)
             {
-                if (DateTime.Compare(hora24,DateTime.ParseExact(ent.fechaHora, "MM/dd/yyyy", CultureInfo.InvariantCulture))<0)
+                if (DateTime.Compare(hora24,DateTime.ParseExact(ent.fechaHora, "dd/MM/yyyy hh:mmtt", CultureInfo.InvariantCulture))<0)
                 {
                     cantEntradas++;
                 }
             }
             foreach (HISTORICO ent in salidas)
             {
-                if (DateTime.Compare(hora24, DateTime.ParseExact(ent.fechaHora, "MM/dd/yyyy", CultureInfo.InvariantCulture)) < 0)
+                if (DateTime.Compare(hora24, DateTime.ParseExact(ent.fechaHora, "dd/MM/yyyy hh:mmtt", CultureInfo.InvariantCulture)) < 0)
                 {
                     cantSalidas++;
                 }
-            }*/
+            }
 
             ViewBag.CantSalidos = cantSalidas;
             ViewBag.CantEntradas =cantEntradas;
