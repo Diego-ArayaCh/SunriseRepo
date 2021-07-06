@@ -30,7 +30,7 @@
     <div id="myTabContent" class="tab-content" style="width:100%">
 
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
         @Html.HiddenFor(model => model.ID)
         @Html.HiddenFor(model => model.stock)
 
@@ -205,6 +205,7 @@
                     </div>
                 </div>
             </div>
+            <br />
 
         </div>
 
@@ -228,10 +229,12 @@
 
 <br />
 
-<div style="margin-top:20px" id="estiloColorHover3">
+@*<div style="margin-top:20px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver al listado de productos", "IndexAdmin")
+</div>*@
+<div style="margin-top:6%" id="estiloColorHover3">
     @Html.ActionLink("<< Volver al listado de productos", "IndexAdmin")
 </div>
-
 
 
 

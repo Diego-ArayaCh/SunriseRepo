@@ -114,34 +114,52 @@ namespace Infraestructure.Models
     {
         [Display(Name = "Identificación")]
         public int ID { get; set; }
+
         [Display(Name = "Identificación Categoría")]
+        [Required(ErrorMessage = "Categoría es un dato requerido")]
         public Nullable<int> IDCategoria { get; set; }
+
         [Display(Name = "Estado")]
         public Nullable<int> estado { get; set; }
+
         [Display(Name = "Serial")]
+        [StringLength(9, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 6)]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string serial { get; set; }
+
         [Display(Name = "Precio")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Range(0, 9999999.99)]
         public Nullable<decimal> precio { get; set; }
+
         [Display(Name = "Nombre")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [StringLength(250, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 1)]
         public string nombre { get; set; }
+
         [Display(Name = "Marca")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [StringLength(100, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 1)]
         public string marca { get; set; }
+
         [Display(Name = "Detalle")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [StringLength(250, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 1)]
         public string detalle { get; set; }
+
         [Display(Name = "Imagen")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public byte[] imagen { get; set; }
+
         [Display(Name = "Stock")]
        // [Required(ErrorMessage = "{0} es un dato requerido")]
         public Nullable<int> stock { get; set; }
+
         [Display(Name = "Cantidad Mínima")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
+        [Range(0, 99999)]
         public Nullable<int> cantMin { get; set; }
+
     }
     internal partial class ProveedorMetaData
     {

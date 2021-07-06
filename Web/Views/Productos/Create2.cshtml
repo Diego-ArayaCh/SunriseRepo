@@ -30,7 +30,7 @@
         <div id="myTabContent" class="tab-content" style="width:100%">
 
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
 
             <div class="tab-pane fade active show" id="Informacion">
 
@@ -153,6 +153,8 @@
                     </div>
                 </div>
 
+                <br />
+
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -181,7 +183,6 @@
 
                 <br />
 
-
             </div>
 
             <div class="tab-pane fade " id="Crear" style="z-index:3">
@@ -204,7 +205,7 @@
 
 <br />
 
-<div style="margin-top:20px" id="estiloColorHover3">
+<div style="margin-top:6%" id="estiloColorHover3">
     @Html.ActionLink("<< Volver al listado de productos", "IndexAdmin")
 </div>
 
