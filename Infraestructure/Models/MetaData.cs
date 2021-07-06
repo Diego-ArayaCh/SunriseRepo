@@ -123,7 +123,7 @@ namespace Infraestructure.Models
         public Nullable<int> estado { get; set; }
 
         [Display(Name = "Serial")]
-        [StringLength(9, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 6)]
+        [StringLength(12, ErrorMessage = "{0} debe de contener entre {2} y {1} caracteres.", MinimumLength = 10)]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string serial { get; set; }
 
