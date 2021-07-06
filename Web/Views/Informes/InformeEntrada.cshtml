@@ -53,24 +53,34 @@
 <div style="margin-bottom: 20px" id="controles">
     @using (Html.BeginForm(/*"InformeEntradaFecha", "Informes", FormMethod.Post, new { enctype = "multipart/form-data" }*/))
     {
-       
-        <div style="display:inline;">
 
-            <label class="lead" for="from">Desde</label>
-            <input type="text" id="from" name="from" style="
+    <div style="display:inline;">
+
+        <label class="lead" for="from">Desde</label>
+        @Html.TextBox("from", "", new { @placeholder = "Seleccionar Fecha",
+       style = "padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;" +
+       "background-color: #f7f7f9; background - clip: padding - box; border: 3px solid #ced4da; -webkit-appearance: none; " +
+       "-moz-appearance: none; border-radius: 0;transition: border - color .15s ease-in-out, box - shadow .15s ease-in-out;" })
+
+        <label class="lead" for="to">hasta</label>
+          @Html.TextBox("to", "", new {  @placeholder = "Seleccionar Fecha",
+         style = "padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;" +
+       "background-color: #f7f7f9; background - clip: padding - box; border: 3px solid #ced4da; -webkit-appearance: none; " +
+       "-moz-appearance: none; border-radius: 0;transition: border - color .15s ease-in-out, box - shadow .15s ease-in-out;" })
+        
+                @*< input type="text" id="from" name="from" style="
         padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;background-color: #f7f7f9;
         background-clip: padding-box; border: 3px solid #ced4da; -webkit-appearance: none; -moz-appearance: none; border-radius: 0;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;}"
-                   placeholder="Seleccionar Fecha">
+               placeholder="Seleccionar Fecha">*@
 
-            <label class="lead" for="to">hasta</label>
-            <input type="text" id="to" name="to" style="
+        @*<input type="text" id="to" name="to" style="
         padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;background-color: #f7f7f9;
         background-clip: padding-box; border: 3px solid #ced4da; -webkit-appearance: none; -moz-appearance: none; border-radius: 0;
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;}"
-                   placeholder="Seleccionar Fecha">
-        </div>
+               placeholder="Seleccionar Fecha">*@
 
+    </div>
         <input type="submit" value="Buscar" class="btn btn-primary" style="display:inline;" />
     }
 
