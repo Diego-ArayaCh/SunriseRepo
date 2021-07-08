@@ -31,13 +31,16 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(filtroBuscarProveedor))
                 {
                     lista = _ServiceProveedores.GetProveedores();
+                    ViewBag.Filtro = "";
                 }
                 else
                 {
                     lista = _ServiceProveedores.GetProductosxNombre(filtroBuscarProveedor);
+                    ViewBag.Filtro = filtroBuscarProveedor;
                 }
                 //Lista autocompletado de productos
                 ViewBag.listaNombres = _ServiceProveedores.GetProveedoresNombre();
+              
             }
             catch (Exception ex)
             {
@@ -50,6 +53,7 @@ namespace Web.Controllers
             ViewBag.titulo = "Lista Proveedores";
             int pageSize = 5;
             int pageNumber = page ?? 1;
+          
             return View(lista.ToPagedList(pageNumber, pageSize));
 
 

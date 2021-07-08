@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Lista Proveedores";
+    String filtro = ViewBag.Filtro;
 }
 @Styles.Render("~/Content/PagedList.css")
 
@@ -28,7 +29,7 @@
             <div class="form-group">
                 <div class="form-group">
                     <div class="input-group mb-10">
-                        @Html.TextBox("filtroBuscarProveedor", "", new { @class = "form-control", @placeholder = "Buscar proveedor" })
+                        @Html.TextBox("filtroBuscarProveedor", filtro, new { @class = "form-control", @placeholder = "Buscar proveedor" })
                         @*<input class="form-control" type="text" placeholder="Buscar producto">*@
                         <div class="input-group-append">
                             <button class="btn btn-primary " type="submit">Buscar</button>
@@ -98,7 +99,8 @@
 
     </tbody>
 </table>
-@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page }),
+
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page, filtroBuscarProveedor = filtro }),
      new PagedListRenderOptions
      {
          LinkToFirstPageFormat = "<< Primera ",
