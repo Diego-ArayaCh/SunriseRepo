@@ -29,10 +29,12 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(filtroBuscarProducto))
                 {
                     lista = _ServiceProducto.GetProductos();
+                    ViewBag.Filtro = "";
                 }
                 else
                 {
                     lista = _ServiceProducto.GetProductosxNombre(filtroBuscarProducto);
+                    ViewBag.Filtro = filtroBuscarProducto;
                 }
 
                 //Lista autocompletado de productos
