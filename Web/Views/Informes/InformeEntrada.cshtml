@@ -40,6 +40,7 @@
 
 @{
     ViewBag.Title = "Informe Entrada";
+    String from=ViewBag.From, to=ViewBag.To;
 }
 @Styles.Render("~/Content/PagedList.css")
 @Styles.Render("~/Content/STYLE-GENERAL/layout-home-page.css")
@@ -57,13 +58,13 @@
     <div style="display:inline;">
 
         <label class="lead" for="from">Desde</label>
-        @Html.TextBox("from", "", new { @placeholder = "Seleccionar Fecha",
+        @Html.TextBox("from", from, new { @placeholder = "Seleccionar Fecha",
        style = "padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;" +
        "background-color: #f7f7f9; background - clip: padding - box; border: 3px solid #ced4da; -webkit-appearance: none; " +
        "-moz-appearance: none; border-radius: 0;transition: border - color .15s ease-in-out, box - shadow .15s ease-in-out;" })
 
         <label class="lead" for="to">hasta</label>
-          @Html.TextBox("to", "", new {  @placeholder = "Seleccionar Fecha",
+          @Html.TextBox("to", to, new {  @placeholder = "Seleccionar Fecha",
          style = "padding: .75rem 1.5rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #55595c;" +
        "background-color: #f7f7f9; background - clip: padding - box; border: 3px solid #ced4da; -webkit-appearance: none; " +
        "-moz-appearance: none; border-radius: 0;transition: border - color .15s ease-in-out, box - shadow .15s ease-in-out;" })
@@ -144,7 +145,7 @@
 
 @* Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount*@
 
-@Html.PagedListPager(Model, page => Url.Action("InformeEntrada", new { page = page }),
+@Html.PagedListPager(Model, page => Url.Action("InformeEntrada", new {from=from, to=to, page = page }),
 new PagedListRenderOptions
 {
    LinkToFirstPageFormat = "<< Primera ",

@@ -54,6 +54,8 @@ namespace Web.Controllers
                     ServiceInformes _ServiceInformes = new ServiceInformes();
                     if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
                     {
+                    ViewBag.From = "";
+                    ViewBag.To = "";
                         lista = _ServiceInformes.GetEntradas();
                     }
                     else
@@ -74,8 +76,10 @@ namespace Web.Controllers
                         }
                     }
                     lista = alma;
-                   // lista = _ServiceInformes.GetEntradas(inicio, fin);
-                    }
+                    ViewBag.From = from;
+                    ViewBag.To = to;
+                    // lista = _ServiceInformes.GetEntradas(inicio, fin);
+                }
                 }
                 catch (Exception ex)
                 {
@@ -137,6 +141,8 @@ namespace Web.Controllers
                 
                 if (String.IsNullOrEmpty(from) || String.IsNullOrEmpty(to))
                 {
+                    ViewBag.From = "";
+                    ViewBag.To = "";
                     lista = _ServiceInformes.GetSalidas();
                 }
                 else
@@ -157,6 +163,8 @@ namespace Web.Controllers
                             alma.Add(hist);
                         }
                     }
+                    ViewBag.From = from;
+                    ViewBag.To = to;
                     lista = alma;
                     // lista = _ServiceInformes.GetEntradas(inicio, fin);
                 }
