@@ -463,6 +463,50 @@ namespace Web.Controllers
 
                 if (ModelState.IsValid)
                 {
+                    if (selectedSucursales == null)
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                            "Atención",
+                            "No hay sucursal(es) seleccionada(s)",
+                            SweetAlertMessageType.error);
+
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        return View("Create2", oProducto);
+                    }
+
+                    if (selectedProveedores == null)
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                            "Atención",
+                            "No hay proveedor(es) seleccionado(s)",
+                            SweetAlertMessageType.error);
+
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        return View("Create2", oProducto);
+                    }
+
                     oProducto.estado = 2;
                     oProducto.stock = 0;
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
@@ -536,6 +580,51 @@ namespace Web.Controllers
 
                 if (ModelState.IsValid)
                 {
+
+                    if (selectedSucursales == null)
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                            "Atención",
+                            "No hay sucursal(es) seleccionada(s)",
+                            SweetAlertMessageType.error);
+
+                        // Lista de autores
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+                        ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));
+
+                        return View("Edit2", oProducto);
+                    }
+
+                    if (selectedProveedores == null)
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                            "Atención",
+                            "No hay proveedor(es) seleccionado(s)",
+                            SweetAlertMessageType.error);
+
+                        // Lista de autores
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Append(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+                        ViewBag.estado = listaEstados(Convert.ToInt32(oProducto.estado));
+
+                        return View("Edit2", oProducto);
+                    }
+
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
                     ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
                                                                   "Registro",
