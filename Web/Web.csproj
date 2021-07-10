@@ -154,6 +154,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformesController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
+    <Compile Include="Controllers\MovimientoController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Enum\Enum.cs" />
@@ -372,6 +373,7 @@
     <Content Include="Views\LogIn\EditPermisos.cshtml" />
     <Content Include="Views\LogIn\VerPerfil.cshtml" />
     <Content Include="Views\Productos\Inventario.cshtml" />
+    <Content Include="Views\Movimiento\MovimientoEntrada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
