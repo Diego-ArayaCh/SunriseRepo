@@ -49,6 +49,15 @@ namespace Web.Controllers
 
             ViewBag.titulo = "Lista Productos";
 
+            if (TempData.ContainsKey("Notificacion_Guardar"))
+            {
+                ViewBag.NotificationMessage = TempData["Notificacion_Guardar"];
+            }
+            if (TempData.ContainsKey("Notificacion_Editar"))
+            {
+                ViewBag.NotificationMessage = TempData["Notificacion_Editar"];
+            }
+
             int pageSize = 5;
             int pageNumber = page ?? 1;
             return View(lista.ToPagedList(pageNumber, pageSize));
@@ -512,10 +521,12 @@ namespace Web.Controllers
                     oProducto.estado = 2;
                     oProducto.stock = 0;
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
-                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                    TempData["Notificacion_Guardar"] = Util.SweetAlertHelper.Mensaje(
                                                                     "Registro", 
                                                                     "Exito al guardar el producto", 
                                                                     SweetAlertMessageType.success);
+                    TempData.Keep();
+                    //ViewBag.NotificationMessage
                 }
                 else
                 {
@@ -628,10 +639,11 @@ namespace Web.Controllers
                     }
 
                     PRODUCTOS oProductoI = _ServiceProducto.Save_AUX(oProducto, selectedSucursales, selectedProveedores);
-                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                    TempData["Notificacion_Editar"] = Util.SweetAlertHelper.Mensaje(
                                                                   "Registro",
                                                                   "Exito al actualizar el producto",
                                                                   SweetAlertMessageType.success);
+                    TempData.Keep();
                 }
                 else
                 {
