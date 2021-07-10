@@ -106,22 +106,16 @@ namespace Web.Controllers
                 if (string.IsNullOrEmpty(filtroBuscarProducto))
                 {
                     lista = _ServiceProducto.GetProductosActivo();
+                    ViewBag.Filtro = "";
                 }
                 else
                 {
                     lista = _ServiceProducto.GetProductosxNombreActivo(filtroBuscarProducto);
+                    ViewBag.Filtro = filtroBuscarProducto;
                 }
 
                 //Lista autocompletado de productos
                 ViewBag.listaNombres = _ServiceProducto.GetProductoNombres();
-                //foreach (PRODUCTOS item in lista)
-                //{
-                //    if (item.estado == 1)
-                //    {
-                //        listaActivos.Append(item);
-                //    }
-                //}
-                //lista = listaActivos;
             }
             catch (Exception ex)
             {
