@@ -1,0 +1,41 @@
+﻿@model Infraestructure.Models.PRODUCTOS
+
+@using (Ajax.BeginForm("AgregarProducto", "Movimiento", new AjaxOptions
+{
+    UpdateTargetId = "resultado",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "GET",
+    OnComplete = "CerrarModal()",
+    LoadingElementId = "ajaxLoader"
+}))
+{
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="myModalLabel">Agregar un producto</h4>
+        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>*@
+    </div>
+    <div id="modal-body" class="modal-body">
+        <div class="card-body">
+            <p class="card-text">
+                Nombre:   @Html.DisplayFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @type = "name" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger", })
+            </p>
+            <p class="card-text">
+                Cantidad:  @Html.Editor("cantidad", new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
+
+            </p>
+
+        </div>
+
+        @Html.Hidden("id", Model.ID)
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+    </div>
+
+}
+

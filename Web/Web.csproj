@@ -376,6 +376,7 @@
     <Content Include="Views\Productos\Inventario.cshtml" />
     <Content Include="Views\Movimiento\MovimientoEntrada.cshtml" />
     <Content Include="Views\Movimiento\_ProductosGenerales.cshtml" />
+    <Content Include="Views\Movimiento\_ModalProductos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

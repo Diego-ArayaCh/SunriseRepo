@@ -12,8 +12,39 @@ namespace Web.Controllers
 {
     public class MovimientoController : Controller
     {
+       [HttpPost]
+        public ActionResult AgregarProducto(int cantidad, int id)
+        {
+            ViewModelMovimiento model = new ViewModelMovimiento();
+            model.prodListDetalle.Add(new ServiceProductos().GetProductoByID(id));
+            model.prodList = new ServiceProductos().GetProductos().ToList();
+            try
+            {
+                return View(model);
+            }
+            catch (Exception ex)
+            {
 
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+           
+        }
+        [HttpPost]
+        public ActionResult Save()
+        {
 
+            return View();
+        }
+        public ActionResult SeleccionarProducto(int id)
+        {
+            PRODUCTOS model = new ServiceProductos().GetProductoByID(id);
+            return PartialView("_ModalProductos", model);
+        }
         private SelectList listaProveedores(int IDCategoria = 0)
         {
             //Lista de Categorias
@@ -33,9 +64,11 @@ namespace Web.Controllers
         {
             try
             {
-                ViewBag.IDProveedor = listaProveedores();
 
-                return View(new ViewModelMovimiento());
+                ViewBag.IDProveedor = listaProveedores();
+                ViewModelMovimiento model = new ViewModelMovimiento();
+                model.prodList = new ServiceProductos().GetProductos().ToList();
+                return View(model);
             }
             catch (Exception ex)
             {
