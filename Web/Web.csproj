@@ -169,6 +169,7 @@
     <Compile Include="Utils\Util.cs" />
     <Compile Include="ViewModel\CrudContactos.cs" />
     <Compile Include="ViewModel\ViewModelContactos.cs" />
+    <Compile Include="ViewModel\ViewModelMovimiento.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
