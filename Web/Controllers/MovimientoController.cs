@@ -20,7 +20,13 @@ namespace Web.Controllers
             model.prodList = new ServiceProductos().GetProductos().ToList();
             try
             {
-                return View(model);
+                if (cantidad > 0)
+                {
+
+                }
+                ViewBag.ListaProveedores = listaProveedores_lst();
+                ViewBag.IDProveedor = listaProveedores();
+                return View("MovimientoEntrada",model);
             }
             catch (Exception ex)
             {

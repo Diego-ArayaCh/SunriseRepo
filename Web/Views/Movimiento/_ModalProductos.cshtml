@@ -1,14 +1,7 @@
 ﻿@model Infraestructure.Models.PRODUCTOS
 
-@using (Ajax.BeginForm("AgregarProducto", "Movimiento", new AjaxOptions
-{
-    UpdateTargetId = "resultado",
-    InsertionMode = InsertionMode.Replace,
-    HttpMethod = "GET",
-    OnComplete = "CerrarModal()",
-    LoadingElementId = "ajaxLoader"
-}))
-{
+@using (Html.BeginForm("AgregarProducto", "Movimiento", FormMethod.Post))
+    {
     <div class="modal-header">
 
         <h4 class="modal-title" id="myModalLabel">Agregar un producto</h4>
