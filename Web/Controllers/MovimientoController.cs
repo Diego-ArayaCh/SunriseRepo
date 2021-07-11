@@ -64,7 +64,6 @@ namespace Web.Controllers
             IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
             return listaProveedores;
         }
-
         public PartialViewResult proveedorXproducto(int? id)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -75,21 +74,37 @@ namespace Web.Controllers
             }
             return PartialView("_ProductosGenerales", lista);
         }
-
+        private IEnumerable<PRODUCTOS> listaProductos_Filtrada(int? idProveedor)
+        {
+            IEnumerable<PRODUCTOS> lista = null;
+            ServiceMovimiento _Service = new ServiceMovimiento();
+            if (idProveedor != null)
+            {
+                lista = _Service.GetProductosActivoXProveedor((int)idProveedor);
+            }
+            return lista;
+        }
 
 
 
 
 
         // GET: Movimiento
-        public ActionResult MovimientoEntrada()
+        public ActionResult MovimientoEntrada(int? idProveedor)
         {
             try
             {
                 ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
                 ViewModelMovimiento model = new ViewModelMovimiento();
-               // model.prodList = new ServiceProductos().GetProductos().ToList();
+                if (idProveedor != null)
+                {
+                    model.prodList = (List<PRODUCTOS>)listaProductos_Filtrada(idProveedor);
+                }
+                else
+                {
+                    model.prodList = new List<PRODUCTOS>();
+                }
                 return View(model);
             }
             catch (Exception ex)
