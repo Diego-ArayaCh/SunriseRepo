@@ -12,7 +12,7 @@ namespace Web.Controllers
 {
     public class MovimientoController : Controller
     {
-       [HttpPost]
+        [HttpPost]
         public ActionResult AgregarProducto(int cantidad, int id)
         {
             ViewModelMovimiento model = new ViewModelMovimiento();
@@ -32,7 +32,7 @@ namespace Web.Controllers
                 TempData.Keep();
                 return RedirectToAction("Default", "Error");
             }
-           
+
         }
         [HttpPost]
         public ActionResult Save()
@@ -94,17 +94,14 @@ namespace Web.Controllers
         {
             try
             {
+                ServiceProductos _serviceProductos = new ServiceProductos();
+                ViewModelMovimiento model = new ViewModelMovimiento();
+
                 ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
-                ViewModelMovimiento model = new ViewModelMovimiento();
-                if (idProveedor != null)
-                {
-                    model.prodList = (List<PRODUCTOS>)listaProductos_Filtrada(idProveedor);
-                }
-                else
-                {
-                    model.prodList = new List<PRODUCTOS>();
-                }
+
+                model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
+
                 return View(model);
             }
             catch (Exception ex)

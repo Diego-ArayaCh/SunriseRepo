@@ -56,7 +56,7 @@
                             @Html.DropDownList("comboProveedor",
                                 (SelectList)ViewBag.IDProveedor,
                                         "Seleccione un proveedor",
-                                            htmlAttributes: new { @class = "form-control" , onChange= "slectProv(this)" })
+                                            htmlAttributes: new { @class = "form-control" , onChange= "slectProv()" })
                         </div>
                     </div>
                 </div>
@@ -78,13 +78,13 @@
                     </thead>
 
                     <tbody id="resultado">
-                        @if (Model.prodList.Count() == 0 || Model.prodList.Equals(null))
+                        @if (Model.prodList.Count() >= 0 || Model.prodList.Equals(null))
                         {
                             <tr class="table-warning">
                                 <td colspan="4"><div class="text-center">Favor seleccionar un proveedor</div> </td>
                             </tr>
                         }
-                        else
+                        @*else
                         {
                             foreach (var item in Model.prodList)
                             {
@@ -110,7 +110,7 @@
                                     </td>
                                 </tr>
                             }
-                        }
+                        }*@
                     </tbody>
                 </table>
 
@@ -225,6 +225,8 @@
 
 
     <script type="text/javascript">
+const { default: update } = require("../../Scripts/src/methods/update");
+
         function mostrarModal(id) {
 
             //$("#myModal").attr('data-toggle', 'modal');
@@ -236,16 +238,17 @@
             $('#myModal').modal('hide');
         }
 
-        function slectProv(ctr) {
+        function slectProv() {
             var id = document.getElementById("comboProveedor").value;
             console.log(id);
             $.ajax({
                 type: "GET",
                 dataType: 'text',
-                url: "/Movimiento/MovimientoEntrada",
-                data: { "idProveedor": id},
+                url: "/Movimiento/proveedorXproducto",
+                data: { "id": id},
                 success: function (data) {
-
+                    $("#resultado").html('');
+                    $("#resultado").html(data);
                 }, error: function (xhr, status, error) {
                     console.log("Error: " + error + ", No Error: " + xhr.status);
                 },
