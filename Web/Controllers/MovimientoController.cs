@@ -45,6 +45,10 @@ namespace Web.Controllers
             PRODUCTOS model = new ServiceProductos().GetProductoByID(id);
             return PartialView("_ModalProductos", model);
         }
+
+
+
+
         private SelectList listaProveedores(int IDCategoria = 0)
         {
             //Lista de Categorias
@@ -52,6 +56,24 @@ namespace Web.Controllers
             IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
 
             return new SelectList(listaProveedores, "ID", "nombre", IDCategoria);
+        }
+        private IEnumerable<PROVEEDORES> listaProveedores_lst(int IDCategoria = 0)
+        {
+            //Lista de Categorias
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
+            return listaProveedores;
+        }
+
+        public PartialViewResult proveedorXproducto(int? id)
+        {
+            IEnumerable<PRODUCTOS> lista = null;
+            ServiceMovimiento _Service = new ServiceMovimiento();
+            if (id != null)
+            {
+                lista = _Service.GetProductosActivoXProveedor((int)id);
+            }
+            return PartialView("_ProductosGenerales", lista);
         }
 
 
@@ -64,10 +86,10 @@ namespace Web.Controllers
         {
             try
             {
-
+                ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
                 ViewModelMovimiento model = new ViewModelMovimiento();
-                model.prodList = new ServiceProductos().GetProductos().ToList();
+               // model.prodList = new ServiceProductos().GetProductos().ToList();
                 return View(model);
             }
             catch (Exception ex)
