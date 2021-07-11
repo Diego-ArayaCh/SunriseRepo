@@ -1,82 +1,240 @@
-﻿@model IEnumerable<Infraestructure.Models.PRODUCTOS>
-
+﻿@*@model PagedList.IPagedList<Web.ViewModel.ViewModelMovimiento>*@
+@model Web.ViewModel.ViewModelMovimiento
 @{
-    ViewBag.Title = "MovimientoEntrada";
+    ViewBag.Title = "Movimiento Entrada";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    String filtro = ViewBag.Filtro;
+
+    String filtroProveedor = "0";
+    String fechaActual = "2021-09-23";
+
 }
 
-<h2>MovimientoEntrada</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IDCategoria)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.estado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.serial)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.precio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.marca)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.detalle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.stock)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.cantMin)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IDCategoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.estado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.serial)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.precio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.marca)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.detalle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.stock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantMin)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<ul class="nav nav-tabs" style="width:100%">
+
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#ProductosGenerales">Productos</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Detalle">Detalle</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Finalizar">Finalizar</a>
+    </li>
+
+</ul>
+<div style="height:480px">
+    @using (Html.BeginForm("Save", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div id="myTabContent" class="tab-content" style="width:100%">
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="tab-pane fade active show" id="ProductosGenerales">
+
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                    Productos disponibles para movimiento
+                </h1>
+                <hr class="my-4">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <p class="lead">
+                                Proveedores disponibles a seleccionar.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.DropDownList(filtroProveedor,
+                                   (SelectList)ViewBag.IDProveedor,
+                                           "Seleccione un proveedor",
+                                               htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().marca)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().nombre)
+                            </th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.prodList.Count() == 0 || Model.prodList.Equals(null))
+                        {
+                            <tr class="table-warning">
+                                <td colspan="4"><div class="text-center">No hay registros</div> </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.prodList)
+                            {
+                                <tr class="table-secondary">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.marca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td style="width:20%" id="estiloColorHover">
+                                        @Ajax.ActionLink("Agregar", "SeleccionarProducto", "Movimiento",
+                                             new { id = item.ID },
+                                             new AjaxOptions
+                                                  {
+                                                 UpdateTargetId = "modal-content",
+                                                 InsertionMode = InsertionMode.Replace,
+                                                 OnComplete = "mostrarModal()"
+                                             }, new { @class = "btn btn-primary update-contact" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="tab-pane fade " id="Detalle" style="z-index:2">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center;">
+                    Detalle del movimiento
+                </h1>
+                <hr class="my-4">
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <p class="lead">
+                                La fecha actual del movimiento es:   @fechaActual
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().marca)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.prodList.First().nombre)
+                            </th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.prodList.Count() == 0 || Model.prodList.Equals(null))
+                        {
+                            <tr class="table-warning">
+                                <td colspan="4"><div class="text-center">No hay registros</div> </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model.prodList)
+                            {
+                                <tr class="table-secondary">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.marca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td style="width:20%" id="estiloColorHover">
+                                        @Html.ActionLink("Borrar", "", new { id = item.ID }) |
+                                        @Html.ActionLink("Editar", "", new { id = item.ID })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div class="tab-pane fade " id="Finalizar" style="z-index:3">
+                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                    Confirmación de creación
+                </h1>
+                <hr class="my-4">
+                <p class="lead" style=" text-align: center; margin-top:20px">
+                    ¡ATENCION! Se guardara el producto especificado en la Base de Datos
+                </p>
+
+                <input type="submit" value="Registrar Producto" class="btn btn-primary"
+                       style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
+
+            </div>
+
+        </div> @*final de los tabs*@
+    }
+
+</div>
+<div style="margin-top:20px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver al inicio", "Index", "Home")
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div id="modal-content" class="modal-content">
+
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/bootstrap-Select/css")*@
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+
+
+    <script type="text/javascript">
+        function mostrarModal(id) {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('show');
+        }
+        function CerrarModal() {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('hide');
+        }
+
+    </script>
+
 }
-
-</table>

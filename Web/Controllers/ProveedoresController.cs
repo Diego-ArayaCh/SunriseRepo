@@ -40,7 +40,14 @@ namespace Web.Controllers
                 }
                 //Lista autocompletado de productos
                 ViewBag.listaNombres = _ServiceProveedores.GetProveedoresNombre();
-              
+                if (TempData.ContainsKey("Notificacion_Guardar"))
+                {
+                    ViewBag.NotificationMessage = TempData["Notificacion_Guardar"];
+                }
+                if (TempData.ContainsKey("Notificacion_Editar"))
+                {
+                    ViewBag.NotificationMessage = TempData["Notificacion_Editar"];
+                }
             }
             catch (Exception ex)
             {
@@ -230,7 +237,11 @@ namespace Web.Controllers
 
 
                         PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores,contactos);
-                        ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Éxito", "Se creó correctamente el proveedor", SweetAlertMessageType.success);
+                        TempData["Notificacion_Guardar"] = Util.SweetAlertHelper.Mensaje(
+                                                                   "Registro",
+                                                                   "Exito al guardar el contacto",
+                                                                   SweetAlertMessageType.success);
+                        TempData.Keep();
                     }
                     else
                     {
@@ -313,7 +324,11 @@ namespace Web.Controllers
 
                         
                         PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores, contactos);
-                       // ViewBag.NotificationMessage = SweetAlertHelper.Mensaje("Éxito", "Se actualizó correctamente el proveedor", SweetAlertMessageType.success);
+                        TempData["Notificacion_Guardar"] = Util.SweetAlertHelper.Mensaje(
+                                                                     "Registro",
+                                                                     "Exito al actualizar el contacto",
+                                                                     SweetAlertMessageType.success);
+                        TempData.Keep();
                     }
                     else
                     {

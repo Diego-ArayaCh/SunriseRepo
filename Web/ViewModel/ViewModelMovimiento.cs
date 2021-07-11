@@ -10,7 +10,7 @@ namespace Web.ViewModel
     {
         public MOVIMIENTO mov { get; set; }
 
-        public List<PRODUCTOS> prodList { get; set; }
+        public List<PRODUCTOS> prodList = new List<PRODUCTOS>();
 
         public List<PRODUCTOS> prodListDetalle=new List<PRODUCTOS>();
 
