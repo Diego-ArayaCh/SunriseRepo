@@ -18,8 +18,11 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Movimiento</a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Realizar Entrada</a>
-                    <a class="dropdown-item" href="#">Realizar Salida</a>
+                    @*<a class="dropdown-item" href="#">Realizar Entrada</a>*@
+                    @Html.ActionLink("Realizar Entrada", "MovimientoEntrada", "Movimiento", null, new { @class = "dropdown-item" })
+                    @*<a class="dropdown-item" href="#">Realizar Salida</a>*@
+                    @Html.ActionLink("Realizar Salida", "MovimientoSalida", "Movimiento", null, new { @class = "dropdown-item" })
+                    @Html.ActionLink("Realizar Transferencia", "MovimientoTransferencia", "Movimiento", null, new { @class = "dropdown-item" })
                 </div>
             </li>
             <li class="nav-item dropdown">

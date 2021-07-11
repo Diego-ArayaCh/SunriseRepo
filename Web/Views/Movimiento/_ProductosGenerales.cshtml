@@ -1,0 +1,93 @@
+﻿@model  PagedList.IPagedList<Infraestructure.Models.PRODUCTOS>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Movimiento Entrada";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    String filtro = ViewBag.Filtro;
+}
+@Styles.Render("~/Content/PagedList.css")
+
+
+<div class="general-container">
+    <div class="sub-container-1">
+        <p class="lead">
+            La siguiente es la lista de productos registados.
+            
+        </p>
+    </div>
+    <div class="sub-container-2">
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="input-group mb-10">
+                        @Html.TextBox("filtroBuscarProducto", filtro, new { @class = "form-control", @placeholder = "Buscar producto" })
+                        <div class="input-group-append">
+                            <button class="btn btn-primary " type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                @Html.DisplayNameFor(model => model.First().CATEGORIA.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().nombre)
+            </th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr class="table-warning">
+
+                <td colspan="6"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td style="width:20%" id="estiloColorHover">
+                        @Html.ActionLink("Editar", "Edit2", new { id = item.ID }) |
+                        @Html.ActionLink("Agregar", "Details", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page = page, filtroBuscarProducto = filtro }),
+     new PagedListRenderOptions
+     {
+         LinkToFirstPageFormat = "<< Primera ",
+         LinkToPreviousPageFormat = "< Anterior ",
+         LinkToNextPageFormat = " Siguiente >",
+         LinkToLastPageFormat = " Ultima >>",
+         UlElementClasses = new[] { "pagination" },
+         LiElementClasses = new[] { "page-item" },
+         MaximumPageNumbersToDisplay = 5
+     })
