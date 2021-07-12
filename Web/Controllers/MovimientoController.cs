@@ -42,12 +42,14 @@ namespace Web.Controllers
             }
 
         }
+        
         [HttpPost]
         public ActionResult Save()
         {
 
             return View();
         }
+        
         public ActionResult SeleccionarProducto(int id)
         {
             PRODUCTOS model = new ServiceProductos().GetProductoByID(id);
@@ -69,6 +71,7 @@ namespace Web.Controllers
 
             return new SelectList(listaProveedores, "ID", "nombre", IDProveedor);
         } //comboBox de proveedores
+        
         private SelectList listaSucursales(int IDSucursal = 0)
         {
             //Lista de Categorias
