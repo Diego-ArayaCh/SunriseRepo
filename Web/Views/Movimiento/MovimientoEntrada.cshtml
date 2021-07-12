@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
     String filtro = ViewBag.Filtro;
 
-    String fechaActual = "2021-09-23";
+    String fechaActual = DateTime.Now.ToString("dd/MMMM/yyyy hh:mm:ss");
 
 }
 @using Infraestructure.Models;
@@ -126,8 +126,16 @@
                     <div class="col-6">
                         <div class="form-group">
                             <p class="lead">
-                                La fecha actual del movimiento es:   @fechaActual
+                                Fecha: @fechaActual
                             </p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.DropDownList("comboSucursal",
+                                (SelectList)ViewBag.IDSucursal,
+                                        "Seleccione una sucursal",
+                                            htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
