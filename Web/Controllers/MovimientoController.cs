@@ -12,6 +12,8 @@ namespace Web.Controllers
 {
     public class MovimientoController : Controller
     {
+
+
         [HttpPost]
         public ActionResult AgregarProducto(int cantidad, int id)
         {
@@ -26,7 +28,7 @@ namespace Web.Controllers
                 }
                 ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
-                return View("MovimientoEntrada",model);
+                return View("MovimientoEntrada", model);
             }
             catch (Exception ex)
             {
@@ -53,23 +55,36 @@ namespace Web.Controllers
         }
 
 
-
-
-        private SelectList listaProveedores(int IDCategoria = 0)
+        //
+        //
+        //====================================================================
+        //=================== COMBOS DE LA APLICACION ========================
+        //====================================================================
+        //
+        private SelectList listaProveedores(int IDProveedor = 0)
         {
             //Lista de Categorias
             ServiceProductos _ServiceProducto = new ServiceProductos();
             IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
 
-            return new SelectList(listaProveedores, "ID", "nombre", IDCategoria);
-        }
-        private IEnumerable<PROVEEDORES> listaProveedores_lst(int IDCategoria = 0)
+            return new SelectList(listaProveedores, "ID", "nombre", IDProveedor);
+        } //comboBox de proveedores
+        private SelectList listaSucursales(int IDSucursal = 0)
         {
             //Lista de Categorias
-            ServiceProductos _ServiceProducto = new ServiceProductos();
-            IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
-            return listaProveedores;
-        }
+            ServiceMovimiento _Service = new ServiceMovimiento();
+            IEnumerable<SUCURSAL> lista = _Service.GetSucursales();
+
+            return new SelectList(lista, "ID", "nombre", IDSucursal);
+        } //comboBox de sucursales
+        
+        
+        //
+        //
+        //====================================================================
+        //======================== VISTAS PARCIALES ==========================
+        //====================================================================
+        //
         public PartialViewResult proveedorXproducto(int? id)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -79,23 +94,40 @@ namespace Web.Controllers
                 lista = _Service.GetProductosActivoXProveedor((int)id);
             }
             return PartialView("_ProductosGenerales", lista);
-        }
-        private IEnumerable<PRODUCTOS> listaProductos_Filtrada(int? idProveedor)
+        } //Vista parcial con seleccion por proveedor
+        
+        
+        //
+        //
+        //====================================================================
+        //========================== METODOS EXTRAS ==========================
+        //====================================================================
+        //
+        private IEnumerable<PROVEEDORES> listaProveedores_lst(int IDProveedor = 0)
+        {
+            //Lista de Categorias
+            ServiceProductos _ServiceProducto = new ServiceProductos();
+            IEnumerable<PROVEEDORES> listaProveedores = _ServiceProducto.GetProveedores();
+            return listaProveedores;
+        } // En AgregarProducto del Modal (SIMULACION)
+
+        private IEnumerable<PRODUCTOS> listaProductos_Filtrada(int? IDProveedor)
         {
             IEnumerable<PRODUCTOS> lista = null;
             ServiceMovimiento _Service = new ServiceMovimiento();
-            if (idProveedor != null)
+            if (IDProveedor != null)
             {
-                lista = _Service.GetProductosActivoXProveedor((int)idProveedor);
+                lista = _Service.GetProductosActivoXProveedor((int)IDProveedor);
             }
             return lista;
-        }
+        } // NO SE UTILIZA
 
-
-
-
-
-        // GET: Movimiento
+        //
+        //
+        //====================================================================
+        //=================== CONTROLLER DE VENTANAS =========================
+        //====================================================================
+        //
         public ActionResult MovimientoEntrada(int? idProveedor)
         {
             try
@@ -103,8 +135,9 @@ namespace Web.Controllers
                 ServiceProductos _serviceProductos = new ServiceProductos();
                 ViewModelMovimiento model = new ViewModelMovimiento();
 
-                ViewBag.ListaProveedores = listaProveedores_lst();
+                // ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
+                ViewBag.IDSucursal = listaSucursales();
 
                 model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
 

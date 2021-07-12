@@ -17,6 +17,11 @@ namespace ApplicationCore.Services
             //RepositoryProducto repository = new RepositoryProducto();
             //return repository.GetProductos();
         }
+        public IEnumerable<SUCURSAL> GetSucursales()
+        {
+            RepositoryMovimiento repository = new RepositoryMovimiento();
+            return repository.GetSucursales();
+        }
 
 
 
