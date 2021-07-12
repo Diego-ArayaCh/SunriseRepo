@@ -238,7 +238,7 @@ namespace Web.Controllers
 
                         PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores,contactos);
                         TempData["Notificacion_Guardar"] = Util.SweetAlertHelper.Mensaje(
-                                                                   "Registro",
+                                                                   "Registrado",
                                                                    "Exito al guardar el contacto",
                                                                    SweetAlertMessageType.success);
                         TempData.Keep();
@@ -325,7 +325,7 @@ namespace Web.Controllers
                         
                         PROVEEDORES oProveedores1 = serviceProveedores.Save(pProveedores, contactos);
                         TempData["Notificacion_Guardar"] = Util.SweetAlertHelper.Mensaje(
-                                                                     "Registro",
+                                                                     "Actualizado",
                                                                      "Exito al actualizar el contacto",
                                                                      SweetAlertMessageType.success);
                         TempData.Keep();
