@@ -1,6 +1,7 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -150,6 +151,60 @@ namespace Infraestructure.Repository
             }
             return lista;
         }
+
+
+
+
+        public IEnumerable<PRODUCTOS> GetProductos_TOP3()
+        {
+            try
+            {
+                IEnumerable<PRODUCTOS> lista = null;
+                IEnumerable<PRODUCTOS> listaAUX = new List<PRODUCTOS>();
+
+                using (MyContext ctx = new MyContext())
+                {
+
+                    ctx.Configuration.LazyLoadingEnabled = false;
+                    lista = ctx.PRODUCTOS.Include("CATEGORIA").
+                            Include("PROVEEDORES").
+                            Include("PROVEEDORES.PAIS").
+                            Include("ProdSuc").
+                            Include("ProdSuc.SUCURSAL").
+                            Include("HistDetalleEntradaSalida").ToList();
+
+                    foreach(var item in lista)
+                    {
+                        int sum=0;
+                        foreach (var item2 in item.HistDetalleEntradaSalida)
+                        {
+                             sum=+ (int) item2.cantidad; //Suma la cantidad de objetos de cada salida
+                        }
+                        item.cantMin = sum; //Va ser utilizada para almacenar el total de objetos movidos
+                    }
+
+                    int total = lista.Count(); // 30
+                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 0));//ultimo
+                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 1));//antepenultimo
+                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 2));//penultimo
+
+                }
+                return listaAUX;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
 
     }
 }
