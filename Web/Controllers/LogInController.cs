@@ -31,11 +31,20 @@ namespace Web.Controllers
 
                     if (oUsuario != null)
                     {
-                        //Se crea variable USER en la session, para validar permisos y demas
-                        Session["User"] = oUsuario;
+                        if (oUsuario.ID == 1)
+                        {
+                            //Se crea variable USER en la session, para validar permisos y demas
+                            Session["User"] = oUsuario;
 
-                        Log.Info($"Accede {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL.descripcion}");
-                        return RedirectToAction("Index", "Home");
+                            Log.Info($"Accede {oUsuario.nombre} {oUsuario.apellidos} con el rol {oUsuario.ROL.ID}-{oUsuario.ROL.descripcion}");
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            Log.Warn($"{usuario.correo} se intentó conectar  y falló");
+                            ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Login", "Error al autenticarse", SweetAlertMessageType.warning);
+                        }
+                        
                     }
                     else
                     {
