@@ -452,6 +452,27 @@ namespace Web.Controllers
                         oProducto.imagen = target.ToArray();
                         ModelState.Remove("imagen");
                     }
+                    else
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                           "Atención",
+                           "No hay imagen seleccionada",
+                           SweetAlertMessageType.error);
+
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        return View("Create2", oProducto);
+                    }
 
                 }
                 if (oProducto.imagen != null)
@@ -568,6 +589,27 @@ namespace Web.Controllers
                         ImageFile.InputStream.CopyTo(target);
                         oProducto.imagen = target.ToArray();
                         ModelState.Remove("imagen");
+                    }
+                    else
+                    {
+                        ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje(
+                           "Atención",
+                           "No hay imagen seleccionada",
+                           SweetAlertMessageType.error);
+
+                        // Valida Errores si Javascript está deshabilitado
+                        Web.Utils.Util.ValidateErrors(this);
+                        ViewBag.IdCategoria = listaCategorias(Convert.ToInt32(oProducto.IDCategoria));
+                        ViewBag.IdProveedor = listaProveedores(oProducto.PROVEEDORES);
+
+                        ICollection<SUCURSAL> listaSucursalesAux = new List<SUCURSAL>();
+                        foreach (var item in oProducto.ProdSuc)
+                        {
+                            listaSucursalesAux.Add(_ServiceProducto.GetSucursalesByID(item.IDSucursal));
+                        }
+                        ViewBag.IdSucursal = listaSucursales(listaSucursalesAux);
+
+                        return View("Edit2", oProducto);
                     }
 
                 }
