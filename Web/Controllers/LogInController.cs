@@ -31,7 +31,7 @@ namespace Web.Controllers
 
                     if (oUsuario != null)
                     {
-                        if (oUsuario.ID == 1)
+                        if (oUsuario.estado == 1)
                         {
                             //Se crea variable USER en la session, para validar permisos y demas
                             Session["User"] = oUsuario;

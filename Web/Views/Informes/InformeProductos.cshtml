@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Infraestructure.Models.PRODUCTOS>
+
+@{
+    ViewBag.Title = "InformeProductos";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+<h1 class="display-6" id="estiloColor">
+    Informe de Productos
+</h1>
+<hr class="my-4">
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                @Html.DisplayNameFor(model => model.CATEGORIA.descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayName("Salidas")
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayName("Despachado")
+            </th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr class="table-warning">
+
+                <td colspan="6"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.marca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.stock)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.cantMin)
+                    </td>
+                    <td id="estiloColorHover">
+                        @Html.ActionLink("Detalles", "DetailsProducto", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}

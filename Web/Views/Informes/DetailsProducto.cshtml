@@ -1,0 +1,209 @@
+﻿@model Infraestructure.Models.PRODUCTOS
+
+@{
+    ViewBag.Title = "DetailsProducto";
+    Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+}
+
+
+<h1 class="display-6" id="estiloColor">
+    Detalle Producto
+</h1>
+<hr class="my-4">
+
+<div class="card mb-3 ">
+    <div class="row no-gutters">
+        <div class="col-lg-8">
+            <div class="card-body">
+                <h3 class="card-title"> @Html.DisplayFor(model => model.marca)  @Html.DisplayFor(model => model.nombre)</h3>
+                <h6 class="text-muted">
+                    @Html.DisplayNameFor(model => model.serial): @Html.DisplayFor(model => model.serial) |
+                    @Html.DisplayNameFor(model => model.CATEGORIA.descripcion): @Html.DisplayFor(model => model.CATEGORIA.descripcion)
+                </h6>
+                <br />
+                <p class="card-text">
+                <p>
+                    @Html.DisplayNameFor(model => model.detalle):
+                </p>
+                <p>
+                    @Html.DisplayFor(model => model.detalle)
+                </p>
+                <p class="card-text">
+                    <h3>
+                        @Html.DisplayNameFor(model => model.precio):₡ @Html.DisplayFor(model => model.precio)
+                    </h3>
+                </p>
+                <br />
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            @*<img src=" @Html.DisplayFor(model => model.imagen)" width="280px" height="310px" />*@
+            <img src="data:image/jpeg;charset=utf-8;base64,@Convert.ToBase64String(Model.imagen)"
+                 role="img" alt="Producto - @Html.DisplayNameFor(model => model.nombre)" style="width:280px; height:310px" />
+        </div>
+    </div>
+</div>
+<br />
+
+<h3>Detalles Generales</h3>
+<hr class="my-4">
+<div class="row ">
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center"> @Html.DisplayNameFor(model => model.stock)</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center">#@Html.DisplayFor(model => model.stock)</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center"> @Html.DisplayNameFor(model => model.cantMin)</div>
+            <div class="card-body">
+                <h1 class="card-title font-weight-bold" style="text-align:center;">#@Html.DisplayFor(model => model.cantMin)</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-5">
+        <div class="card  mb-3 border border-success" style="max-width: 20rem;">
+            <div class="card-header" style="text-align:center">
+                @Html.DisplayNameFor(model => model.estado)
+            </div>
+            <div class="card-body">
+                @if (@Html.DisplayFor(model => model.estado).ToString() == "1")
+                {
+                    <h1 class="card-title font-weight-bold" style="text-align:center">Activo</h1>
+                }
+                else
+                {
+                    <h1 class="card-title font-weight-bold" style="text-align:center">Inactivo</h1>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+
+<h3>Sucursales</h3>
+<hr class="my-4">
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).SUCURSAL.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).SUCURSAL.direccion)
+            </th>
+            <th style="text-align:center">
+                @Html.DisplayNameFor(model => model.ProdSuc.ElementAt(0).cant)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ProdSuc.Count() == 0)
+        {
+
+
+            <tr class="table-warning">
+
+                <td colspan="3"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model.ProdSuc)
+            {
+                <tr class="table-secondary">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SUCURSAL.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SUCURSAL.direccion)
+                    </td>
+                    <td style="text-align:center">
+                        @Html.DisplayFor(modelItem => item.cant)
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+
+<h3>Historial de Salidas </h3>
+<hr class="my-4">
+
+<table class="table table-hover">
+    <thead>
+        <tr class="table-success">
+            <th>
+                @Html.Label("Fecha")
+            </th>
+            <th>
+                @Html.Label("Numero Movimiento")
+            </th>
+            <th>
+                @Html.Label("Sucursal")
+            </th>
+            <th style="text-align:center">
+                @Html.Label("Cantidad Despachada")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.HistDetalleEntradaSalida.Count() == 0)
+        {
+            <tr class="table-warning">
+
+                <td colspan="4"><div class="text-center">No hay registros</div> </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model.HistDetalleEntradaSalida)
+            {
+                if (item.IDSucursalSale != null)
+                {
+                <tr class="table-secondary">
+                    <td style="align-content:center">
+                        @Html.DisplayFor(modelItem => item.HISTORICO.fechaHora)
+                    </td>
+                    <td style="align-content:center">
+                        @Html.DisplayFor(modelItem => item.IDHistorico)
+                    </td>
+                    <td style="align-content:center">
+                        @Html.DisplayFor(modelItem => item.SUCURSAL1.nombre)
+                    </td>
+                    <td style="align-content:center">
+                        @Html.DisplayFor(modelItem => item.cantidad)
+                    </td>
+                </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<br />
+
+
+<div style="margin-top:10px" id="estiloColorHover3">
+    @Html.ActionLink("<< Volver al informe de productos", "InformeProductos")
+</div>
+
+
+@section footer{
+    <footer class="footer mt-auto py-3 ">
+        <hr />
+        <div class="container">
+            <p>&copy; @DateTime.Now.Year - Sunrise Computers &reg;</p>
+            <p>Si deseas conocer mas acerca de la página, favor visitar la página "Acerca de"</p>
+        </div>
+    </footer>
+}
+

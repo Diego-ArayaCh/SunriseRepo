@@ -183,7 +183,58 @@ namespace Web.Controllers
             return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: Informe/Create
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        public ActionResult InformeProductos()
+        {
+            IEnumerable<PRODUCTOS> lista = null;
+            try
+            {
+                ServiceInformes _ServiceInformes = new ServiceInformes();
+                lista = _ServiceInformes.GetProductos_TOP3();
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.titulo = "Informe Productos";
+            return View(lista);
+        }
+        
+         [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+        public ActionResult DetailsProducto(int? id)
+        {
+            ServiceInformes _ServiceInforme = new ServiceInformes();
+            PRODUCTOS informe = null;
+            try
+            {
+                // Si va null
+                if (id == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                informe = _ServiceInforme.GetProductoByID(id.Value);
+                if (informe == null)
+                {
+                    return RedirectToAction("Index", "Home"); //preguntar si vamos usar la pagina "error"
+                }
+
+                ViewBag.titulo = "Detalle Informe";
+                return View(informe);
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+
+
 
     }
 }
