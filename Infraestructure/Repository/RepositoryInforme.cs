@@ -175,10 +175,14 @@ namespace Infraestructure.Repository
                     foreach (var item in lista)
                     {
                         //Va ser utilizada para almacenar el total de objetos movidos
-                        item.cantMin = item.HistDetalleEntradaSalida.Where(i => i.IDSucursalSale != null).Sum(j => j.cantidad);
+                        item.cantMin = item.HistDetalleEntradaSalida.
+                            Where(i => i.IDSucursalSale != null && i.IDSucursalEntra==null)
+                            .Sum(j => j.cantidad);
                         
                         //Va ser utilizada para almacenar el total de salidas
-                        item.stock = item.HistDetalleEntradaSalida.Count();
+                        item.stock = item.HistDetalleEntradaSalida.
+                            Where(i => i.IDSucursalSale != null && i.IDSucursalEntra == null)
+                            .Count(); 
                     }
 
 
