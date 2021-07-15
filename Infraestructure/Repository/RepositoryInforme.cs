@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Repository
 {
-  public  class RepositoryInforme
+    public class RepositoryInforme
     {
         public IEnumerable<HISTORICO> GetEntradas()
         {
             IEnumerable<HISTORICO> lista = null;
             using (MyContext ctx = new MyContext())
             {
-               
+
 
                 ctx.Configuration.LazyLoadingEnabled = false;
 
@@ -54,7 +54,7 @@ namespace Infraestructure.Repository
                     Include("USUARIO").
                     Include("HistDetalleEntradaSalida").
                     Include("HistDetalleEntradaSalida.SUCURSAL").
-                      Where(p => (DateTime.Compare( Convert.ToDateTime(p.fechaHora),from)>0 && DateTime.Compare(Convert.ToDateTime(p.fechaHora),to)<0)&&(p.tipoMov == 1 || p.tipoMov == 3) ).
+                      Where(p => (DateTime.Compare(Convert.ToDateTime(p.fechaHora), from) > 0 && DateTime.Compare(Convert.ToDateTime(p.fechaHora), to) < 0) && (p.tipoMov == 1 || p.tipoMov == 3)).
                                 ToList();
 
                 //lista = ctx.HistDetalleEntradaSalida.
@@ -85,7 +85,7 @@ namespace Infraestructure.Repository
                     Include("HistDetalleEntradaSalida.PROVEEDORES").
                     Include("HistDetalleEntradaSalida.SUCURSAL").
                     Include("HistDetalleEntradaSalida.SUCURSAL1").
-                    Where(p => p.ID == pID ).FirstOrDefault<HISTORICO>();
+                    Where(p => p.ID == pID).FirstOrDefault<HISTORICO>();
 
             }
             return oHistorico;
@@ -153,14 +153,13 @@ namespace Infraestructure.Repository
         }
 
 
-
-
         public IEnumerable<PRODUCTOS> GetProductos_TOP3()
         {
             try
             {
                 IEnumerable<PRODUCTOS> lista = null;
-                IEnumerable<PRODUCTOS> listaAUX = new List<PRODUCTOS>();
+                IOrderedEnumerable<PRODUCTOS> listaAUX_Ordenada;
+                ICollection<PRODUCTOS> listaAUX_Filtrada = new List<PRODUCTOS>();
 
                 using (MyContext ctx = new MyContext())
                 {
@@ -173,23 +172,28 @@ namespace Infraestructure.Repository
                             Include("ProdSuc.SUCURSAL").
                             Include("HistDetalleEntradaSalida").ToList();
 
-                    foreach(var item in lista)
+                    foreach (var item in lista)
                     {
-                        int sum=0;
-                        foreach (var item2 in item.HistDetalleEntradaSalida)
-                        {
-                             sum=+ (int) item2.cantidad; //Suma la cantidad de objetos de cada salida
-                        }
-                        item.cantMin = sum; //Va ser utilizada para almacenar el total de objetos movidos
+                        //Va ser utilizada para almacenar el total de objetos movidos
+                        item.cantMin = item.HistDetalleEntradaSalida.
+                            Where(i => i.IDSucursalSale != null && i.IDSucursalEntra==null)
+                            .Sum(j => j.cantidad);
+                        
+                        //Va ser utilizada para almacenar el total de salidas
+                        item.stock = item.HistDetalleEntradaSalida.
+                            Where(i => i.IDSucursalSale != null && i.IDSucursalEntra == null)
+                            .Count(); 
                     }
 
-                    int total = lista.Count(); // 30
-                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 0));//ultimo
-                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 1));//antepenultimo
-                    listaAUX.Append(lista.OrderBy(i => i.cantMin).ElementAt(total - 2));//penultimo
+
+                    int total = lista.Count(); // ==7
+                    listaAUX_Ordenada = lista.OrderBy(i => i.stock);
+                    listaAUX_Filtrada.Add(listaAUX_Ordenada.ElementAt(total - 1));//ultimo
+                    listaAUX_Filtrada.Add(listaAUX_Ordenada.ElementAt(total - 2));//antepenultimo
+                    listaAUX_Filtrada.Add(listaAUX_Ordenada.ElementAt(total - 3));//penultimo
 
                 }
-                return listaAUX;
+                return listaAUX_Filtrada;
             }
             catch (DbUpdateException dbEx)
             {
@@ -203,6 +207,43 @@ namespace Infraestructure.Repository
                 Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
                 throw;
             }
+        }
+
+        public PRODUCTOS GetProductoByID(int pID)
+        {
+            try
+            {
+                PRODUCTOS oProducto = null;
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    oProducto = ctx.PRODUCTOS.
+                            Include("CATEGORIA").
+                            Include("PROVEEDORES").
+                            Include("PROVEEDORES.PAIS").
+                            Include("ProdSuc").
+                            Include("ProdSuc.SUCURSAL").
+                            Include("HistDetalleEntradaSalida").
+                            Include("HistDetalleEntradaSalida.HISTORICO").
+                            Where(p => p.ID == pID).
+                                    FirstOrDefault<PRODUCTOS>();
+                }
+                return oProducto;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+
         }
 
 

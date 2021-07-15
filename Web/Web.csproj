@@ -378,6 +378,8 @@
     <Content Include="Views\Movimiento\MovimientoEntrada.cshtml" />
     <Content Include="Views\Movimiento\_ProductosGenerales.cshtml" />
     <Content Include="Views\Movimiento\_ModalProductos.cshtml" />
+    <Content Include="Views\Informes\InformeProductos.cshtml" />
+    <Content Include="Views\Informes\DetailsProducto.cshtml" />
     <Content Include="Views\Movimiento\_MovimientoDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>

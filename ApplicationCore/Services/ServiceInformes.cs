@@ -36,5 +36,16 @@ namespace ApplicationCore.Services
             RepositoryInforme repository = new RepositoryInforme();
             return repository.GetInformeByID(id);
         }
+
+        public IEnumerable<PRODUCTOS> GetProductos_TOP3()
+        {
+            RepositoryInforme repository = new RepositoryInforme();
+            return repository.GetProductos_TOP3();
+        }
+        public PRODUCTOS GetProductoByID(int idProducto)
+        {
+            RepositoryInforme repository = new RepositoryInforme();
+            return repository.GetProductoByID(idProducto);
+        }
     }
 }
