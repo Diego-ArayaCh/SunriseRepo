@@ -1,7 +1,6 @@
 ﻿@model Infraestructure.Models.PRODUCTOS
 
-@using (Html.BeginForm("AgregarProducto", "Movimiento", FormMethod.Post))
-    {
+
     <div class="modal-header">
 
         <h4 class="modal-title" id="myModalLabel">Agregar un producto</h4>
@@ -16,8 +15,7 @@
                 @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger", })
             </p>
             <p class="card-text">
-                Cantidad:  @Html.Editor("cantidad", new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
-
+                Cantidad: @Html.Editor("cantidad", new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "1" } })
             </p>
 
         </div>
@@ -27,8 +25,8 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-dark">Guardar</button>
+        <button type="submit" onclick="Agreg()" class="btn btn-dark">Guardar</button>
     </div>
+  
 
-}
 

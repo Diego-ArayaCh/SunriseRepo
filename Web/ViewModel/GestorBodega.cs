@@ -1,4 +1,5 @@
-﻿using Infraestructure.Models;
+﻿using ApplicationCore.Services;
+using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Web.ViewModel
         // Un constructor protegido asegura que un objeto no se puede crear desde el exterior
         protected GestorBodega() { }
 
-        public void AgregarActualizar(PRODUCTOS producto, int idProveedor,int cant)
+        public void AgregarActualizar(PRODUCTOS producto, int? idProveedor,int cant)
         {
             if (movimientoDetalle.prodListDetalle.Exists(x => x.ID == producto.ID)) { 
                 movimientoDetalle.historicoDetalle.Find(x => x.IDProducto == producto.ID).cantidad=cant;
@@ -47,12 +48,14 @@ namespace Web.ViewModel
                 HistDetalleEntradaSalida histDetalle = new HistDetalleEntradaSalida();
                 histDetalle.IDProducto = producto.ID;
                 histDetalle.cantidad = cant;
-                histDetalle.IDProveedor = idProveedor;
+                histDetalle.IDProveedor = idProveedor.Value;
+                histDetalle.PROVEEDORES = new ServiceProveedores().GetProveedorByID(idProveedor.Value);
+                histDetalle.PRODUCTOS = producto;
 
                 movimientoDetalle.historicoDetalle.Add(histDetalle);
             }
         }
-        public String EliminarItem(int idProducto)
+        public String EliminarProducto(int idProducto)
         {
             String mensaje = "";
             if (movimientoDetalle.historicoDetalle.Exists(x => x.IDProducto == idProducto))
@@ -63,6 +66,10 @@ namespace Web.ViewModel
             }
             return mensaje;
 
+        }
+        public void VaciarMovimiento()
+        {
+            HttpContext.Current.Session["GestorBodega"] = null;
         }
     }
 }

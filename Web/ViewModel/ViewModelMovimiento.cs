@@ -16,12 +16,12 @@ namespace Web.ViewModel
 
         public USUARIO usuario { get; set; }
 
-        public List<SUCURSAL> sucursalEntrada { get; set; }
-        public List<SUCURSAL> sucursalSalir { get; set; }
+        public SUCURSAL sucursalEntrada { get; set; }
+        public SUCURSAL sucursalSalir { get; set; }
 
         public HISTORICO historico { get; set; }
 
-        public List<HistDetalleEntradaSalida> historicoDetalle { get; set; }
+        public List<HistDetalleEntradaSalida> historicoDetalle = new List<HistDetalleEntradaSalida>();
 
         public ViewModelMovimiento()
         {

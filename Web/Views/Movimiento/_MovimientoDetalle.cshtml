@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Infraestructure.Models.HistDetalleEntradaSalida>
+
+@try
+{
+    if (Model.Count() == 0)
+    {
+        <tr class="table-warning">
+            <td colspan="4"><div class="text-center">No hay productos registrados</div> </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            
+<tr class="table-secondary">
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.CATEGORIA.descripcion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.marca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.cantidad)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PROVEEDORES.nombre)
+    </td>
+    <td style="width:20%" id="estiloColorHover">
+        @Ajax.ActionLink("Agregar", "SeleccionarProducto", "Movimiento",
+             new { id = item.PRODUCTOS.ID },
+             new AjaxOptions
+                  {
+                 UpdateTargetId = "modal-content",
+                 InsertionMode = InsertionMode.Replace,
+                 OnComplete = "mostrarModal()"
+             }, new { @class = "btn btn-primary update-contact" })
+    </td>
+</tr>
+                            }
+            }
+            
+        
+    
+}
+catch (Exception e)
+{
+    <tr class="table-warning">
+        <td colspan="4"><div class="text-center">Sin Registro</div> </td>
+    </tr>
+}

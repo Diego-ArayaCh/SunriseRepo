@@ -14,21 +14,26 @@ namespace Web.Controllers
     {
 
 
-        [HttpPost]
-        public ActionResult AgregarProducto(int cantidad, int id)
+        //[HttpPost]
+        public ActionResult AgregarActualizarProducto(int idProveedor, int cantidad, int id)
         {
-            ViewModelMovimiento model = new ViewModelMovimiento();
-            model.prodListDetalle.Add(new ServiceProductos().GetProductoByID(id));
-            model.prodList = new ServiceProductos().GetProductos().ToList();
+            IEnumerable<HistDetalleEntradaSalida> model=new List<HistDetalleEntradaSalida>();
             try
             {
+                
                 if (cantidad > 0)
+                {
+                    
+                    GestorBodega.Instancia.AgregarActualizar(new ServiceProductos().GetProductoByID(id), idProveedor, cantidad);
+                    model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                }
+                else
                 {
 
                 }
-                ViewBag.ListaProveedores = listaProveedores_lst();
-                ViewBag.IDProveedor = listaProveedores();
-                return View("MovimientoEntrada", model);
+                //ViewBag.ListaProveedores = listaProveedores_lst();
+                //ViewBag.IDProveedor = listaProveedores();
+                return PartialView("_MovimientoDetalle", model);
             }
             catch (Exception ex)
             {
@@ -41,6 +46,10 @@ namespace Web.Controllers
                 return RedirectToAction("Default", "Error");
             }
 
+        }
+        public PartialViewResult MovimientoDetalle()
+        {
+            return PartialView();
         }
         
         [HttpPost]
