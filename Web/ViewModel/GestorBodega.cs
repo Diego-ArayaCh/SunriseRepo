@@ -40,7 +40,7 @@ namespace Web.ViewModel
 
         public void AgregarActualizar(PRODUCTOS producto, int? idProveedor,int cant)
         {
-            if (movimientoDetalle.prodListDetalle.Exists(x => x.ID == producto.ID)) { 
+            if (movimientoDetalle.historicoDetalle.Exists(x => x.IDProducto == producto.ID)) { 
                 movimientoDetalle.historicoDetalle.Find(x => x.IDProducto == producto.ID).cantidad=cant;
             }
             else
