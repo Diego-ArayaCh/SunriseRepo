@@ -1,6 +1,7 @@
 ﻿using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
@@ -24,9 +25,9 @@ namespace Infraestructure.Repository
                     lista = ctx.PRODUCTOS.Include("CATEGORIA").Include("PROVEEDORES").ToList().
                         FindAll(l => l.estado == 1);
 
-                    foreach(var item in lista)
+                    foreach (var item in lista)
                     {
-                        foreach(var prod in item.PROVEEDORES)
+                        foreach (var prod in item.PROVEEDORES)
                         {
                             if (prod.ID == idProveedor)
                             {
@@ -62,7 +63,7 @@ namespace Infraestructure.Repository
                 using (MyContext ctx = new MyContext())
                 {
                     ctx.Configuration.LazyLoadingEnabled = false;
-                    lista = ctx. SUCURSAL.ToList();
+                    lista = ctx.SUCURSAL.ToList();
                 }
                 return lista;
             }
@@ -79,6 +80,100 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+        public HISTORICO GuardarMovimiento(HISTORICO mov)
+        {
+            HISTORICO histMov = null;
+            histMov = mov;
+            int retorno;
+            using (MyContext ctx = new MyContext())
+            {
+                ctx.Configuration.LazyLoadingEnabled = false;
+
+                if (histMov == null)
+                {
+                    try
+                    {
+                        using (var transaccion = ctx.Database.BeginTransaction())
+                        {//Insertar nuevo historico con el detalle?
+                            ctx.HISTORICO.Add(histMov);
+                            retorno = ctx.SaveChanges();
+
+                            //Actualizacion de cantidades
+
+                            foreach (HistDetalleEntradaSalida detalle in histMov.HistDetalleEntradaSalida)
+                            {
+                                switch (histMov.tipoMov)
+                                {
+                                    case 1:
+                                        ProdSuc ps = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
+                                        ps.cant += detalle.cantidad;
+                                        ctx.Entry(ps).State = EntityState.Modified;
+                                        PRODUCTOS prod = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
+                                        prod.stock += detalle.cantidad;
+                                        ctx.Entry(prod).State = EntityState.Modified;
+                                        break;
+                                    case 2:
+                                        ProdSuc ps1 = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
+                                        ps1.cant -= detalle.cantidad;
+                                        ctx.Entry(ps1).State = EntityState.Modified;
+                                        PRODUCTOS prod1 = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
+                                        prod1.stock += detalle.cantidad;
+                                        ctx.Entry(prod1).State = EntityState.Modified;
+                                        break;
+                                    case 3:
+                                        ProdSuc psEntra = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
+                                        psEntra.cant += detalle.cantidad;
+                                        ProdSuc psSalida = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
+                                        psSalida.cant -= detalle.cantidad;
+                                        ctx.Entry(psEntra).State = EntityState.Modified;
+                                        ctx.Entry(psSalida).State = EntityState.Modified;
+                                        break;
+
+                                }
+                                ctx.SaveChanges();
+                            }
+
+                            
+                            transaccion.Commit();
+                        }
+
+
+
+
+                    }
+                    catch (DbUpdateException dbEx)
+                    {
+                        string mensaje = "";
+                        Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                        throw new Exception(mensaje);
+                    }
+                    catch (Exception ex)
+                    {
+                        string mensaje = "";
+                        Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                        throw new Exception(mensaje);
+                    }
+                }
+
+
+                
+
+                return histMov;
+            }
+
+        }
+        public ProdSuc GetProdSucByBothID(int idProducto, int idSucursal)
+        {
+            ProdSuc ps=null;
+            using (MyContext ctx=new MyContext())
+            {
+                ctx.Configuration.LazyLoadingEnabled = false;
+                ps = ctx.ProdSuc.Where(p => p.IDProducto == idProducto && p.IDSucursal == idSucursal).First();
+            }
+            return ps;
+            
+        }
 
     }
+    
 }
