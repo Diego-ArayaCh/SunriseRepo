@@ -80,7 +80,10 @@ namespace Infraestructure.Repository
                         {
                             if (prod.IDSucursal == idSucursal)
                             {
-                                lista_ProdFiltrados.Add(item);
+                                if (prod.cant >= 1)
+                                {
+                                    lista_ProdFiltrados.Add(item);
+                                }
                             }
                         }
                     }
