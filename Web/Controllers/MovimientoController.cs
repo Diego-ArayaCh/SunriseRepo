@@ -107,8 +107,20 @@ namespace Web.Controllers
             }
             return PartialView("_ProductosGenerales", lista);
         } //Vista parcial con seleccion por proveedor
-        
-        
+       
+        public PartialViewResult sucursalXproducto(int? id)
+        {
+            IEnumerable<PRODUCTOS> lista = null;
+            ServiceMovimiento _Service = new ServiceMovimiento();
+            if (id != null)
+            {
+                lista = _Service.GetProductosActivoXSucursal((int)id);
+            }
+            ViewBag.SucursalSelecciona = id;
+            return PartialView("_ProductosSucursal", lista);
+        } //Vista parcial con seleccion por proveedor
+
+
         //
         //
         //====================================================================
@@ -166,9 +178,29 @@ namespace Web.Controllers
             }
         }
 
-        public ActionResult MovimientoSalida()
+        public ActionResult MovimientoSalida(int? idSucursal)
         {
-            return View();
+            try
+            {
+                ServiceProductos _serviceProductos = new ServiceProductos();
+                ViewModelMovimiento model = new ViewModelMovimiento();
+
+                ViewBag.IDProveedor = listaProveedores();
+                ViewBag.IDSucursal = listaSucursales();
+
+                model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
         }
 
         public ActionResult MovimientoTransferencia()

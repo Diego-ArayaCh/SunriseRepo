@@ -54,6 +54,53 @@ namespace Infraestructure.Repository
                 throw;
             }
         }
+        
+        public IEnumerable<PRODUCTOS> GetProductosActivoXSucursal(int idSucursal)
+        {
+            try
+            {
+                IEnumerable<PRODUCTOS> lista = null;
+                ICollection<PRODUCTOS> lista_ProdFiltrados = new List<PRODUCTOS>();
+                using (MyContext ctx = new MyContext())
+                {
+                    ctx.Configuration.LazyLoadingEnabled = false;
+
+                    lista = ctx.PRODUCTOS.
+                            Include("CATEGORIA").
+                            Include("PROVEEDORES").
+                            Include("PROVEEDORES.PAIS").
+                            Include("ProdSuc").
+                            Include("ProdSuc.SUCURSAL").
+                            ToList().
+                        FindAll(l => l.estado == 1);
+
+                    foreach (var item in lista)
+                    {
+                        foreach (var prod in item.ProdSuc)
+                        {
+                            if (prod.IDSucursal == idSucursal)
+                            {
+                                lista_ProdFiltrados.Add(item);
+                            }
+                        }
+                    }
+                }
+                return lista_ProdFiltrados;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                string mensaje = "";
+                Log.Error(dbEx, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw new Exception(mensaje);
+            }
+            catch (Exception ex)
+            {
+                string mensaje = "";
+                Log.Error(ex, System.Reflection.MethodBase.GetCurrentMethod(), ref mensaje);
+                throw;
+            }
+        }
+
 
         public IEnumerable<SUCURSAL> GetSucursales()
         {

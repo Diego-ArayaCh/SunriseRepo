@@ -1,8 +1,249 @@
-﻿
+﻿@model Web.ViewModel.ViewModelMovimiento
 @{
-    ViewBag.Title = "MovimientoSalida";
+    ViewBag.Title = "Movimiento Salida";
     Layout = "~/Views/Shared/_LayoutMaster.cshtml";
+    String filtro = ViewBag.Filtro;
+
+    String fechaActual = DateTime.Now.ToString("dd/MMMM/yyyy hh:mm:ss");
+
 }
+@using Infraestructure.Models;
 
-<h2>MovimientoSalida</h2>
+<ul class="nav nav-tabs" style="width:100%">
 
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#ProductosGenerales">Productos</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Detalle">Detalle</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Finalizar">Finalizar</a>
+    </li>
+
+</ul>
+<div style="height:480px">
+
+    <div id="myTabContent" class="tab-content" style="width:100%">
+
+        <div class="tab-pane fade active show" id="ProductosGenerales">
+            @*@using (Html.BeginForm("AgregarActualizarProducto", "Movimiento", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Productos disponibles para movimiento
+            </h1>
+            <hr class="my-4">
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <p class="lead">
+                            Sucursales disponibles para salida.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.DropDownList("comboSucursalSalida",
+                        (SelectList)ViewBag.IDSucursal,
+                                "Seleccione una sucursal",
+                                    htmlAttributes: new { @class = "form-control", onChange = "selectSuc()" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().marca)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().nombre)
+                        </th>
+                        <th>
+                            @Html.DisplayName("Cantidad Disponible")
+                        </th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="resultado">
+                    @if (Model.prodList.Count() >= 0 || Model.prodList.Equals(null))
+                    {
+                        <tr class="table-warning">
+                            <td colspan="6"><div class="text-center">Favor seleccionar una sucursal</div> </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @*}*@
+
+
+        </div>
+
+        <div class="tab-pane fade " id="Detalle" style="z-index:2">
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center;">
+                Detalle del movimiento
+            </h1>
+            <hr class="my-4">
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <p class="lead">
+                            Fecha: @fechaActual
+                        </p>
+                    </div>
+                </div>
+                @*<div class="col-6">
+                    <div class="form-group">
+                        @Html.DropDownList("comboSucursalEntrada",
+                            (SelectList)ViewBag.IDSucursal,
+                                    "Seleccione una sucursal",
+                                        htmlAttributes: new { @class = "form-control" })
+                    </div>
+                </div>*@
+            </div>
+
+            <br />
+
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().marca)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().nombre)
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                        <th>
+                            Proveedor
+                        </th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="resultadoDetalle">
+                    <tr class="table-warning">
+                        <td colspan="6"><div class="text-center">No hay registros</div> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div class="tab-pane fade " id="Finalizar" style="z-index:3">
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Confirmación de creación
+            </h1>
+            <hr class="my-4">
+            <p class="lead" style=" text-align: center; margin-top:20px">
+                ¡ATENCION! Se guardara el movimiento especificado en la Base de Datos
+            </p>
+            <br />
+            <div class="col-md-4" style="width:50%; transform: translateX(-50%); margin-left: 50%;">
+                @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-md-6" })
+                @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+
+            <input type="submit" value="Realizar Movimiento" class="btn btn-primary"
+                   style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
+
+        </div>
+
+    </div> @*final de los tabs*@
+
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div id="modal-content" class="modal-content">
+
+        </div>
+    </div>
+</div>
+<br />
+
+
+
+@section Scripts {
+    @*@Scripts.Render("~/bundles/bootstrap-select")
+        @Styles.Render("~/Content/bootstrap-Select/css")*@
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryajax")
+
+
+<script type="text/javascript">
+    const { default: update } = require("../../Scripts/src/methods/update");
+
+    function mostrarModal(id) {
+
+        //$("#myModal").attr('data-toggle', 'modal');
+        $('#myModal').modal('show');
+    }
+    function CerrarModal() {
+
+        //$("#myModal").attr('data-toggle', 'modal');
+        $('#myModal').modal('hide');
+    }
+
+    function selectSuc() {
+        var id = document.getElementById("comboSucursalSalida").value;
+        console.log(id);
+        $.ajax({
+            type: "GET",
+            dataType: 'text',
+            url: "/Movimiento/sucursalXproducto",
+            data: { "id": id },
+            success: function (data) {
+                $("#resultado").html('');
+                $("#resultado").html(data);
+            }, error: function (xhr, status, error) {
+                console.log("Error: " + error + ", No Error: " + xhr.status);
+            },
+        });
+    }
+
+    function Agreg() {
+        var id = document.getElementById("id").value;
+        var cantidad = document.getElementById("cantidad").value;
+        var idProveedor = document.getElementById("comboProveedor").value;
+        console.log(id);
+        $.ajax({
+            type: "GET",
+            dataType: 'text',
+            url: "/Movimiento/AgregarActualizarProducto",
+            data: { "idProveedor": idProveedor, "cantidad": cantidad, "id": id },
+            success: function (data) {
+                $("#resultadoDetalle").html('');
+                $("#resultadoDetalle").html(data);
+            }, error: function (xhr, status, error) {
+                console.log("Error: " + error + ", No Error: " + xhr.status);
+            },
+        });
+        CerrarModal();
+    }
+
+
+
+
+</script>
+
+}

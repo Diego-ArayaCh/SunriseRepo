@@ -382,6 +382,7 @@
     <Content Include="Views\Informes\DetailsProducto.cshtml" />
     <Content Include="Views\Movimiento\_MovimientoDetalle.cshtml" />
     <Content Include="Views\Movimiento\MovimientoSalida.cshtml" />
+    <Content Include="Views\Movimiento\_ProductosSucursal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
