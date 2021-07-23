@@ -500,6 +500,16 @@ namespace Infraestructure.Repository
                                 retorno = ctx.SaveChanges();
                             }
                         }
+                     
+                        int sumaCantidades = 0;
+                        foreach(var item in pProducto.ProdSuc)
+                        {
+                            sumaCantidades += Convert.ToInt32(item.cant);
+                        }
+                        pProducto.stock = sumaCantidades;
+                        ctx.Entry(pProducto).State = EntityState.Modified;
+                        retorno = ctx.SaveChanges();
+
                     }
 
                     if (retorno >= 0)
