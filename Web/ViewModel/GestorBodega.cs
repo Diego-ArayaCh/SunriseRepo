@@ -38,10 +38,15 @@ namespace Web.ViewModel
         // Un constructor protegido asegura que un objeto no se puede crear desde el exterior
         protected GestorBodega() { }
 
-        public void AgregarActualizar(PRODUCTOS producto, int? idProveedor,int cant)
+        public bool AgregarActualizar(PRODUCTOS producto, int? idProveedor,int cant)
         {
+            if (movimientoDetalle.historicoDetalle.Exists(x => x.IDProveedor !=idProveedor && x.IDProducto == producto.ID))
+            {
+                return true;
+            }
             if (movimientoDetalle.historicoDetalle.Exists(x => x.IDProducto == producto.ID)) { 
                 movimientoDetalle.historicoDetalle.Find(x => x.IDProducto == producto.ID).cantidad=cant;
+                return false;
             }
             else
             {
@@ -53,6 +58,7 @@ namespace Web.ViewModel
                 histDetalle.PRODUCTOS = producto;
 
                 movimientoDetalle.historicoDetalle.Add(histDetalle);
+                return false;
             }
         }
         public String EliminarProducto(int idProducto)

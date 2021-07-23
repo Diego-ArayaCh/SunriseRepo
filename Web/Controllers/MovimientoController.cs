@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Util;
 using Web.ViewModel;
 
 namespace Web.Controllers
@@ -24,7 +25,15 @@ namespace Web.Controllers
                 if (cantidad > 0)
                 {
                     
-                    GestorBodega.Instancia.AgregarActualizar(new ServiceProductos().GetProductoByID(id), idProveedor, cantidad);
+                   bool validacion= GestorBodega.Instancia.AgregarActualizar(new ServiceProductos().GetProductoByID(id), idProveedor, cantidad);
+                    if (validacion)
+                    {
+                        TempData["Notificacion"] = Util.SweetAlertHelper.Mensaje(
+                                                                   "Error",
+                                                                   "El producto está agregado con otro proveedor",
+                                                                   SweetAlertMessageType.warning);
+                        TempData.Keep();
+                    }
                     model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
                 }
                 else
@@ -55,7 +64,7 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult Save()
         {
-
+           
             return View();
         }
         
@@ -164,7 +173,11 @@ namespace Web.Controllers
                 ViewBag.IDSucursal = listaSucursales();
 
                 model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
-
+                if (TempData.ContainsKey("Notificacion"))
+                {
+                    ViewBag.NotificationMessage = TempData["Notificacion"];
+                }
+                
                 return View(model);
             }
             catch (Exception ex)
