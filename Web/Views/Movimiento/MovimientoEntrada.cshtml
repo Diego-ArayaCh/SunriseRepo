@@ -29,91 +29,91 @@
 
 </ul>
 <div style="height:480px">
-   
+
     <div id="myTabContent" class="tab-content" style="width:100%">
-        
+
 
 
         <div class="tab-pane fade active show" id="ProductosGenerales">
             @*@using (Html.BeginForm("AgregarActualizarProducto", "Movimiento", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
-                <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
-                    Productos disponibles para movimiento
-                </h1>
-                <hr class="my-4">
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <h1 class="display-6" id="estiloColor" style="margin-top:25px; text-align:center">
+                Productos disponibles para movimiento
+            </h1>
+            <hr class="my-4">
 
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <p class="lead">
-                                Proveedores disponibles a seleccionar.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            @Html.DropDownList("comboProveedor",
-                                (SelectList)ViewBag.IDProveedor,
-                                        "Seleccione un proveedor",
-                                            htmlAttributes: new { @class = "form-control", onChange = "slectProv()" })
-                        </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <p class="lead">
+                            Proveedores disponibles a seleccionar.
+                        </p>
                     </div>
                 </div>
-                <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr class="table-primary">
-                            <th>
-                                @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.prodList.First().marca)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.prodList.First().nombre)
-                            </th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
+                <div class="col-6">
+                    <div class="form-group">
+                        @Html.DropDownList("comboProveedor",
+                            (SelectList)ViewBag.IDProveedor,
+                                    "Seleccione un proveedor",
+                                        htmlAttributes: new { @class = "form-control", onChange = "slectProv()" })
+                    </div>
+                </div>
+            </div>
+            <br />
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().CATEGORIA.descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().marca)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.prodList.First().nombre)
+                        </th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
 
-                    <tbody id="resultado">
-                        @if (Model.prodList.Count() >= 0 || Model.prodList.Equals(null))
-                        {
-                            <tr class="table-warning">
-                                <td colspan="4"><div class="text-center">Favor seleccionar un proveedor</div> </td>
-                            </tr>
-                        }
-                        @*else
+                <tbody id="resultado">
+                    @if (Model.prodList.Count() >= 0 || Model.prodList.Equals(null))
                     {
-                        foreach (var item in Model.prodList)
+                        <tr class="table-warning">
+                            <td colspan="4"><div class="text-center">Favor seleccionar un proveedor</div> </td>
+                        </tr>
+                    }
+                    @*else
                         {
-                            <tr class="table-secondary">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.marca)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nombre)
-                                </td>
-                                <td style="width:20%" id="estiloColorHover">
-                                    @Ajax.ActionLink("Agregar", "SeleccionarProducto", "Movimiento",
-                                         new { id = item.ID },
-                                         new AjaxOptions
-                                              {
-                                             UpdateTargetId = "modal-content",
-                                             InsertionMode = InsertionMode.Replace,
-                                             OnComplete = "mostrarModal()"
-                                         }, new { @class = "btn btn-primary update-contact" })
-                                </td>
-                            </tr>
-                        }
-                    }*@
-                    </tbody>
-                </table>
+                            foreach (var item in Model.prodList)
+                            {
+                                <tr class="table-secondary">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.marca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td style="width:20%" id="estiloColorHover">
+                                        @Ajax.ActionLink("Agregar", "SeleccionarProducto", "Movimiento",
+                                             new { id = item.ID },
+                                             new AjaxOptions
+                                                  {
+                                                 UpdateTargetId = "modal-content",
+                                                 InsertionMode = InsertionMode.Replace,
+                                                 OnComplete = "mostrarModal()"
+                                             }, new { @class = "btn btn-primary update-contact" })
+                                    </td>
+                                </tr>
+                            }
+                        }*@
+                </tbody>
+            </table>
             @*}*@
 
 
@@ -133,14 +133,14 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        @Html.DropDownList("comboSucursal",
-                            (SelectList)ViewBag.IDSucursal,
-                                    "Seleccione una sucursal",
-                                        htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>
+                @*<div class="col-6">
+                        <div class="form-group">
+                            @Html.DropDownList("comboSucursal",
+                                (SelectList)ViewBag.IDSucursal,
+                                        "Seleccione una sucursal",
+                                            htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>*@
             </div>
 
             <br />
@@ -172,30 +172,30 @@
                         <td colspan="6"><div class="text-center">No hay registros</div> </td>
                     </tr>
                     @*@if (Model.prodList.Count() == 0 || Model.prodList.Equals(null))
-                    {
-                        
-                    }
-                    else
-                    {
-                        foreach (var item in Model.prodList)
                         {
-                            <tr class="table-secondary">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.marca)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.nombre)
-                                </td>
-                                <td style="width:20%" id="estiloColorHover">
-                                    @Html.ActionLink("Borrar", "", new { id = item.ID }) |
-                                    @Html.ActionLink("Editar", "", new { id = item.ID })
-                                </td>
-                            </tr>
+
                         }
-                    }*@
+                        else
+                        {
+                            foreach (var item in Model.prodList)
+                            {
+                                <tr class="table-secondary">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CATEGORIA.descripcion)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.marca)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.nombre)
+                                    </td>
+                                    <td style="width:20%" id="estiloColorHover">
+                                        @Html.ActionLink("Borrar", "", new { id = item.ID }) |
+                                        @Html.ActionLink("Editar", "", new { id = item.ID })
+                                    </td>
+                                </tr>
+                            }
+                        }*@
                 </tbody>
             </table>
 
@@ -208,26 +208,34 @@
             </h1>
             <hr class="my-4">
             <p class="lead" style=" text-align: center; margin-top:20px">
-                ¡ATENCION! Se guardara el producto especificado en la Base de Datos
+                ¡ATENCION! Se guardara el movimiento especificado en la Base de Datos
             </p>
             <br />
             <div class="col-md-4" style="width:50%; transform: translateX(-50%); margin-left: 50%;">
-                @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-md-6" })
+                @Html.Label("Sucursal a la cual se va realizar la entrada", htmlAttributes: new { @class = "control-label col-lg-8" })
+                @Html.DropDownList("comboSucursal",
+                                            (SelectList)ViewBag.IDSucursal,
+                                                    "Seleccione una sucursal",
+                                                        htmlAttributes: new { @class = "form-control" })
+            </div>
+            <br />
+            <div class="col-md-4" style="width:50%; transform: translateX(-50%); margin-left: 50%;">
+                @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-lg-6" })
                 @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
-            <input type="submit" value="Registrar Producto" class="btn btn-primary"
+            <input type="submit" value="Realizar Movimiento" class="btn btn-primary"
                    style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
 
         </div>
 
     </div> @*final de los tabs*@
-    
+
 
 </div>
 @*<div  id="estiloColorHover3">
-    @Html.ActionLink("<< Volver al inicio", "Index", "Home")
-</div>*@
+        @Html.ActionLink("<< Volver al inicio", "Index", "Home")
+    </div>*@
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div id="modal-content" class="modal-content">
@@ -248,7 +256,7 @@
 
 
     <script type="text/javascript">
-const { default: update } = require("../../Scripts/src/methods/update");
+        const { default: update } = require("../../Scripts/src/methods/update");
 
         function mostrarModal(id) {
 
@@ -268,7 +276,7 @@ const { default: update } = require("../../Scripts/src/methods/update");
                 type: "GET",
                 dataType: 'text',
                 url: "/Movimiento/proveedorXproducto",
-                data: { "id": id},
+                data: { "id": id },
                 success: function (data) {
                     $("#resultado").html('');
                     $("#resultado").html(data);
@@ -280,7 +288,7 @@ const { default: update } = require("../../Scripts/src/methods/update");
         function Agreg() {
             var id = document.getElementById("id").value;
             var cantidad = document.getElementById("cantidad").value;
-            var idProveedor= document.getElementById("comboProveedor").value;
+            var idProveedor = document.getElementById("comboProveedor").value;
             console.log(id);
             $.ajax({
                 type: "GET",
