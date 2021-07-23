@@ -381,6 +381,7 @@
     <Content Include="Views\Informes\InformeProductos.cshtml" />
     <Content Include="Views\Informes\DetailsProducto.cshtml" />
     <Content Include="Views\Movimiento\_MovimientoDetalle.cshtml" />
+    <Content Include="Views\Movimiento\MovimientoSalida.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

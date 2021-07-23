@@ -169,7 +169,7 @@
 
                 <tbody id="resultadoDetalle">
                     <tr class="table-warning">
-                        <td colspan="4"><div class="text-center">No hay registros</div> </td>
+                        <td colspan="6"><div class="text-center">No hay registros</div> </td>
                     </tr>
                     @*@if (Model.prodList.Count() == 0 || Model.prodList.Equals(null))
                     {
@@ -210,6 +210,11 @@
             <p class="lead" style=" text-align: center; margin-top:20px">
                 ¡ATENCION! Se guardara el producto especificado en la Base de Datos
             </p>
+            <br />
+            <div class="col-md-4" style="width:50%; transform: translateX(-50%); margin-left: 50%;">
+                @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-md-6" })
+                @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
 
             <input type="submit" value="Registrar Producto" class="btn btn-primary"
                    style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
