@@ -87,6 +87,46 @@ namespace Web.Controllers
             }
 
         }
+        public ActionResult EjecutarMovimiento(int idSuc,string descripcion,int tipoMov)
+        {
+            IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
+            try
+            {
+                HISTORICO hist = new HISTORICO();
+                hist.tipoMov = tipoMov;
+                hist.IDUsuario = 1;
+                hist.fechaHora = DateTime.Now.ToString("dd/MM/yyyy hh:mmtt");
+                hist.detalle = descripcion;
+                hist.HistDetalleEntradaSalida = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                foreach(HistDetalleEntradaSalida h in hist.HistDetalleEntradaSalida)
+                {
+                    h.PRODUCTOS = null;
+                    if (hist.tipoMov == 1) h.IDSucursalEntra = idSuc;
+                    h.PROVEEDORES = null;
+                }
+                new ServiceMovimiento().GuardarMovimiento(hist);
+                GestorBodega.Instancia.VaciarMovimiento();
+                ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                   "Transacción",
+                                                                   "El movimiento se ha ingresado en el sistema",
+                                                                   SweetAlertMessageType.success);
+
+                model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+
+                return PartialView("_MovimientoDetalle", model);
+            }
+            catch (Exception ex)
+            {
+
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+
+        }
         public PartialViewResult MovimientoDetalle()
         {
             return PartialView();

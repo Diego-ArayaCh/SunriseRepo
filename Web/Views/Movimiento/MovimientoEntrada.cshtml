@@ -224,7 +224,7 @@
                 @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
-            <input type="submit" value="Realizar Movimiento" class="btn btn-primary"
+            <input type="button" onclick="EjecutarMovimiento()" value="Realizar Movimiento" class="btn btn-primary"
                    style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
 
         </div>
@@ -304,7 +304,23 @@
             });
             CerrarModal();
         }
-        
+        function EjecutarMovimiento() {
+            var idSuc = document.getElementById("comboSucursal").value;
+            var descripcion = document.getElementById("txtComentario").value;
+            
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Movimiento/EjecutarMovimiento",
+                data: { "idSuc": idSuc, "descripcion": descripcion, "tipoMov":1},
+                success: function (data) {
+                    $("#resultadoDetalle").html('');
+                    $("#resultadoDetalle").html(data);
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
+        }
 
 
 

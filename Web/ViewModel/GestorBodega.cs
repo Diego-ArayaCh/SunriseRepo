@@ -75,7 +75,7 @@ namespace Web.ViewModel
         }
         public void VaciarMovimiento()
         {
-            HttpContext.Current.Session["GestorBodega"] = null;
+            movimientoDetalle.historicoDetalle = new List<HistDetalleEntradaSalida>();
         }
     }
 }

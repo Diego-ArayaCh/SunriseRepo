@@ -29,7 +29,10 @@ namespace ApplicationCore.Services
             RepositoryMovimiento repository = new RepositoryMovimiento();
             return repository.GetSucursales();
         }
-
+        public HISTORICO GuardarMovimiento(HISTORICO hist)
+        {
+            return new RepositoryMovimiento().GuardarMovimiento(hist);
+        }
 
 
     }

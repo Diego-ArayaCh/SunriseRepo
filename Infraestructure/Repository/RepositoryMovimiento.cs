@@ -139,7 +139,7 @@ namespace Infraestructure.Repository
             {
                 ctx.Configuration.LazyLoadingEnabled = false;
 
-                if (histMov == null)
+                if (histMov != null)
                 {
                     try
                     {
@@ -156,9 +156,25 @@ namespace Infraestructure.Repository
                                 {
                                     case 1:
                                         ProdSuc ps = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
-                                        ps.cant += detalle.cantidad;
-                                        ctx.Entry(ps).State = EntityState.Modified;
-                                        PRODUCTOS prod = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
+                                        if (ps==null)
+                                        {
+                                            ps = new ProdSuc();
+                                            ps.IDProducto = detalle.IDProducto;
+                                            ps.IDSucursal = detalle.IDSucursalEntra.Value;
+                                            ps.cant = detalle.cantidad;
+                                            ctx.ProdSuc.Add(ps);
+                                            ctx.SaveChanges();
+                                        }
+                                        else
+                                        {
+                                            ps.cant += detalle.cantidad;
+                                            ctx.Entry(ps).State = EntityState.Modified;
+                                        }
+                                        
+                                        PRODUCTOS prod = ctx.PRODUCTOS.
+                                        Where(p => p.ID == detalle.IDProducto).
+                                        FirstOrDefault<PRODUCTOS>();
+                                        
                                         prod.stock += detalle.cantidad;
                                         ctx.Entry(prod).State = EntityState.Modified;
                                         break;
@@ -167,7 +183,7 @@ namespace Infraestructure.Repository
                                         ps1.cant -= detalle.cantidad;
                                         ctx.Entry(ps1).State = EntityState.Modified;
                                         PRODUCTOS prod1 = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
-                                        prod1.stock += detalle.cantidad;
+                                        prod1.stock -= detalle.cantidad;
                                         ctx.Entry(prod1).State = EntityState.Modified;
                                         break;
                                     case 3:
