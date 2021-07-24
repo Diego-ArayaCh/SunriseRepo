@@ -33,6 +33,10 @@ namespace Web.Controllers
                                                                    "El producto está agregado con otro proveedor",
                                                                    SweetAlertMessageType.warning);
                         TempData.Keep();
+                        ViewBag.Mensaje= Util.SweetAlertHelper.Mensaje(
+                                                                   "Error",
+                                                                   "El producto está agregado con otro proveedor",
+                                                                   SweetAlertMessageType.warning);
                     }
                     model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
                 }
@@ -42,6 +46,33 @@ namespace Web.Controllers
                 }
                 //ViewBag.ListaProveedores = listaProveedores_lst();
                 //ViewBag.IDProveedor = listaProveedores();
+                return PartialView("_MovimientoDetalle", model);
+            }
+            catch (Exception ex)
+            {
+
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+
+        }
+        public ActionResult EliminarProducto(int idProd)
+        {
+            IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
+            try
+            {
+                GestorBodega.Instancia.EliminarProducto(idProd);
+                ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                   "Eliminado",
+                                                                   "El producto se elimino del movimiento",
+                                                                   SweetAlertMessageType.success);
+
+                model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                
                 return PartialView("_MovimientoDetalle", model);
             }
             catch (Exception ex)
