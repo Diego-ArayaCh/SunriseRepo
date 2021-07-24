@@ -224,13 +224,13 @@
     function Agreg() {
         var id = document.getElementById("id").value;
         var cantidad = document.getElementById("cantidad").value;
-        var idProveedor = document.getElementById("comboProveedor").value;
+        var idSucursal = document.getElementById("comboSucursalSalida").value;
         console.log(id);
         $.ajax({
             type: "GET",
             dataType: 'text',
             url: "/Movimiento/AgregarActualizarProducto",
-            data: { "idProveedor": idProveedor, "cantidad": cantidad, "id": id },
+            data: { "idSucursal": idSucursal, "cantidad": cantidad, "id": id },
             success: function (data) {
                 $("#resultadoDetalle").html('');
                 $("#resultadoDetalle").html(data);
