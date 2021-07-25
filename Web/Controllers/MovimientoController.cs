@@ -348,7 +348,14 @@ namespace Web.Controllers
         //
         public ActionResult MovimientoEntrada(int? idProveedor)
         {
-            
+            try
+            {
+                GestorBodega.Instancia.VaciarMovimiento();
+            }
+            catch (Exception)
+            {
+
+            }
             try
             {
                 ServiceProductos _serviceProductos = new ServiceProductos();

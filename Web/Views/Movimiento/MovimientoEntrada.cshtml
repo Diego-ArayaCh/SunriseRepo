@@ -381,7 +381,8 @@
                     $("#resultadoDetalle").html('');
                     $("#resultadoDetalle").html(data);
                     document.getElementById("comboSucursal").value = ""
-                    document.getElementById("txtComentario").value=""
+                    document.getElementById("txtComentario").value = ""
+                    document.getElementById("comboConcepto").value = ""
                 }, error: function (xhr, status, error) {
                     console.log("Error: " + error + ", No Error: " + xhr.status);
                 },
