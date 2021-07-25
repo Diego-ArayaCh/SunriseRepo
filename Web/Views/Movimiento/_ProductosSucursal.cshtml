@@ -25,7 +25,7 @@
                 </td>
                 @foreach (var sucursales in item.ProdSuc)
                 {
-                    if (ViewBag.SucursalSelecciona==sucursales.IDSucursal)
+                    if (ViewBag.SucursalSelecciona == sucursales.IDSucursal)
                     {
                         <td style="text-align:center">
                             @Html.DisplayFor(modelItem => sucursales.cant)
@@ -45,6 +45,9 @@
             </tr>
         }
     }
+    <script>
+            @Html.Raw(@ViewBag.Mensaje);
+    </script>
 }
 catch (Exception e)
 {

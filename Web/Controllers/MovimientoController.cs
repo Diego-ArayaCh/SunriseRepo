@@ -309,7 +309,15 @@ namespace Web.Controllers
             {
                 lista = _Service.GetProductosActivoXSucursal((int)id);
             }
-            GestorBodega.Instancia.VaciarMovimiento();
+            if (GestorBodega.Instancia.movimientoDetalle.historicoDetalle.Count > 0)
+            {
+                GestorBodega.Instancia.VaciarMovimiento();
+                ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                  "Aviso",
+                                                                  "Se ha eliminado el detalle del movimiento, solo se permite realizar movimientos de una sucursal a la vez",
+                                                                  SweetAlertMessageType.warning);
+            }
+           
             ViewBag.SucursalSelecciona = id;
             return PartialView("_ProductosSucursal", lista);
         } //Vista parcial con seleccion por proveedor
