@@ -61,6 +61,30 @@ namespace Web.ViewModel
                 return false;
             }
         }
+        public bool AgregarActualizarSalida(PRODUCTOS producto, int? idSucursal, int cant)
+        {
+            if (movimientoDetalle.historicoDetalle.Exists(x => x.IDSucursalSale != idSucursal && x.IDProducto == producto.ID))
+            {
+                return true;
+            }
+            if (movimientoDetalle.historicoDetalle.Exists(x => x.IDProducto == producto.ID))
+            {
+                movimientoDetalle.historicoDetalle.Find(x => x.IDProducto == producto.ID).cantidad = cant;
+                return false;
+            }
+            else
+            {
+                HistDetalleEntradaSalida histDetalle = new HistDetalleEntradaSalida();
+                histDetalle.IDProducto = producto.ID;
+                histDetalle.cantidad = cant;
+                histDetalle.IDSucursalSale = idSucursal.Value;
+             
+                histDetalle.PRODUCTOS = producto;
+
+                movimientoDetalle.historicoDetalle.Add(histDetalle);
+                return false;
+            }
+        }
         public String EliminarProducto(int idProducto)
         {
             String mensaje = "";

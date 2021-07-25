@@ -10,6 +10,12 @@ namespace ApplicationCore.Services
 {
     public class ServiceProductos
     {
+        public ProdSuc GetProductoSucursal(int idProducto, int idSucursal)
+        {
+            RepositoryProducto repository = new RepositoryProducto();
+           return  repository.GetProductoSucursal(idProducto,idSucursal);
+            
+        }
         public IEnumerable<PRODUCTOS> GetProductos()
         {
             RepositoryProducto repository = new RepositoryProducto();

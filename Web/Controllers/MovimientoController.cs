@@ -73,6 +73,76 @@ namespace Web.Controllers
             }
 
         }
+        public ActionResult AgregarActualizarProductoSalida(int idSucursal, int cantidad, int id)
+        {
+            IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
+            ProdSuc prodSuc = new ServiceProductos().GetProductoSucursal(id , idSucursal);
+            if (cantidad > prodSuc.cant)
+            {
+                ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Error",
+                                                                 "La cantidad sobrepasa las existencias del producto en esta sucursal",
+                                                                 SweetAlertMessageType.warning);
+                model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                return PartialView("_MovimientoDetalle", model);
+            }
+            try
+            {
+                if (true)
+                {
+
+                }
+                if (cantidad > 0)
+                {
+
+                    bool validacion = GestorBodega.Instancia.AgregarActualizarSalida(new ServiceProductos().GetProductoByID(id), idSucursal, cantidad);
+                    if (validacion)
+                    {
+                        TempData["Notificacion"] = Util.SweetAlertHelper.Mensaje(
+                                                                   "Error",
+                                                                   "El producto está agregado con otro proveedor",
+                                                                   SweetAlertMessageType.warning);
+                        TempData.Keep();
+                        ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                   "Error",
+                                                                   "El producto está agregado con otro proveedor",
+                                                                   SweetAlertMessageType.warning);
+                    }
+                    else
+                    {
+                        ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Agregado",
+                                                                 "El producto ha sido agregado",
+                                                                 SweetAlertMessageType.success);
+                    }
+                    model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                }
+                else
+                {
+                    ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Error",
+                                                                 "Indique la cantidad del producto a agregar",
+                                                                 SweetAlertMessageType.error);
+                }
+                //ViewBag.ListaProveedores = listaProveedores_lst();
+                //ViewBag.IDProveedor = listaProveedores();
+                return PartialView("_MovimientoDetalle", model);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                "Error",
+                                                                "Indique la cantidad del producto a agregar",
+                                                                SweetAlertMessageType.error);
+                // Salvar el error en un archivo 
+                Log.Error(ex, MethodBase.GetCurrentMethod());
+                // Pasar el Error a la página que lo muestra
+                TempData["Message"] = ex.Message;
+                TempData.Keep();
+                return RedirectToAction("Default", "Error");
+            }
+
+        }
         public ActionResult EliminarProducto(int idProd)
         {
             IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
@@ -117,7 +187,8 @@ namespace Web.Controllers
                
                 HISTORICO hist = new HISTORICO();
                 hist.tipoMov = tipoMov;
-                hist.IDUsuario = 1;
+               
+                hist.IDUsuario = ((USUARIO) Session["User"]).ID;
                 hist.fechaHora = DateTime.Now.ToString("dd/MM/yyyy hh:mmtt");
                 hist.detalle = descripcion;
                 hist.HistDetalleEntradaSalida = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
@@ -183,7 +254,20 @@ namespace Web.Controllers
 
             return new SelectList(listaProveedores, "ID", "nombre", IDProveedor);
         } //comboBox de proveedores
-        
+        private IEnumerable<SelectListItem> listaConceptoEntrada()
+        {
+            IList<SelectListItem> items = new List<SelectListItem>
+            {
+                new SelectListItem{Selected = true,Text = "Seleccione el concepto", Value = ""},
+                new SelectListItem{Text = "Compra", Value = "Compra"},
+                new SelectListItem{Text = "Devolución", Value = "Devolución"},
+                new SelectListItem{Text = "Ajuste inventario", Value = "Ajuste inventario"},
+                new SelectListItem{Text = "Traspaso", Value = "Traspaso"},
+                new SelectListItem{Text = "Inventario inicial", Value = "Inventario inicial"},
+
+            };
+            return items;
+        }
         private SelectList listaSucursales(int IDSucursal = 0)
         {
             //Lista de Categorias
@@ -210,7 +294,13 @@ namespace Web.Controllers
             }
             return PartialView("_ProductosGenerales", lista);
         } //Vista parcial con seleccion por proveedor
-       
+       public PartialViewResult limpiarDetalle()
+        {
+            GestorBodega.Instancia.VaciarMovimiento();
+           IEnumerable<HistDetalleEntradaSalida> model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+
+            return PartialView("_MovimientoDetalle",model);
+        }
         public PartialViewResult sucursalXproducto(int? id)
         {
             IEnumerable<PRODUCTOS> lista = null;
@@ -219,6 +309,7 @@ namespace Web.Controllers
             {
                 lista = _Service.GetProductosActivoXSucursal((int)id);
             }
+            GestorBodega.Instancia.VaciarMovimiento();
             ViewBag.SucursalSelecciona = id;
             return PartialView("_ProductosSucursal", lista);
         } //Vista parcial con seleccion por proveedor
@@ -266,7 +357,8 @@ namespace Web.Controllers
                 // ViewBag.ListaProveedores = listaProveedores_lst();
                 ViewBag.IDProveedor = listaProveedores();
                 ViewBag.IDSucursal = listaSucursales();
-
+                ViewBag.conceptos = listaConceptoEntrada();
+                ViewBag.usuario = ((USUARIO)Session["User"]).nombre+" "+ ((USUARIO)Session["User"]).apellidos;
                 model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
                 if (TempData.ContainsKey("Notificacion"))
                 {
@@ -305,7 +397,7 @@ namespace Web.Controllers
 
                 ViewBag.IDProveedor = listaProveedores();
                 ViewBag.IDSucursal = listaSucursales();
-
+                ViewBag.usuario = ((USUARIO)Session["User"]).nombre + " " + ((USUARIO)Session["User"]).apellidos;
                 model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
                 if (TempData.ContainsKey("Notificacion"))
                 {

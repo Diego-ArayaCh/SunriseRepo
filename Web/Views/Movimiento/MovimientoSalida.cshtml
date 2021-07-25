@@ -98,9 +98,15 @@
             <div class="row">
                 <div class="col-6">
                     <div class="form-group">
-                        <p class="lead">
-                            Fecha: @fechaActual
+                        <p id="HoraActual" class="lead">
+
                         </p>
+                        <h5 style="display: inline">
+                            Usuario:
+                        </h5>
+                        <h6 style="display: inline">
+                            @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
+                        </h6>
                     </div>
                 </div>
                 @*<div class="col-6">
@@ -156,12 +162,38 @@
                 ¡ATENCION! Se guardara el movimiento especificado en la Base de Datos
             </p>
             <br />
-            <div class="col-md-4" style="width:50%; transform: translateX(-50%); margin-left: 50%;">
-                @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-lg-6" })
-                @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
+            <div class="container">
+                <div style="margin-bottom: 2%; " class="row">
+                    <div class="col-lg-12">
+
+                        @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-lg-6" })
+                        @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+
+                    <br />
+                    <br />
+
+                </div>
+                <div class="row">
+
+                    <br />
+                    
+                    <div class="col-lg-6">
+                        @Html.Label("Seleccione bajo qué concepto se realiza el movimiento", htmlAttributes: new { @class = "control-label col-lg-8" })
+                        <select id="comboConcepto" class="form-control dropdown" name="select">
+                            <option value="" selected>Seleccione el concepto</option>
+                            <option value="Factura">Factura</option>
+                            <option value="Cancelación de compra">Cancelación de compra</option>
+                            <option value="Devolución de compra a proveedor">Devolución de compra a proveedor</option>
+                            <option value="Ajuste de inventario">Ajuste de inventario</option>
+                            <option value="Traspaso">Ajuste de inventario</option>
+                        </select>
+                    </div>
+
+                </div>
             </div>
 
-            <input type="submit" value="Realizar Movimiento" class="btn btn-primary"
+            <input type="button" onclick="EjecutarMovimiento()" value="Realizar Movimiento" class="btn btn-primary"
                    style=" text-align: center; margin-left: 50%; transform: translateX(-50%); margin-top:60px" />
 
         </div>
@@ -191,6 +223,25 @@
 
 
 <script type="text/javascript">
+    showTime();
+    function showTime() {
+        myDate = new Date();
+        hours = myDate.getHours();
+        minutes = myDate.getMinutes();
+        seconds = myDate.getSeconds();
+        date = myDate.getDate();
+        month = myDate.getMonth();
+        year = myDate.getFullYear();
+
+        if (hours < 10) hours = 0 + hours;
+
+        if (minutes < 10) minutes = "0" + minutes;
+
+        if (seconds < 10) seconds = "0" + seconds;
+
+        $("#HoraActual").text("Fecha: " + date + "/" + month + "/" + year + "  " + hours + ":" + minutes + ":" + seconds);
+        setTimeout("showTime()", 1000);
+    }
     const { default: update } = require("../../Scripts/src/methods/update");
 
     function mostrarModal(id) {
@@ -219,17 +270,34 @@
                 console.log("Error: " + error + ", No Error: " + xhr.status);
             },
         });
+        LimpiarDetalle()
     }
-
+    function LimpiarDetalle() {
+        $.ajax({
+            type: "GET",
+            dataType: 'text',
+            url: "/Movimiento/LimpiarDetalle",
+            data: {  },
+            success: function (data) {
+                $("#resultadoDetalle").html('');
+                $("#resultadoDetalle").html(data);
+            }, error: function (xhr, status, error) {
+                console.log("Error: " + error + ", No Error: " + xhr.status);
+            },
+        });
+    }
+    
     function Agreg() {
+
         var id = document.getElementById("id").value;
         var cantidad = document.getElementById("cantidad").value;
         var idSucursal = document.getElementById("comboSucursalSalida").value;
+
         console.log(id);
         $.ajax({
             type: "GET",
             dataType: 'text',
-            url: "/Movimiento/AgregarActualizarProducto",
+            url: "/Movimiento/AgregarActualizarProductoSalida",
             data: { "idSucursal": idSucursal, "cantidad": cantidad, "id": id },
             success: function (data) {
                 $("#resultadoDetalle").html('');
@@ -241,9 +309,43 @@
         CerrarModal();
     }
 
+    function EjecutarMovimiento() {
+      
+        var descripcion = document.getElementById("txtComentario").value
+       
+        if (descripcion.trim() == "") {
+            alert("Ingrese la descripción del movimiento")
+            return
+        }
+        var concepto = document.getElementById("comboConcepto").value
+        if (concepto == "") {
+            alert("Seleccione el concepto del movimiento")
+            return
+        }
+        descripcion = concepto +" - "+descripcion
+        $.ajax({
+            type: "GET",
+            dataType: 'text',
+            url: "/Movimiento/EjecutarMovimiento",
+            data: { "idSuc": 0, "descripcion": descripcion, "tipoMov": 2 },
+            success: function (data) {
+                $("#resultadoDetalle").html('');
+                $("#resultadoDetalle").html(data);
+               
+                document.getElementById("txtComentario").value = ""
+            }, error: function (xhr, status, error) {
+                console.log("Error: " + error + ", No Error: " + xhr.status);
+            },
+        });
 
 
+    }
 
+    
+        
+
+
+    
 </script>
 
 }

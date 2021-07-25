@@ -11,6 +11,13 @@ namespace Infraestructure.Repository
 {
     public class RepositoryProducto
     {
+        public ProdSuc GetProductoSucursal(int idProducto, int idSucursal)
+        {
+            using (MyContext ctx = new MyContext())
+            {
+               return ctx.ProdSuc.Where(p => p.IDProducto ==idProducto && p.IDSucursal == idSucursal).First();
+            }
+        }
         public IEnumerable<PRODUCTOS> GetProductos()
         {
             try

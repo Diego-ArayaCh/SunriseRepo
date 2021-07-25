@@ -80,7 +80,7 @@ namespace Infraestructure.Repository
                         {
                             if (prod.IDSucursal == idSucursal)
                             {
-                                if (prod.cant >= 1)
+                                if (prod.cant >= 0)
                                 {
                                     lista_ProdFiltrados.Add(item);
                                 }
@@ -179,12 +179,13 @@ namespace Infraestructure.Repository
                                         ctx.Entry(prod).State = EntityState.Modified;
                                         break;
                                     case 2:
-                                        ProdSuc ps1 = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
-                                        ps1.cant -= detalle.cantidad;
-                                        ctx.Entry(ps1).State = EntityState.Modified;
                                         PRODUCTOS prod1 = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
                                         prod1.stock -= detalle.cantidad;
                                         ctx.Entry(prod1).State = EntityState.Modified;
+                                        ProdSuc ps1 = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
+                                        ps1.cant -= detalle.cantidad;
+                                        ctx.Entry(ps1).State = EntityState.Modified;
+                                       
                                         break;
                                     case 3:
                                         ProdSuc psEntra = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
