@@ -80,7 +80,7 @@ namespace Infraestructure.Repository
                         {
                             if (prod.IDSucursal == idSucursal)
                             {
-                                if (prod.cant >= 0)
+                                if (prod.cant >= 1)
                                 {
                                     lista_ProdFiltrados.Add(item);
                                 }
