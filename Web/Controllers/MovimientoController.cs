@@ -38,11 +38,21 @@ namespace Web.Controllers
                                                                    "El producto está agregado con otro proveedor",
                                                                    SweetAlertMessageType.warning);
                     }
+                    else
+                    {
+                        ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Agregado",
+                                                                 "El producto ha sido agregado",
+                                                                 SweetAlertMessageType.success);
+                    }
                     model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
                 }
                 else
                 {
-
+                    ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Error",
+                                                                 "Indique la cantidad del producto a agregar",
+                                                                 SweetAlertMessageType.error);
                 }
                 //ViewBag.ListaProveedores = listaProveedores_lst();
                 //ViewBag.IDProveedor = listaProveedores();
@@ -50,7 +60,10 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-
+                 ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Error",
+                                                                 "Indique la cantidad del producto a agregar",
+                                                                 SweetAlertMessageType.error);
                 // Salvar el error en un archivo 
                 Log.Error(ex, MethodBase.GetCurrentMethod());
                 // Pasar el Error a la página que lo muestra
@@ -92,6 +105,16 @@ namespace Web.Controllers
             IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
             try
             {
+                if (GestorBodega.Instancia.movimientoDetalle.historicoDetalle.Count == 0)
+                {
+                    ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                  "Error",
+                                                                  "Detalle del movimiento vacío",
+                                                                  SweetAlertMessageType.warning);
+                    model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                    return PartialView("_MovimientoDetalle", model);
+                }
+               
                 HISTORICO hist = new HISTORICO();
                 hist.tipoMov = tipoMov;
                 hist.IDUsuario = 1;
@@ -234,6 +257,7 @@ namespace Web.Controllers
         //
         public ActionResult MovimientoEntrada(int? idProveedor)
         {
+            
             try
             {
                 ServiceProductos _serviceProductos = new ServiceProductos();
@@ -248,7 +272,8 @@ namespace Web.Controllers
                 {
                     ViewBag.NotificationMessage = TempData["Notificacion"];
                 }
-                
+
+              
                 return View(model);
             }
             catch (Exception ex)
@@ -266,6 +291,15 @@ namespace Web.Controllers
         {
             try
             {
+                GestorBodega.Instancia.VaciarMovimiento();
+            }
+            catch (Exception)
+            {
+
+
+            }
+            try
+            {
                 ServiceProductos _serviceProductos = new ServiceProductos();
                 ViewModelMovimiento model = new ViewModelMovimiento();
 
@@ -273,7 +307,10 @@ namespace Web.Controllers
                 ViewBag.IDSucursal = listaSucursales();
 
                 model.prodList = (List<PRODUCTOS>)_serviceProductos.GetProductosActivo();
-
+                if (TempData.ContainsKey("Notificacion"))
+                {
+                    ViewBag.NotificationMessage = TempData["Notificacion"];
+                }
                 return View(model);
             }
             catch (Exception ex)

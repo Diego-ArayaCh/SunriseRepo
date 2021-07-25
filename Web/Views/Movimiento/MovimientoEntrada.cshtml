@@ -307,7 +307,14 @@
         function EjecutarMovimiento() {
             var idSuc = document.getElementById("comboSucursal").value;
             var descripcion = document.getElementById("txtComentario").value;
-            
+            if (descripcion.trim() == "") {
+                alert("Ingrese la descripción del movimiento")
+                return
+            }
+            if (idSuc == 0) {
+                alert("seleccione la sucursal")
+                return
+            }
             $.ajax({
                 type: "GET",
                 dataType: 'text',
@@ -316,10 +323,14 @@
                 success: function (data) {
                     $("#resultadoDetalle").html('');
                     $("#resultadoDetalle").html(data);
+                    document.getElementById("comboSucursal").value = ""
+                    document.getElementById("txtComentario").value=""
                 }, error: function (xhr, status, error) {
                     console.log("Error: " + error + ", No Error: " + xhr.status);
                 },
             });
+            
+           
         }
 
 

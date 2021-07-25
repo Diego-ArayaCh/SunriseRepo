@@ -155,7 +155,7 @@ namespace Infraestructure.Repository
                                 switch (histMov.tipoMov)
                                 {
                                     case 1:
-                                        ProdSuc ps = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
+                                        ProdSuc ps = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra).FirstOrDefault();
                                         if (ps==null)
                                         {
                                             ps = new ProdSuc();
