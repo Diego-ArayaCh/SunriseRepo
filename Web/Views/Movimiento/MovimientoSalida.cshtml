@@ -109,7 +109,16 @@
                         Usuario:
                     </p>
                     <p class="lead" style="display: inline">
-                        @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
+                        @{
+                            Infraestructure.Models.USUARIO oUsuario;
+                            oUsuario = (Infraestructure.Models.USUARIO)Session["User"];
+                            string info = $"{oUsuario.nombre} {oUsuario.apellidos}";
+
+                        }
+                        @*@Html.Label(info, htmlAttributes: new { @class = "control-label col-lg-6" })*@
+                        <label class="control-label col-lg-6">
+                            @info
+                        </label>
                     </p>
                 </div>
             </div>
@@ -169,10 +178,10 @@
                         <select id="comboConcepto" class="form-control dropdown" name="select">
                             <option value="" selected>Seleccione el concepto</option>
                             <option value="Factura">Factura</option>
-                            <option value="Cancelación de compra">Cancelación de compra</option>
+                            <option value="Cancelación de compra">Cancelación de compra</option> 
                             <option value="Devolución de compra a proveedor">Devolución de compra a proveedor</option>
                             <option value="Ajuste de inventario">Ajuste de inventario</option>
-                            <option value="Traspaso">Ajuste de inventario</option>
+                            <option value="Traspaso">Traspaso</option>
                         </select>
                     </div>
                 </div>
@@ -248,14 +257,16 @@
                 dataType: 'text',
                 url: "/Movimiento/sucursalXproducto",
                 data: { "id": id },
+               
                 success: function (data) {
                     $("#resultado").html('');
                     $("#resultado").html(data);
-                }, error: function (xhr, status, error) {
+                    LimpiarDetalle()
+                } , error: function (xhr, status, error) {
                     console.log("Error: " + error + ", No Error: " + xhr.status);
                 },
             });
-            LimpiarDetalle()
+           
         }
         function LimpiarDetalle() {
             $.ajax({

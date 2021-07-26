@@ -207,8 +207,10 @@ namespace Web.Controllers
                 hist.fechaHora = DateTime.Now.ToString("dd/MM/yyyy hh:mmtt");
                 hist.detalle = descripcion;
                 hist.HistDetalleEntradaSalida = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
-                foreach(HistDetalleEntradaSalida h in hist.HistDetalleEntradaSalida)
+                int tipo = 0;
+                foreach (HistDetalleEntradaSalida h in hist.HistDetalleEntradaSalida)
                 {
+                     tipo = GestorBodega.Instancia.GetHistDetalle(h.IDProducto);
                     h.PRODUCTOS = null;
                     if (hist.tipoMov == 1) h.IDSucursalEntra = idSuc;
                     h.PROVEEDORES = null;
@@ -221,7 +223,16 @@ namespace Web.Controllers
                                                                    SweetAlertMessageType.success);
 
                 model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                
 
+                if (tipo == 1)
+                {
+                    ViewBag.colspanDetalle = "6";
+                }
+                if (tipo == 2)
+                {
+                    ViewBag.colspanDetalle = "5";
+                }
                 return PartialView("_MovimientoDetalle", model);
             }
             catch (Exception ex)
@@ -312,8 +323,9 @@ namespace Web.Controllers
        public PartialViewResult limpiarDetalle()
         {
             GestorBodega.Instancia.VaciarMovimiento();
-           IEnumerable<HistDetalleEntradaSalida> model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+            IEnumerable<HistDetalleEntradaSalida> model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
 
+            ViewBag.colspanDetalle = "5";
             return PartialView("_MovimientoDetalle",model);
         }
         public PartialViewResult sucursalXproducto(int? id)
@@ -326,7 +338,7 @@ namespace Web.Controllers
             }
             if (GestorBodega.Instancia.movimientoDetalle.historicoDetalle.Count > 0)
             {
-                GestorBodega.Instancia.VaciarMovimiento();
+               
                 ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
                                                                   "Aviso",
                                                                   "Se ha eliminado el detalle del movimiento, solo se permite realizar movimientos de una sucursal a la vez",
@@ -334,6 +346,7 @@ namespace Web.Controllers
             }
            
             ViewBag.SucursalSelecciona = id;
+            ViewBag.colspanDetalle = "5";
             return PartialView("_ProductosSucursal", lista);
         } //Vista parcial con seleccion por proveedor
 

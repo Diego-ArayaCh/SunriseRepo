@@ -139,7 +139,16 @@
                         Usuario:
                     </p>
                     <p class="lead" style="display: inline">
-                        @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
+                        @{
+                            Infraestructure.Models.USUARIO oUsuario;
+                            oUsuario = (Infraestructure.Models.USUARIO)Session["User"];
+                            string info = $"{oUsuario.nombre} {oUsuario.apellidos}";
+
+                        }
+                        @*@Html.Label(info, htmlAttributes: new { @class = "control-label col-lg-6" })*@
+                        <label class="control-label col-lg-6">
+                            @info
+                        </label>
                     </p>
                 </div>
             </div>
@@ -224,7 +233,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            @Html.Label("Sucursal a la cual se va realizar la entrada", htmlAttributes: new { @class = "control-label col-lg-8" })
+                            @Html.Label("Seleccione la sucursal de entrada", htmlAttributes: new { @class = "control-label col-lg-8" })
                             @Html.DropDownList("comboSucursal",
                                                         (SelectList)ViewBag.IDSucursal,
                                                                 "Seleccione una sucursal",
