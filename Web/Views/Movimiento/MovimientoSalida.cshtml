@@ -102,22 +102,16 @@
                         <p id="HoraActual" class="lead">
 
                         </p>
-                        <h5 style="display: inline">
-                            Usuario:
-                        </h5>
-                        <h6 style="display: inline">
-                            @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
-                        </h6>
                     </div>
                 </div>
-                @*<div class="col-6">
-                    <div class="form-group">
-                        @Html.DropDownList("comboSucursalEntrada",
-                            (SelectList)ViewBag.IDSucursal,
-                                    "Seleccione una sucursal",
-                                        htmlAttributes: new { @class = "form-control" })
-                    </div>
-                </div>*@
+                <div class="col-6">
+                    <p class="lead" style="display: inline">
+                        Usuario:
+                    </p>
+                    <p class="lead" style="display: inline">
+                        @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
+                    </p>
+                </div>
             </div>
 
             <br />
@@ -166,21 +160,14 @@
             <div class="container">
                 <div style="margin-bottom: 2%; " class="row">
                     <div class="col-lg-12">
-
                         @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-lg-6" })
                         @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-
-                    <br />
-                    <br />
-
                 </div>
+                <br />
                 <div class="row">
-
-                    <br />
-                    
                     <div class="col-lg-6">
-                        @Html.Label("Seleccione bajo qué concepto se realiza el movimiento", htmlAttributes: new { @class = "control-label col-lg-8" })
+                        @Html.Label("Seleccione el concepto del movimiento", htmlAttributes: new { @class = "control-label col-lg-8" })
                         <select id="comboConcepto" class="form-control dropdown" name="select">
                             <option value="" selected>Seleccione el concepto</option>
                             <option value="Factura">Factura</option>
@@ -190,7 +177,6 @@
                             <option value="Traspaso">Ajuste de inventario</option>
                         </select>
                     </div>
-
                 </div>
             </div>
 
@@ -223,131 +209,131 @@
     @Scripts.Render("~/bundles/jqueryajax")
 
 
-<script type="text/javascript">
-    showTime();
-    function showTime() {
-        myDate = new Date();
-        hours = myDate.getHours();
-        minutes = myDate.getMinutes();
-        seconds = myDate.getSeconds();
-        date = myDate.getDate();
-        month = myDate.getMonth();
-        year = myDate.getFullYear();
+    <script type="text/javascript">
+        showTime();
+        function showTime() {
+            myDate = new Date();
+            hours = myDate.getHours();
+            minutes = myDate.getMinutes();
+            seconds = myDate.getSeconds();
+            date = myDate.getDate();
+            month = myDate.getMonth();
+            year = myDate.getFullYear();
 
-        if (hours < 10) hours = 0 + hours;
+            if (hours < 10) hours = 0 + hours;
 
-        if (minutes < 10) minutes = "0" + minutes;
+            if (minutes < 10) minutes = "0" + minutes;
 
-        if (seconds < 10) seconds = "0" + seconds;
+            if (seconds < 10) seconds = "0" + seconds;
 
-        $("#HoraActual").text("Fecha: " + date + "/" + month + "/" + year + "  " + hours + ":" + minutes + ":" + seconds);
-        setTimeout("showTime()", 1000);
-    }
-    const { default: update } = require("../../Scripts/src/methods/update");
-
-    function mostrarModal(id) {
-
-        //$("#myModal").attr('data-toggle', 'modal');
-        $('#myModal').modal('show');
-    }
-    function CerrarModal() {
-
-        //$("#myModal").attr('data-toggle', 'modal');
-        $('#myModal').modal('hide');
-    }
-
-    function selectSuc() {
-        var id = document.getElementById("comboSucursalSalida").value;
-        console.log(id);
-        $.ajax({
-            type: "GET",
-            dataType: 'text',
-            url: "/Movimiento/sucursalXproducto",
-            data: { "id": id },
-            success: function (data) {
-                $("#resultado").html('');
-                $("#resultado").html(data);
-            }, error: function (xhr, status, error) {
-                console.log("Error: " + error + ", No Error: " + xhr.status);
-            },
-        });
-        LimpiarDetalle()
-    }
-    function LimpiarDetalle() {
-        $.ajax({
-            type: "GET",
-            dataType: 'text',
-            url: "/Movimiento/LimpiarDetalle",
-            data: {  },
-            success: function (data) {
-                $("#resultadoDetalle").html('');
-                $("#resultadoDetalle").html(data);
-            }, error: function (xhr, status, error) {
-                console.log("Error: " + error + ", No Error: " + xhr.status);
-            },
-        });
-    }
-    
-    function Agreg() {
-
-        var id = document.getElementById("id").value;
-        var cantidad = document.getElementById("cantidad").value;
-        var idSucursal = document.getElementById("comboSucursalSalida").value;
-
-        console.log(id);
-        $.ajax({
-            type: "GET",
-            dataType: 'text',
-            url: "/Movimiento/AgregarActualizarProductoSalida",
-            data: { "idSucursal": idSucursal, "cantidad": cantidad, "id": id },
-            success: function (data) {
-                $("#resultadoDetalle").html('');
-                $("#resultadoDetalle").html(data);
-            }, error: function (xhr, status, error) {
-                console.log("Error: " + error + ", No Error: " + xhr.status);
-            },
-        });
-        CerrarModal();
-    }
-
-    function EjecutarMovimiento() {
-      
-        var descripcion = document.getElementById("txtComentario").value
-       
-        if (descripcion.trim() == "") {
-            alert("Ingrese la descripción del movimiento")
-            return
+            $("#HoraActual").text("Fecha: " + date + "/" + month + "/" + year + "  " + hours + ":" + minutes + ":" + seconds);
+            setTimeout("showTime()", 1000);
         }
-        var concepto = document.getElementById("comboConcepto").value
-        if (concepto == "") {
-            alert("Seleccione el concepto del movimiento")
-            return
+        const { default: update } = require("../../Scripts/src/methods/update");
+
+        function mostrarModal(id) {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('show');
         }
-        descripcion = concepto +" - "+descripcion
-        $.ajax({
-            type: "GET",
-            dataType: 'text',
-            url: "/Movimiento/EjecutarMovimiento",
-            data: { "idSuc": 0, "descripcion": descripcion, "tipoMov": 2 },
-            success: function (data) {
-                $("#resultadoDetalle").html('');
-                $("#resultadoDetalle").html(data);
-               
-                document.getElementById("txtComentario").value = ""
-                document.getElementById("comboConcepto").value = ""
-            }, error: function (xhr, status, error) {
-                console.log("Error: " + error + ", No Error: " + xhr.status);
-            },
-        });
+        function CerrarModal() {
+
+            //$("#myModal").attr('data-toggle', 'modal');
+            $('#myModal').modal('hide');
+        }
+
+        function selectSuc() {
+            var id = document.getElementById("comboSucursalSalida").value;
+            console.log(id);
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Movimiento/sucursalXproducto",
+                data: { "id": id },
+                success: function (data) {
+                    $("#resultado").html('');
+                    $("#resultado").html(data);
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
+            LimpiarDetalle()
+        }
+        function LimpiarDetalle() {
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Movimiento/LimpiarDetalle",
+                data: {},
+                success: function (data) {
+                    $("#resultadoDetalle").html('');
+                    $("#resultadoDetalle").html(data);
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
+        }
+
+        function Agreg() {
+
+            var id = document.getElementById("id").value;
+            var cantidad = document.getElementById("cantidad").value;
+            var idSucursal = document.getElementById("comboSucursalSalida").value;
+
+            console.log(id);
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Movimiento/AgregarActualizarProductoSalida",
+                data: { "idSucursal": idSucursal, "cantidad": cantidad, "id": id },
+                success: function (data) {
+                    $("#resultadoDetalle").html('');
+                    $("#resultadoDetalle").html(data);
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
+            CerrarModal();
+        }
+
+        function EjecutarMovimiento() {
+
+            var descripcion = document.getElementById("txtComentario").value
+
+            if (descripcion.trim() == "") {
+                alert("Ingrese la descripción del movimiento")
+                return
+            }
+            var concepto = document.getElementById("comboConcepto").value
+            if (concepto == "") {
+                alert("Seleccione el concepto del movimiento")
+                return
+            }
+            descripcion = concepto + " - " + descripcion
+            $.ajax({
+                type: "GET",
+                dataType: 'text',
+                url: "/Movimiento/EjecutarMovimiento",
+                data: { "idSuc": 0, "descripcion": descripcion, "tipoMov": 2 },
+                success: function (data) {
+                    $("#resultadoDetalle").html('');
+                    $("#resultadoDetalle").html(data);
+
+                    document.getElementById("txtComentario").value = ""
+                    document.getElementById("comboConcepto").value = ""
+                }, error: function (xhr, status, error) {
+                    console.log("Error: " + error + ", No Error: " + xhr.status);
+                },
+            });
 
 
-    }
-
-    
-        
+        }
 
 
-    
-</script>
+
+
+
+
+    </script>
 
 }

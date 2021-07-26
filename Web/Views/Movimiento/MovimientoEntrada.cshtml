@@ -131,22 +131,17 @@
                         <p id="HoraActual" class="lead">
                            
                         </p>
-                        <h5 style="display: inline">
-                            Usuario: 
-                        </h5>
-                        <h6 style="display: inline">
-                            @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
-                        </h6>
+                        
                     </div>
                 </div>
-                @*<div class="col-6">
-                        <div class="form-group">
-                            @Html.DropDownList("comboSucursal",
-                                (SelectList)ViewBag.IDSucursal,
-                                        "Seleccione una sucursal",
-                                            htmlAttributes: new { @class = "form-control" })
-                        </div>
-                    </div>*@
+                <div class="col-6">
+                    <p class="lead" style="display: inline">
+                        Usuario:
+                    </p>
+                    <p class="lead" style="display: inline">
+                        @Html.Label((string)ViewBag.usuario, htmlAttributes: new { @class = "control-label col-lg-6" })
+                    </p>
+                </div>
             </div>
 
             <br />
@@ -224,34 +219,31 @@
                         @Html.Label("Comentario acerca del movimiento", htmlAttributes: new { @class = "control-label col-lg-6" })
                         @Html.Editor("txtComentario", new { htmlAttributes = new { @class = "form-control" } })
                     </div>
-                   
-                    <br />
-                    <br />
-
                 </div>
+                <br />
                 <div class="row">
-
-                    <br />
                     <div class="col-lg-6">
-                        @Html.Label("Sucursal a la cual se va realizar la entrada", htmlAttributes: new { @class = "control-label col-lg-8" })
-                        @Html.DropDownList("comboSucursal",
-                                                    (SelectList)ViewBag.IDSucursal,
-                                                            "Seleccione una sucursal",
-                                                                htmlAttributes: new { @class = "form-control" })
+                        <div class="form-group">
+                            @Html.Label("Sucursal a la cual se va realizar la entrada", htmlAttributes: new { @class = "control-label col-lg-8" })
+                            @Html.DropDownList("comboSucursal",
+                                                        (SelectList)ViewBag.IDSucursal,
+                                                                "Seleccione una sucursal",
+                                                                    htmlAttributes: new { @class = "form-control" })
+                        </div>
                     </div>
                     <div class="col-lg-6">
-                        @Html.Label("Seleccione bajo qué concepto se realiza el movimiento", htmlAttributes: new { @class = "control-label col-lg-8" })
-                        <select id="comboConcepto" class="form-control dropdown" name="select">
-            <option value="" selected>Seleccione el concepto</option>
-            <option value="Compra">Compra</option>
-            <option value="Devolución">Devolución</option>
-            <option value="Ajuste inventario">Ajuste inventario</option>
-            <option value="Traspaso">Traspaso</option>
-            <option value="Inventario inicial">Inventario inicial</option>
-        </select>
-                        
+                        <div class="form-group">
+                            @Html.Label("Seleccione el concepto del movimiento", htmlAttributes: new { @class = "control-label col-lg-8" })
+                            <select id="comboConcepto" class="form-control dropdown" name="select">
+                                <option value="" selected>Seleccione el concepto</option>
+                                <option value="Compra">Compra</option>
+                                <option value="Devolución">Devolución</option>
+                                <option value="Ajuste inventario">Ajuste inventario</option>
+                                <option value="Traspaso">Traspaso</option>
+                                <option value="Inventario inicial">Inventario inicial</option>
+                            </select>
+                        </div>
                     </div>
-
                 </div>
             </div>
             
