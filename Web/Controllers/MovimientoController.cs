@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using Web.Security;
 using Web.Util;
 using Web.ViewModel;
 
@@ -354,6 +355,7 @@ namespace Web.Controllers
         //=================== CONTROLLER DE VENTANAS =========================
         //====================================================================
         //
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult MovimientoEntrada(int? idProveedor)
         {
             try
@@ -394,6 +396,8 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
+
         public ActionResult MovimientoSalida(int? idSucursal)
         {
             try
@@ -431,6 +435,7 @@ namespace Web.Controllers
             }
         }
 
+        [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]
         public ActionResult MovimientoTransferencia()
         {
             return View();
