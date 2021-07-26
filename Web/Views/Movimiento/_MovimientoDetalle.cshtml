@@ -4,8 +4,9 @@
 {
     if (Model.Count() == 0)
     {
+        
         <tr class="table-warning">
-            <td colspan="6"><div class="text-center">No hay productos registrados</div> </td>
+            <td colspan="@((string)ViewBag.colspanDetalle)" ><div class="text-center">No hay productos registrados</div> </td>
         </tr>
     }
     else
@@ -13,45 +14,55 @@
         foreach (var item in Model)
         {
 
-            <tr class="table-secondary">
-                <td>
-                    @Html.DisplayFor(modelItem => item.PRODUCTOS.CATEGORIA.descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PRODUCTOS.marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.cantidad)
-                </td>
-              
-                <td style="width:20%" id="estiloColorHover">
-                    @Ajax.ActionLink("Editar", "SeleccionarProducto", "Movimiento",
-                         new { id = item.PRODUCTOS.ID },
-                         new AjaxOptions
-                              {
-                             UpdateTargetId = "modal-content",
-                             InsertionMode = InsertionMode.Replace,
-                             OnComplete = "mostrarModal()"
-                         }, new { @class = "btn btn-primary update-contact" })
-                    @Ajax.ActionLink("Eliminar",
-                                       "EliminarProducto",
-                                       "Movimiento",
-                                       new
-                                       {
-                                           idProd = item.PRODUCTOS.ID
-                                       },
-                                       new AjaxOptions
-                                       {
-                                           UpdateTargetId = "resultadoDetalle",
-                                           InsertionMode = InsertionMode.Replace,
-                                           HttpMethod = "GET",
-                                       }, new { @class = "btn btn-danger" }
-                                       )
-                </td>
-            </tr>
+<tr class="table-secondary">
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.CATEGORIA.descripcion)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.marca)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PRODUCTOS.nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.cantidad)
+    </td>
+    @if (item.PROVEEDORES == null)
+    {
+
+    }
+    else
+    {
+        <td>
+            @Html.DisplayFor(modelItem => item.PROVEEDORES.nombre)
+        </td>
+    }
+
+    <td style="width:20%" id="estiloColorHover">
+        @Ajax.ActionLink("Editar", "SeleccionarProducto", "Movimiento",
+             new { id = item.PRODUCTOS.ID },
+             new AjaxOptions
+             {
+                 UpdateTargetId = "modal-content",
+                 InsertionMode = InsertionMode.Replace,
+                 OnComplete = "mostrarModal()"
+             }, new { @class = "btn btn-primary update-contact", @style = "width:100%" })
+        @Ajax.ActionLink("Eliminar",
+                           "EliminarProducto",
+                           "Movimiento",
+                           new
+                           {
+                               idProd = item.PRODUCTOS.ID
+                           },
+                           new AjaxOptions
+                           {
+                               UpdateTargetId = "resultadoDetalle",
+                               InsertionMode = InsertionMode.Replace,
+                               HttpMethod = "GET",
+                           }, new { @class = "btn btn-danger", @style = "width:100%" }
+                           )
+    </td>
+</tr>
         }
     }
 

@@ -97,6 +97,29 @@ namespace Web.ViewModel
             return mensaje;
 
         }
+        public int  GetHistDetalle(int idProd)
+        {
+
+            int tipoMov = 0;
+            foreach (var item in Instancia.movimientoDetalle.historicoDetalle)
+            {
+                if (item.IDProducto == idProd)
+                {
+                    if (item.IDSucursalSale != null)
+                    {
+                        tipoMov = 2;
+                    }
+                    else
+                    {
+                        tipoMov = 1;
+                    }
+                }
+            }
+
+
+
+            return tipoMov;
+        }
         public void VaciarMovimiento()
         {
             movimientoDetalle.historicoDetalle = new List<HistDetalleEntradaSalida>();

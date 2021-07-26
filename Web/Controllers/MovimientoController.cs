@@ -12,9 +12,10 @@ using Web.ViewModel;
 
 namespace Web.Controllers
 {
+   
     public class MovimientoController : Controller
     {
-
+       
 
         //[HttpPost]
         public ActionResult AgregarActualizarProducto(int idProveedor, int cantidad, int id)
@@ -55,6 +56,7 @@ namespace Web.Controllers
                                                                  "Indique la cantidad del producto a agregar",
                                                                  SweetAlertMessageType.error);
                 }
+                ViewBag.colspanDetalle = "6";
                 //ViewBag.ListaProveedores = listaProveedores_lst();
                 //ViewBag.IDProveedor = listaProveedores();
                 return PartialView("_MovimientoDetalle", model);
@@ -85,6 +87,7 @@ namespace Web.Controllers
                                                                  "La cantidad sobrepasa las existencias del producto en esta sucursal",
                                                                  SweetAlertMessageType.warning);
                 model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                ViewBag.colspanDetalle = "5";
                 return PartialView("_MovimientoDetalle", model);
             }
             try
@@ -125,6 +128,7 @@ namespace Web.Controllers
                                                                  "Indique la cantidad del producto a agregar",
                                                                  SweetAlertMessageType.error);
                 }
+                ViewBag.colspanDetalle = "5";
                 //ViewBag.ListaProveedores = listaProveedores_lst();
                 //ViewBag.IDProveedor = listaProveedores();
                 return PartialView("_MovimientoDetalle", model);
@@ -149,14 +153,24 @@ namespace Web.Controllers
             IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
             try
             {
-                GestorBodega.Instancia.EliminarProducto(idProd);
+               
                 ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
                                                                    "Eliminado",
                                                                    "El producto se elimino del movimiento",
                                                                    SweetAlertMessageType.success);
 
                 model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
+                int tipo = GestorBodega.Instancia.GetHistDetalle(idProd);
                 
+                if (tipo== 1)
+                {
+                    ViewBag.colspanDetalle = "6";
+                }
+                if (tipo==2)
+                {
+                    ViewBag.colspanDetalle = "5";
+                }
+                GestorBodega.Instancia.EliminarProducto(idProd);
                 return PartialView("_MovimientoDetalle", model);
             }
             catch (Exception ex)
@@ -368,6 +382,7 @@ namespace Web.Controllers
             }
             try
             {
+               
                 ServiceProductos _serviceProductos = new ServiceProductos();
                 ViewModelMovimiento model = new ViewModelMovimiento();
 
@@ -411,6 +426,7 @@ namespace Web.Controllers
             }
             try
             {
+                
                 ServiceProductos _serviceProductos = new ServiceProductos();
                 ViewModelMovimiento model = new ViewModelMovimiento();
 
