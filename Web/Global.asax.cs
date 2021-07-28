@@ -39,6 +39,7 @@ namespace Web
             myCulture.NumberFormat.NumberDecimalSeparator = ".";
             myCulture.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             myCulture.DateTimeFormat.DateSeparator = "/";
+            myCulture.DateTimeFormat.FullDateTimePattern= "dd/MM/yyyy hh:mmtt";
             Thread.CurrentThread.CurrentCulture = myCulture;
         }
 

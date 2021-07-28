@@ -2,6 +2,7 @@
 using Infraestructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -204,7 +205,28 @@ namespace Web.Controllers
                 hist.tipoMov = tipoMov;
                
                 hist.IDUsuario = ((USUARIO) Session["User"]).ID;
-                hist.fechaHora = DateTime.Now.ToString("dd/MM/yyyy hh:mmtt");
+                String fechaHora= DateTime.Now.ToString("dd/MM/yyyy hh:mmtt");
+
+                try
+                {
+                    DateTime.ParseExact(fechaHora, "dd/MM/yyyy hh:mmtt", CultureInfo.InvariantCulture);
+                }
+                catch (Exception)
+                {
+                    fechaHora=fechaHora.Replace(".", "");
+                    if (fechaHora.Contains("p"))
+                    {
+                        fechaHora = fechaHora.Replace("p", "P");
+                    }
+                    else
+                    {
+                        fechaHora = fechaHora.Replace("a", "A");
+                    }
+                    String [] arrayFH=fechaHora.Split(' ');
+                    String f1=arrayFH[0], f2=arrayFH[1];
+                    fechaHora= f1 + " " + f2+"M";
+                }
+                hist.fechaHora = fechaHora;
                 hist.detalle = descripcion;
                 hist.HistDetalleEntradaSalida = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
                 int tipo = 0;
