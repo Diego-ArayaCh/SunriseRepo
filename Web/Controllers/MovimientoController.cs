@@ -81,6 +81,7 @@ namespace Web.Controllers
         {
             IEnumerable<HistDetalleEntradaSalida> model = new List<HistDetalleEntradaSalida>();
             ProdSuc prodSuc = new ServiceProductos().GetProductoSucursal(id , idSucursal);
+            model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
             if (cantidad > prodSuc.cant)
             {
                 ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
@@ -93,10 +94,8 @@ namespace Web.Controllers
             }
             try
             {
-                if (true)
-                {
-
-                }
+              
+              
                 if (cantidad > 0)
                 {
 
@@ -124,6 +123,17 @@ namespace Web.Controllers
                 }
                 else
                 {
+                    if (cantidad<0)
+                    {
+                        ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
+                                                                 "Error",
+                                                                 "Los números deben ser positivos",
+                                                                 SweetAlertMessageType.error);
+                        ViewBag.colspanDetalle = "5";
+                        //ViewBag.ListaProveedores = listaProveedores_lst();
+                        //ViewBag.IDProveedor = listaProveedores();
+                        return PartialView("_MovimientoDetalle", model);
+                    }
                     ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
                                                                  "Error",
                                                                  "Indique la cantidad del producto a agregar",
@@ -136,6 +146,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
+                model = GestorBodega.Instancia.movimientoDetalle.historicoDetalle;
                 ViewBag.Mensaje = Util.SweetAlertHelper.Mensaje(
                                                                 "Error",
                                                                 "Indique la cantidad del producto a agregar",
