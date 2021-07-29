@@ -360,16 +360,19 @@
             var idSuc = document.getElementById("comboSucursal").value;
             var descripcion = document.getElementById("txtComentario").value;
             if (descripcion.trim() == "") {
-                alert("Ingrese la descripción del movimiento")
+                //alert("Ingrese la descripción del movimiento")
+                swal({ title: 'Validación', text: 'Ingrese la descripción del movimiento', type: 'warning' });
                 return
             }
             if (idSuc == 0) {
-                alert("seleccione la sucursal")
+                //alert("seleccione la sucursal")
+                swal({ title: 'Validación', text: 'Seleccione la sucursal', type: 'warning' });
                 return
             }
             var concepto = document.getElementById("comboConcepto").value
             if (concepto == "") {
-                alert("Seleccione el concepto del movimiento")
+                //alert("Seleccione el concepto del movimiento")
+                swal({ title: 'Validación', text: 'Seleccione el concepto del movimiento', type: 'warning' });
                 return
             }
             descripcion = concepto + " - " + descripcion
