@@ -140,7 +140,7 @@
                         <th>
                             Cantidad
                         </th>
-                       
+
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -178,7 +178,7 @@
                         <select id="comboConcepto" class="form-control dropdown" name="select">
                             <option value="" selected>Seleccione el concepto</option>
                             <option value="Factura">Factura</option>
-                            <option value="Cancelación de compra">Cancelación de compra</option> 
+                            <option value="Cancelación de compra">Cancelación de compra</option>
                             <option value="Devolución de compra a proveedor">Devolución de compra a proveedor</option>
                             <option value="Ajuste de inventario">Ajuste de inventario</option>
                             <option value="Traspaso">Traspaso</option>
@@ -224,7 +224,7 @@
             minutes = myDate.getMinutes();
             seconds = myDate.getSeconds();
             date = myDate.getDate();
-            month = myDate.getMonth();
+            month = myDate.getMonth() + 1;
             year = myDate.getFullYear();
 
             if (hours < 10) hours = 0 + hours;
@@ -257,16 +257,16 @@
                 dataType: 'text',
                 url: "/Movimiento/sucursalXproducto",
                 data: { "id": id },
-               
+
                 success: function (data) {
                     $("#resultado").html('');
                     $("#resultado").html(data);
                     LimpiarDetalle()
-                } , error: function (xhr, status, error) {
+                }, error: function (xhr, status, error) {
                     console.log("Error: " + error + ", No Error: " + xhr.status);
                 },
             });
-           
+
         }
         function LimpiarDetalle() {
             $.ajax({
