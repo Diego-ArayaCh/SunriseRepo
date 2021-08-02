@@ -48,7 +48,8 @@ namespace Web.Controllers
         {
          
                 IEnumerable<HISTORICO> lista = null;
-                try
+            List<HISTORICO> model = new List<HISTORICO>();
+            try
                 {
                     
                     ServiceInformes _ServiceInformes = new ServiceInformes();
@@ -80,6 +81,24 @@ namespace Web.Controllers
                     ViewBag.To = to;
                     // lista = _ServiceInformes.GetEntradas(inicio, fin);
                 }
+                USUARIO user = ((USUARIO)Session["User"]);
+               
+                foreach (var item in lista)
+                {
+                    
+
+                    if (user.IDRol == 2)
+                    {
+                        if (item.IDUsuario==user.ID)
+                        {
+                            model.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        model = lista.ToList();
+                    }
+                }
                 }
                 catch (Exception ex)
                 {
@@ -93,7 +112,7 @@ namespace Web.Controllers
                 int pageSize = 4;
                 int pageNumber = page ?? 1;
 
-                return View("InformeEntrada", lista.ToPagedList(pageNumber, pageSize));
+                return View("InformeEntrada", model.ToPagedList(pageNumber, pageSize));
                
            
 
@@ -134,6 +153,7 @@ namespace Web.Controllers
         public ActionResult InformeSalida(String from, String to, int? page)
         {
             IEnumerable<HISTORICO> lista = null;
+            List<HISTORICO> model = new List<HISTORICO>();
             try
             {
                 ServiceInformes _ServiceInformes = new ServiceInformes();
@@ -168,6 +188,24 @@ namespace Web.Controllers
                     lista = alma;
                     // lista = _ServiceInformes.GetEntradas(inicio, fin);
                 }
+                USUARIO user = ((USUARIO)Session["User"]);
+
+                foreach (var item in lista)
+                {
+
+
+                    if (user.IDRol == 2)
+                    {
+                        if (item.IDUsuario == user.ID)
+                        {
+                            model.Add(item);
+                        }
+                    }
+                    else
+                    {
+                        model = lista.ToList();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -180,7 +218,7 @@ namespace Web.Controllers
             int pageSize = 4;
             int pageNumber = page ?? 1;
 
-            return View(lista.ToPagedList(pageNumber, pageSize));
+            return View(model.ToPagedList(pageNumber, pageSize));
         }
 
         [CustomAuthorize((int)Roles.Administrador, (int)Roles.Encargado)]

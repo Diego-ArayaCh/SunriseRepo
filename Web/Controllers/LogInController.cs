@@ -150,6 +150,26 @@ namespace Web.Controllers
             USUARIO rUsuario = user;
             try
             {
+                Convert.ToInt32(user.cedula);
+            }
+            catch (Exception e)
+            {
+
+                ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro fallido", "Verifiqué que el campo de cédula contenga sólo números ", SweetAlertMessageType.warning);
+                return View("Index");
+            }
+            try
+            {
+                Convert.ToInt32(user.telefono);
+            }
+            catch (Exception e)
+            {
+
+                ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro fallido", "Verifiqué que el campo de teléfono contenga sólo números ", SweetAlertMessageType.warning);
+                return View("Index");
+            }
+            try
+            {
                 if (rUsuario.contrasenha == Contrasenia2)
                 {
                     new ServiceUsuario().Save(rUsuario);
@@ -158,7 +178,7 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro Fallido", "Contraseña erronea pendejo le toca revisar", SweetAlertMessageType.warning);
+                    ViewBag.NotificationMessage = Util.SweetAlertHelper.Mensaje("Registro Fallido", "Contraseña errónea, por favor revise", SweetAlertMessageType.warning);
                 }
 
             }
@@ -174,7 +194,7 @@ namespace Web.Controllers
 
             return View("Index");
         }
-
+        [CustomAuthorize((int)Roles.Administrador)]
         //Mantenimiento de aprobaciones
         public ActionResult EditPermisos()
         {

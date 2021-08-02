@@ -204,8 +204,10 @@ namespace Infraestructure.Models
     internal partial class UsuarioMetaData
     {
         [Display(Name = "Identificación")]
+
         public int ID { get; set; }
         [Display(Name = "Número de Cédula")]
+        [StringLength(9, ErrorMessage = "{0} debe corresponder a un número de cédula", MinimumLength = 9)]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string cedula { get; set; }
         [Display(Name = "Estado")]
@@ -226,6 +228,8 @@ namespace Infraestructure.Models
         [Display(Name = "Identificación de Rol")]
         public Nullable<int> IDRol { get; set; }
         [Display(Name = "Teléfono")]
+        [StringLength(8, ErrorMessage = "{0}  debe corresponder a un número telefónico", MinimumLength = 8)]
+
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string telefono { get; set; }
     }
