@@ -25,7 +25,7 @@ namespace Infraestructure.Repository
                     Include("USUARIO").
                     Include("HistDetalleEntradaSalida").
                     Include("HistDetalleEntradaSalida.SUCURSAL").
-                      Where(p => p.tipoMov == 1 || p.tipoMov == 3).
+                      Where(p => p.tipoMov == 1 ).
                                 ToList();
 
                 //lista = ctx.HistDetalleEntradaSalida.
@@ -54,7 +54,7 @@ namespace Infraestructure.Repository
                     Include("USUARIO").
                     Include("HistDetalleEntradaSalida").
                     Include("HistDetalleEntradaSalida.SUCURSAL").
-                      Where(p => (DateTime.Compare(Convert.ToDateTime(p.fechaHora), from) > 0 && DateTime.Compare(Convert.ToDateTime(p.fechaHora), to) < 0) && (p.tipoMov == 1 || p.tipoMov == 3)).
+                      Where(p => (DateTime.Compare(Convert.ToDateTime(p.fechaHora), from) > 0 && DateTime.Compare(Convert.ToDateTime(p.fechaHora), to) < 0) && (p.tipoMov == 1 )).
                                 ToList();
 
                 //lista = ctx.HistDetalleEntradaSalida.
@@ -108,7 +108,7 @@ namespace Infraestructure.Repository
                     Include("USUARIO").
                     Include("HistDetalleEntradaSalida").
                     Include("HistDetalleEntradaSalida.SUCURSAL1").
-                      Where(p => p.tipoMov == 2 || p.tipoMov == 3).
+                      Where(p => p.tipoMov == 2 ).
                                 ToList();
 
                 //lista = ctx.HistDetalleEntradaSalida.
@@ -137,7 +137,7 @@ namespace Infraestructure.Repository
                     Include("USUARIO").
                     Include("HistDetalleEntradaSalida").
                     Include("HistDetalleEntradaSalida.SUCURSAL1").
-                      Where(p => (Convert.ToDateTime(p.fechaHora) >= from && Convert.ToDateTime(p.fechaHora) <= to) && (p.tipoMov == 2 || p.tipoMov == 3)).
+                      Where(p => (Convert.ToDateTime(p.fechaHora) >= from && Convert.ToDateTime(p.fechaHora) <= to) && (p.tipoMov == 2 )).
                                 ToList(); ;
 
                 //lista = ctx.HistDetalleEntradaSalida.
