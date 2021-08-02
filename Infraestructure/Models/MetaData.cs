@@ -207,7 +207,7 @@ namespace Infraestructure.Models
 
         public int ID { get; set; }
         [Display(Name = "Número de Cédula")]
-        [StringLength(9, ErrorMessage = "{0} debe corresponder a un número de cédula", MinimumLength = 9)]
+        [StringLength(9, ErrorMessage = "{0} debe contener 9 números", MinimumLength = 9)]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string cedula { get; set; }
         [Display(Name = "Estado")]
