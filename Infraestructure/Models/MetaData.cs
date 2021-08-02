@@ -208,6 +208,7 @@ namespace Infraestructure.Models
         public int ID { get; set; }
         [Display(Name = "Número de Cédula")]
         [StringLength(9, ErrorMessage = "{0} debe contener 9 números", MinimumLength = 9)]
+        [Range(01, 999999999, ErrorMessage = "{0} debe de contener únicamente números")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string cedula { get; set; }
         [Display(Name = "Estado")]
@@ -229,7 +230,7 @@ namespace Infraestructure.Models
         public Nullable<int> IDRol { get; set; }
         [Display(Name = "Teléfono")]
         [StringLength(8, ErrorMessage = "{0}  debe cotener 8 números", MinimumLength = 8)]
-
+        [Range(01, 99999999, ErrorMessage = "{0} debe de contener únicamente números")]
         [Required(ErrorMessage = "{0} es un dato requerido")]
         public string telefono { get; set; }
     }
