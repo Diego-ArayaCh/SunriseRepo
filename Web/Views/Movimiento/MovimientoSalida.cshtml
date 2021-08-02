@@ -329,7 +329,7 @@
                 success: function (data) {
                     $("#resultadoDetalle").html('');
                     $("#resultadoDetalle").html(data);
-
+                    selectSuc();
                     document.getElementById("txtComentario").value = ""
                     document.getElementById("comboConcepto").value = ""
                 }, error: function (xhr, status, error) {

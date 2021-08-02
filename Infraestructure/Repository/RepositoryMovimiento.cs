@@ -179,22 +179,23 @@ namespace Infraestructure.Repository
                                         ctx.Entry(prod).State = EntityState.Modified;
                                         break;
                                     case 2:
-                                        PRODUCTOS prod1 = new RepositoryProducto().GetProductoByID(detalle.IDProducto);
+                                        PRODUCTOS prod1 = ctx.PRODUCTOS.
+                                        Where(p => p.ID == detalle.IDProducto).
+                                        FirstOrDefault<PRODUCTOS>();
                                         prod1.stock -= detalle.cantidad;
                                         ctx.Entry(prod1).State = EntityState.Modified;
                                         ProdSuc ps1 = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
                                         ps1.cant -= detalle.cantidad;
                                         ctx.Entry(ps1).State = EntityState.Modified;
-                                       
                                         break;
-                                    case 3:
-                                        ProdSuc psEntra = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
-                                        psEntra.cant += detalle.cantidad;
-                                        ProdSuc psSalida = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
-                                        psSalida.cant -= detalle.cantidad;
-                                        ctx.Entry(psEntra).State = EntityState.Modified;
-                                        ctx.Entry(psSalida).State = EntityState.Modified;
-                                        break;
+                                    //case 3:
+                                    //    ProdSuc psEntra = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalEntra.Value).First();
+                                    //    psEntra.cant += detalle.cantidad;
+                                    //    ProdSuc psSalida = ctx.ProdSuc.Where(p => p.IDProducto == detalle.IDProducto && p.IDSucursal == detalle.IDSucursalSale.Value).First();
+                                    //    psSalida.cant -= detalle.cantidad;
+                                    //    ctx.Entry(psEntra).State = EntityState.Modified;
+                                    //    ctx.Entry(psSalida).State = EntityState.Modified;
+                                    //    break;
 
                                 }
                                 ctx.SaveChanges();
