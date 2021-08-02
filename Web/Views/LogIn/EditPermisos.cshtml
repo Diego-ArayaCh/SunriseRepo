@@ -4,12 +4,16 @@
     ViewBag.Title = "Mantenimiento de Permisos";
 }
 
-<h2>Mantenimiento de Permisos</h2>
+<h1 class="display-6" id="estiloColor">
+    Mantenimiento de Permisos
+</h1>
 
-<p>
+<hr class="my-4">
+@*<div id="estiloColorHover2">
     @Html.ActionLink("Registrar Nuevo", "Index")
-</p>
+</div>*@
 
+<br />
 
 <table class="table table-hover">
     <thead>
@@ -85,7 +89,7 @@
                     <td>
                         @if (item.estado != 1)
                         {
-                            @Html.ActionLink("Habilitar", "Habilitar", new {@class ="btn btn-primary", id = item.ID }, new { @class = "btn btn-outline-dark btn-sm" })
+                            @Html.ActionLink("Habilitar", "Habilitar", new { @class = "btn btn-primary", id = item.ID }, new { @class = "btn btn-outline-dark btn-sm" })
                         }
                         else
                         {
@@ -96,7 +100,7 @@
                     <td>
                         @if (item.estado != 2)
                         {
-                            @Html.ActionLink("Deshabilitar", "Deshabilitar", new {id = item.ID },new { @class = "btn btn-outline-dark btn-sm" })
+                            @Html.ActionLink("Deshabilitar", "Deshabilitar", new { id = item.ID }, new { @class = "btn btn-outline-dark btn-sm" })
                         }
                         else
                         {
